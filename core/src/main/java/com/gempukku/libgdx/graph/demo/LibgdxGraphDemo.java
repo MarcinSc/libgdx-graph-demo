@@ -44,6 +44,8 @@ import java.io.InputStream;
  * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
  */
 public class LibgdxGraphDemo extends ApplicationAdapter {
+    private static final float BLUR_VALUE = 30f;
+
     private Array<Disposable> disposables = new Array<>();
 
     private PipelineRenderer pipelineRenderer;
@@ -70,7 +72,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
 
         script = createScript(subtitleLabel, camera, models, pipelineRenderer);
         // TODO: Temp - move to hangar scene
-        script.update(30f);
+        //script.update(30f);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -78,7 +80,9 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     private MovieScript createScript(Label subtitleLabel, Camera camera, GraphShaderModels models, PipelineRenderer pipelineRenderer) {
         MovieScript movieScript = new MovieScript(subtitleLabel, camera, models, pipelineRenderer);
         // Introduction
-        movieScript.setSubtitleText(0f, Color.WHITE, "This is not a game.\nThis is a libGDX Graph Demo.\nAll graphical assets were free and not created by me.");
+        movieScript.setSubtitleText(0f, Color.WHITE, "This is not a game.\nThis is a libGDX-Graph Demo.\n" +
+                "No shaders were written during creation of this demo.\n" +
+                "All graphical assets were free and not created by me.");
         movieScript.setSubtitleText(5f, Color.WHITE, "");
         movieScript.setSubtitleText(5.5f, new Color(0.8f, 0.8f, 1f, 1f), "A few centuries ago, in a far away galaxy...");
 
@@ -92,9 +96,9 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
 
     private void createHangarScene(MovieScript movieScript, float hangarSceneStart, float hangarSceneLength) {
         movieScript.setPipelineFloatProperty("Blackout", hangarSceneStart, 3f, 1, 0, Interpolation.pow3In);
-        movieScript.setPipelineFloatProperty("Blur", hangarSceneStart, 3f, 10, 0);
+        movieScript.setPipelineFloatProperty("Blur", hangarSceneStart, 3f, BLUR_VALUE, 0);
         movieScript.setSubtitleText(hangarSceneStart + 3f, Color.WHITE, "");
-        movieScript.setSubtitleText(hangarSceneStart + 3.5f, Color.WHITE, "- This is GDX-255 requesting permission to enter the hangar.");
+        movieScript.setSubtitleText(hangarSceneStart + 3.5f, Color.WHITE, "- This is GDX-255 requesting permission to enter the transfer bay.");
         movieScript.setSubtitleText(hangarSceneStart + 7f, Color.WHITE, "- GDX-255, this is Interdimensional Control - request granted.");
         setupHangarEnvironment(movieScript, hangarSceneStart, hangarSceneLength);
 
@@ -124,7 +128,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         movieScript.setSubtitleText(hangarSceneStart + 25f, Color.WHITE, "- Affirmative. Initiating interdimensional transfer.");
         movieScript.setSubtitleText(hangarSceneStart + 31f, Color.WHITE, "");
         movieScript.setPipelineFloatProperty("Blackout", hangarSceneStart + 31f, 2f, 0, 1, Interpolation.pow3In);
-        movieScript.setPipelineFloatProperty("Blur", hangarSceneStart + 31f, 2f, 0, 10);
+        movieScript.setPipelineFloatProperty("Blur", hangarSceneStart + 31f, 2f, 0, BLUR_VALUE);
     }
 
     private void setupHangarEnvironment(MovieScript movieScript, float hangarSceneStart, float hangarSceneLength) {
@@ -152,7 +156,6 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
                     new ActorScript(cellId, hangarSceneStart, hangarSceneLength)
                             .setScale(0, hangarSceneLength, 0.002f, 0.002f)
                             .setPosition(0, hangarSceneLength, cellPosition, cellPosition));
-
         }
     }
 
