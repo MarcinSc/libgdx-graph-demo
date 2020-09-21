@@ -96,7 +96,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         luminarisHangarActor.setScale(0, hangarSceneLength, luminarisScale, luminarisScale);
         luminarisHangarActor.setRotation(0, hangarSceneLength, new Vector3(0, 1, 0), 90, 90);
         luminarisHangarActor.setPosition(0, 13 - hangarSceneStart, new Vector3(luminarisStartingX, luminarisY + 1f, 0), new Vector3(luminarisStartingX, luminarisY + 1f, 0));
-        luminarisHangarActor.setPosition(13 - hangarSceneStart, 5f, new Vector3(luminarisStartingX, luminarisY + 1f, 0), new Vector3(-13f, luminarisY, 0f), Interpolation.smooth);
+        luminarisHangarActor.setPosition(13 - hangarSceneStart, 5f, new Vector3(luminarisStartingX, luminarisY + 1f, 0), new Vector3(0f, luminarisY, 0f), Interpolation.smooth);
         movieScript.addActorScript(luminarisHangarActor);
 
         return movieScript;
