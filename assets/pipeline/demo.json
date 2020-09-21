@@ -992,6 +992,910 @@
                     }
                   ]
                 }
+              },
+              {
+                "id": "fe05d6882e644f9ba82176d1026a3254",
+                "tag": "Ship Shield",
+                "shader": {
+                  "version": "0.1.0",
+                  "nodes": [
+                    {
+                      "id": "bdaebe0ec4124809a9ee7fab46d719b1",
+                      "type": "Multiply",
+                      "x": 1237.0,
+                      "y": 322.99993896484375
+                    },
+                    {
+                      "id": "c9e0c730f9be451184778a01e0b0062a",
+                      "type": "Add",
+                      "x": 1675.9996337890625,
+                      "y": 649.9999389648438
+                    },
+                    {
+                      "id": "d19edd1a882346efa7768bdb109f4d27",
+                      "type": "Add",
+                      "x": 1840.0,
+                      "y": 377.0
+                    },
+                    {
+                      "id": "c9da28824e704af18dbe1dc287a61461",
+                      "type": "Clamp",
+                      "x": 1435.0,
+                      "y": 299.99993896484375
+                    },
+                    {
+                      "id": "e8a8ab994d6944959854c0ad937ed9b2",
+                      "type": "ValueVector2",
+                      "x": 1298.0,
+                      "y": 884.0001220703125,
+                      "data": {
+                        "v1": 0.0,
+                        "v2": 1.0
+                      }
+                    },
+                    {
+                      "id": "1eb533a8d6a6451e81b9c9a92fc09ab2",
+                      "type": "ValueColor",
+                      "x": 2307.999755859375,
+                      "y": 940.0001831054688,
+                      "data": {
+                        "color": "6fe8e2ff"
+                      }
+                    },
+                    {
+                      "id": "3ec5716fb7904df58aebccf87bbdcfd3",
+                      "type": "AttributePosition",
+                      "x": 1131.000244140625,
+                      "y": 546.9998779296875,
+                      "data": {
+                        "coordinates": "world"
+                      }
+                    },
+                    {
+                      "id": "5028f8710842457ab517d742167fef52",
+                      "type": "Multiply",
+                      "x": 1193.0,
+                      "y": 1393.0
+                    },
+                    {
+                      "id": "91d8ad30956f403ab91ab891eb3d865e",
+                      "type": "CameraPosition",
+                      "x": 665.0,
+                      "y": 160.0
+                    },
+                    {
+                      "id": "32aec50f252848b7b8db7d61c1b7fe0b",
+                      "type": "Subtract",
+                      "x": 1296.0,
+                      "y": 1092.0001220703125
+                    },
+                    {
+                      "id": "bf40df8c98094cd1b0564446f731aca2",
+                      "type": "AttributeNormal",
+                      "x": 1260.000244140625,
+                      "y": 735.9998779296875,
+                      "data": {
+                        "coordinates": "world"
+                      }
+                    },
+                    {
+                      "id": "4862c59348bc4b059b28e86886b0b5d7",
+                      "type": "Subtract",
+                      "x": 1644.0,
+                      "y": 376.99993896484375
+                    },
+                    {
+                      "id": "b03071bf83f84d72aea3c9becff9757a",
+                      "type": "ValueFloat",
+                      "x": 1436.0,
+                      "y": 406.99993896484375,
+                      "data": {
+                        "v1": 1.0
+                      }
+                    },
+                    {
+                      "id": "7dbabbec7eb84cc69319c3c9499e59c7",
+                      "type": "ValueFloat",
+                      "x": 949.0,
+                      "y": 1275.0,
+                      "data": {
+                        "v1": 0.30000001192092896
+                      }
+                    },
+                    {
+                      "id": "58d969f11176475f8ecc33bdcaee9b57",
+                      "type": "CameraPosition",
+                      "x": 1148.000244140625,
+                      "y": 636.9998779296875
+                    },
+                    {
+                      "id": "1449f692d6fd4d648556ba58f91b3268",
+                      "type": "ValueFloat",
+                      "x": 723.0,
+                      "y": 1234.0,
+                      "data": {
+                        "v1": 1.0
+                      }
+                    },
+                    {
+                      "id": "364ec61db81a4cdda780d958743aeb21",
+                      "type": "AttributePosition",
+                      "x": 649.0,
+                      "y": 219.0,
+                      "data": {
+                        "coordinates": "world"
+                      }
+                    },
+                    {
+                      "id": "e17a426ffadb4e64b9c10649d15efe5c",
+                      "type": "Power",
+                      "x": 1904.0,
+                      "y": 1093.0001220703125
+                    },
+                    {
+                      "id": "b4231a67558745bf99e1401427c34c19",
+                      "type": "ValueFloat",
+                      "x": 1493.0,
+                      "y": 939.0001220703125,
+                      "data": {
+                        "v1": 1.0
+                      }
+                    },
+                    {
+                      "id": "8ea08de0306c4a2abddbed6e186d8151",
+                      "type": "Split",
+                      "x": 272.0,
+                      "y": 338.0
+                    },
+                    {
+                      "id": "fa227b59e0fb4a31a6c83a11ebb7052b",
+                      "type": "FresnelEffect",
+                      "x": 1589.0001220703125,
+                      "y": 691.9998168945312
+                    },
+                    {
+                      "id": "fc96358ccea94b78ae601b8c7a2ab379",
+                      "type": "AttributePosition",
+                      "x": 313.9998779296875,
+                      "y": 1364.9998779296875,
+                      "data": {
+                        "coordinates": "world"
+                      }
+                    },
+                    {
+                      "id": "e3f69bc80d374113bc42931811ce8a89",
+                      "type": "FragmentCoordinate",
+                      "x": 50.0,
+                      "y": 407.0
+                    },
+                    {
+                      "id": "b71656f83a9344608a44a04eeead98f4",
+                      "type": "Subtract",
+                      "x": 1346.000244140625,
+                      "y": 601.9998779296875
+                    },
+                    {
+                      "id": "3b9aacc01a564e89a214ad6d08daab10",
+                      "type": "Property",
+                      "x": 799.9999389648438,
+                      "y": 1023.0001220703125,
+                      "data": {
+                        "name": "Min Y",
+                        "type": "Float"
+                      }
+                    },
+                    {
+                      "id": "ad1c5c086fbb4574b9d633cc382636ea",
+                      "type": "Multiply",
+                      "x": 657.0,
+                      "y": 383.0
+                    },
+                    {
+                      "id": "c62bf5fa090b44fa83f1c7303a767352",
+                      "type": "Subtract",
+                      "x": 1906.0,
+                      "y": 1324.0
+                    },
+                    {
+                      "id": "5f10c036af03433cb78477c1ab3e6d84",
+                      "type": "Add",
+                      "x": 1147.999755859375,
+                      "y": 1234.0
+                    },
+                    {
+                      "id": "536fd05307f44485bed38b9b74c3d56e",
+                      "type": "ValueFloat",
+                      "x": 1493.0,
+                      "y": 1002.0001220703125,
+                      "data": {
+                        "v1": 0.0
+                      }
+                    },
+                    {
+                      "id": "d5c601fa74814553af004891ddca0422",
+                      "type": "Subtract",
+                      "x": 1039.0,
+                      "y": 383.0
+                    },
+                    {
+                      "id": "496a4a4cc6f04b7081971916c55b7faf",
+                      "type": "Remap",
+                      "x": 1493.0,
+                      "y": 1069.0001220703125
+                    },
+                    {
+                      "id": "0c9690072bed4276a4c38b255433c7b3",
+                      "type": "Merge",
+                      "x": 465.0,
+                      "y": 337.0
+                    },
+                    {
+                      "id": "b6d7abb7242249db91c886905fecd8e7",
+                      "type": "Step",
+                      "x": 1666.0,
+                      "y": 1260.0
+                    },
+                    {
+                      "id": "730b07d7b9cf4e35aeb87e3bb72217c2",
+                      "type": "Clamp",
+                      "x": 1770.0,
+                      "y": 549.9998779296875
+                    },
+                    {
+                      "id": "e459c5396f1c4241832e1ede82b3ccca",
+                      "type": "PixelSize",
+                      "x": 466.0,
+                      "y": 229.0
+                    },
+                    {
+                      "id": "601406503c1b4776a7e71ea0056b7f24",
+                      "type": "ValueFloat",
+                      "x": 1347.0,
+                      "y": 530.9998779296875,
+                      "data": {
+                        "v1": 3.0
+                      }
+                    },
+                    {
+                      "id": "2b3584b995e44d4390025d6d168a3d24",
+                      "type": "Merge",
+                      "x": 1295.0,
+                      "y": 948.0001220703125
+                    },
+                    {
+                      "id": "end",
+                      "type": "ShaderEnd",
+                      "x": 2514.0,
+                      "y": 470.0,
+                      "data": {
+                        "culling": "none",
+                        "transparency": "transparent",
+                        "blending": "alpha",
+                        "depthTest": "less"
+                      }
+                    },
+                    {
+                      "id": "b8e6b5ed300149cfadd47824ab87e0a1",
+                      "type": "Property",
+                      "x": 1441.0,
+                      "y": 1283.0,
+                      "data": {
+                        "name": "Min Y",
+                        "type": "Float"
+                      }
+                    },
+                    {
+                      "id": "b7ad323e113a4b88ad060d3bb2617d9a",
+                      "type": "ValueFloat",
+                      "x": 1236.0,
+                      "y": 189.99993896484375,
+                      "data": {
+                        "v1": 1.0
+                      }
+                    },
+                    {
+                      "id": "a55d31f60f0e4c4589d452a66676e40a",
+                      "type": "ValueFloat",
+                      "x": 1643.0,
+                      "y": 85.0,
+                      "data": {
+                        "v1": 0.009999999776482582
+                      }
+                    },
+                    {
+                      "id": "5628234eb26f4b64a7084cbe0e013287",
+                      "type": "ValueFloat",
+                      "x": 1588.0,
+                      "y": 617.9998779296875,
+                      "data": {
+                        "v1": 0.0
+                      }
+                    },
+                    {
+                      "id": "d4d6f254c0ae40b6b05b5e408aaa3094",
+                      "type": "Subtract",
+                      "x": 1029.0,
+                      "y": 1000.0001220703125
+                    },
+                    {
+                      "id": "5082ff0411514e368dfb6b38593657fa",
+                      "type": "Distance",
+                      "x": 856.0,
+                      "y": 220.0
+                    },
+                    {
+                      "id": "c854dee7a44a4299b88a664c627aef05",
+                      "type": "Multiply",
+                      "x": 2323.0,
+                      "y": 765.0
+                    },
+                    {
+                      "id": "0c601c4238db4f6fa44f31a804d5ae26",
+                      "type": "ValueFloat",
+                      "x": 1666.0,
+                      "y": 1346.0,
+                      "data": {
+                        "v1": 1.0
+                      }
+                    },
+                    {
+                      "id": "31a08d4be30c48dcb9000568e5969960",
+                      "type": "Add",
+                      "x": 1999.0,
+                      "y": 562.0
+                    },
+                    {
+                      "id": "a190124048c3469e821668100d9fbe52",
+                      "type": "SceneDepth",
+                      "x": 841.0,
+                      "y": 406.0
+                    },
+                    {
+                      "id": "75481498894d4c7690e757dcf3fc97e7",
+                      "type": "Split",
+                      "x": 526.9998779296875,
+                      "y": 1318.9998779296875
+                    },
+                    {
+                      "id": "804e71cfca374405aab037dfda9d8b9b",
+                      "type": "SimplexNoise2D",
+                      "x": 926.0,
+                      "y": 1348.0
+                    },
+                    {
+                      "id": "bf06bb65c1d14a86822668d5ea55a181",
+                      "type": "Merge",
+                      "x": 723.0,
+                      "y": 1316.0
+                    },
+                    {
+                      "id": "f8f5ea7d3d3e42cc9d9ddf418bac60ad",
+                      "type": "Clamp",
+                      "x": 1702.0,
+                      "y": 1069.0001220703125
+                    },
+                    {
+                      "id": "7a1ed8f8993142d585fbc4434311b4c3",
+                      "type": "ValueFloat",
+                      "x": 1702.0,
+                      "y": 1000.0001220703125,
+                      "data": {
+                        "v1": 10.0
+                      }
+                    },
+                    {
+                      "id": "122b09a08daa479bb335e47b98bf4708",
+                      "type": "ValueFloat",
+                      "x": 1587.0,
+                      "y": 549.9998779296875,
+                      "data": {
+                        "v1": 0.4000000059604645
+                      }
+                    },
+                    {
+                      "id": "dedd2d5a46b8411d9ce794a35d4bf1aa",
+                      "type": "ValueFloat",
+                      "x": 828.9998779296875,
+                      "y": 776.0,
+                      "data": {
+                        "v1": 0.30000001192092896
+                      }
+                    },
+                    {
+                      "id": "a5e2684bd0f04546bf5b88eaeab8de50",
+                      "type": "ValueFloat",
+                      "x": 1237.0,
+                      "y": 253.99993896484375,
+                      "data": {
+                        "v1": 0.20000000298023224
+                      }
+                    },
+                    {
+                      "id": "a2dbcee0974d4753bf24b38681f47cfb",
+                      "type": "ValueFloat",
+                      "x": 1042.0,
+                      "y": 50.0,
+                      "data": {
+                        "v1": 2.0
+                      }
+                    }
+                  ],
+                  "connections": [
+                    {
+                      "fromNode": "e3f69bc80d374113bc42931811ce8a89",
+                      "fromField": "output",
+                      "toNode": "8ea08de0306c4a2abddbed6e186d8151",
+                      "toField": "input"
+                    },
+                    {
+                      "fromNode": "8ea08de0306c4a2abddbed6e186d8151",
+                      "fromField": "x",
+                      "toNode": "0c9690072bed4276a4c38b255433c7b3",
+                      "toField": "x"
+                    },
+                    {
+                      "fromNode": "8ea08de0306c4a2abddbed6e186d8151",
+                      "fromField": "y",
+                      "toNode": "0c9690072bed4276a4c38b255433c7b3",
+                      "toField": "y"
+                    },
+                    {
+                      "fromNode": "364ec61db81a4cdda780d958743aeb21",
+                      "fromField": "position",
+                      "toNode": "5082ff0411514e368dfb6b38593657fa",
+                      "toField": "p0"
+                    },
+                    {
+                      "fromNode": "91d8ad30956f403ab91ab891eb3d865e",
+                      "fromField": "position",
+                      "toNode": "5082ff0411514e368dfb6b38593657fa",
+                      "toField": "p1"
+                    },
+                    {
+                      "fromNode": "a190124048c3469e821668100d9fbe52",
+                      "fromField": "depth",
+                      "toNode": "d5c601fa74814553af004891ddca0422",
+                      "toField": "a"
+                    },
+                    {
+                      "fromNode": "5082ff0411514e368dfb6b38593657fa",
+                      "fromField": "output",
+                      "toNode": "d5c601fa74814553af004891ddca0422",
+                      "toField": "b"
+                    },
+                    {
+                      "fromNode": "a5e2684bd0f04546bf5b88eaeab8de50",
+                      "fromField": "value",
+                      "toNode": "c9da28824e704af18dbe1dc287a61461",
+                      "toField": "min"
+                    },
+                    {
+                      "fromNode": "b7ad323e113a4b88ad060d3bb2617d9a",
+                      "fromField": "value",
+                      "toNode": "c9da28824e704af18dbe1dc287a61461",
+                      "toField": "max"
+                    },
+                    {
+                      "fromNode": "0c9690072bed4276a4c38b255433c7b3",
+                      "fromField": "v2",
+                      "toNode": "ad1c5c086fbb4574b9d633cc382636ea",
+                      "toField": "a"
+                    },
+                    {
+                      "fromNode": "ad1c5c086fbb4574b9d633cc382636ea",
+                      "fromField": "output",
+                      "toNode": "a190124048c3469e821668100d9fbe52",
+                      "toField": "screenPosition"
+                    },
+                    {
+                      "fromNode": "e459c5396f1c4241832e1ede82b3ccca",
+                      "fromField": "size",
+                      "toNode": "ad1c5c086fbb4574b9d633cc382636ea",
+                      "toField": "b"
+                    },
+                    {
+                      "fromNode": "c9da28824e704af18dbe1dc287a61461",
+                      "fromField": "output",
+                      "toNode": "4862c59348bc4b059b28e86886b0b5d7",
+                      "toField": "b"
+                    },
+                    {
+                      "fromNode": "b03071bf83f84d72aea3c9becff9757a",
+                      "fromField": "value",
+                      "toNode": "4862c59348bc4b059b28e86886b0b5d7",
+                      "toField": "a"
+                    },
+                    {
+                      "fromNode": "d5c601fa74814553af004891ddca0422",
+                      "fromField": "output",
+                      "toNode": "bdaebe0ec4124809a9ee7fab46d719b1",
+                      "toField": "a"
+                    },
+                    {
+                      "fromNode": "a2dbcee0974d4753bf24b38681f47cfb",
+                      "fromField": "value",
+                      "toNode": "bdaebe0ec4124809a9ee7fab46d719b1",
+                      "toField": "b"
+                    },
+                    {
+                      "fromNode": "bdaebe0ec4124809a9ee7fab46d719b1",
+                      "fromField": "output",
+                      "toNode": "c9da28824e704af18dbe1dc287a61461",
+                      "toField": "input"
+                    },
+                    {
+                      "fromNode": "bf40df8c98094cd1b0564446f731aca2",
+                      "fromField": "normal",
+                      "toNode": "fa227b59e0fb4a31a6c83a11ebb7052b",
+                      "toField": "normal"
+                    },
+                    {
+                      "fromNode": "601406503c1b4776a7e71ea0056b7f24",
+                      "fromField": "value",
+                      "toNode": "fa227b59e0fb4a31a6c83a11ebb7052b",
+                      "toField": "power"
+                    },
+                    {
+                      "fromNode": "d19edd1a882346efa7768bdb109f4d27",
+                      "fromField": "output",
+                      "toNode": "31a08d4be30c48dcb9000568e5969960",
+                      "toField": "b"
+                    },
+                    {
+                      "fromNode": "730b07d7b9cf4e35aeb87e3bb72217c2",
+                      "fromField": "output",
+                      "toNode": "31a08d4be30c48dcb9000568e5969960",
+                      "toField": "a"
+                    },
+                    {
+                      "fromNode": "5628234eb26f4b64a7084cbe0e013287",
+                      "fromField": "value",
+                      "toNode": "730b07d7b9cf4e35aeb87e3bb72217c2",
+                      "toField": "min"
+                    },
+                    {
+                      "fromNode": "122b09a08daa479bb335e47b98bf4708",
+                      "fromField": "value",
+                      "toNode": "730b07d7b9cf4e35aeb87e3bb72217c2",
+                      "toField": "max"
+                    },
+                    {
+                      "fromNode": "b71656f83a9344608a44a04eeead98f4",
+                      "fromField": "output",
+                      "toNode": "fa227b59e0fb4a31a6c83a11ebb7052b",
+                      "toField": "viewDir"
+                    },
+                    {
+                      "fromNode": "3ec5716fb7904df58aebccf87bbdcfd3",
+                      "fromField": "position",
+                      "toNode": "b71656f83a9344608a44a04eeead98f4",
+                      "toField": "b"
+                    },
+                    {
+                      "fromNode": "58d969f11176475f8ecc33bdcaee9b57",
+                      "fromField": "position",
+                      "toNode": "b71656f83a9344608a44a04eeead98f4",
+                      "toField": "a"
+                    },
+                    {
+                      "fromNode": "fa227b59e0fb4a31a6c83a11ebb7052b",
+                      "fromField": "output",
+                      "toNode": "730b07d7b9cf4e35aeb87e3bb72217c2",
+                      "toField": "input"
+                    },
+                    {
+                      "fromNode": "4862c59348bc4b059b28e86886b0b5d7",
+                      "fromField": "output",
+                      "toNode": "d19edd1a882346efa7768bdb109f4d27",
+                      "toField": "a"
+                    },
+                    {
+                      "fromNode": "a55d31f60f0e4c4589d452a66676e40a",
+                      "fromField": "value",
+                      "toNode": "d19edd1a882346efa7768bdb109f4d27",
+                      "toField": "b"
+                    },
+                    {
+                      "fromNode": "b8e6b5ed300149cfadd47824ab87e0a1",
+                      "fromField": "value",
+                      "toNode": "b6d7abb7242249db91c886905fecd8e7",
+                      "toField": "edge"
+                    },
+                    {
+                      "fromNode": "b6d7abb7242249db91c886905fecd8e7",
+                      "fromField": "output",
+                      "toNode": "c62bf5fa090b44fa83f1c7303a767352",
+                      "toField": "b"
+                    },
+                    {
+                      "fromNode": "0c601c4238db4f6fa44f31a804d5ae26",
+                      "fromField": "value",
+                      "toNode": "c62bf5fa090b44fa83f1c7303a767352",
+                      "toField": "a"
+                    },
+                    {
+                      "fromNode": "1eb533a8d6a6451e81b9c9a92fc09ab2",
+                      "fromField": "value",
+                      "toNode": "end",
+                      "toField": "color"
+                    },
+                    {
+                      "fromNode": "c62bf5fa090b44fa83f1c7303a767352",
+                      "fromField": "output",
+                      "toNode": "c854dee7a44a4299b88a664c627aef05",
+                      "toField": "a"
+                    },
+                    {
+                      "fromNode": "c854dee7a44a4299b88a664c627aef05",
+                      "fromField": "output",
+                      "toNode": "end",
+                      "toField": "alpha"
+                    },
+                    {
+                      "fromNode": "3b9aacc01a564e89a214ad6d08daab10",
+                      "fromField": "value",
+                      "toNode": "d4d6f254c0ae40b6b05b5e408aaa3094",
+                      "toField": "a"
+                    },
+                    {
+                      "fromNode": "dedd2d5a46b8411d9ce794a35d4bf1aa",
+                      "fromField": "value",
+                      "toNode": "d4d6f254c0ae40b6b05b5e408aaa3094",
+                      "toField": "b"
+                    },
+                    {
+                      "fromNode": "fc96358ccea94b78ae601b8c7a2ab379",
+                      "fromField": "position",
+                      "toNode": "75481498894d4c7690e757dcf3fc97e7",
+                      "toField": "input"
+                    },
+                    {
+                      "fromNode": "d4d6f254c0ae40b6b05b5e408aaa3094",
+                      "fromField": "output",
+                      "toNode": "32aec50f252848b7b8db7d61c1b7fe0b",
+                      "toField": "b"
+                    },
+                    {
+                      "fromNode": "536fd05307f44485bed38b9b74c3d56e",
+                      "fromField": "value",
+                      "toNode": "f8f5ea7d3d3e42cc9d9ddf418bac60ad",
+                      "toField": "min"
+                    },
+                    {
+                      "fromNode": "b4231a67558745bf99e1401427c34c19",
+                      "fromField": "value",
+                      "toNode": "f8f5ea7d3d3e42cc9d9ddf418bac60ad",
+                      "toField": "max"
+                    },
+                    {
+                      "fromNode": "31a08d4be30c48dcb9000568e5969960",
+                      "fromField": "output",
+                      "toNode": "c9e0c730f9be451184778a01e0b0062a",
+                      "toField": "b"
+                    },
+                    {
+                      "fromNode": "c9e0c730f9be451184778a01e0b0062a",
+                      "fromField": "output",
+                      "toNode": "c854dee7a44a4299b88a664c627aef05",
+                      "toField": "b"
+                    },
+                    {
+                      "fromNode": "f8f5ea7d3d3e42cc9d9ddf418bac60ad",
+                      "fromField": "output",
+                      "toNode": "e17a426ffadb4e64b9c10649d15efe5c",
+                      "toField": "a"
+                    },
+                    {
+                      "fromNode": "7a1ed8f8993142d585fbc4434311b4c3",
+                      "fromField": "value",
+                      "toNode": "e17a426ffadb4e64b9c10649d15efe5c",
+                      "toField": "b"
+                    },
+                    {
+                      "fromNode": "e17a426ffadb4e64b9c10649d15efe5c",
+                      "fromField": "output",
+                      "toNode": "c9e0c730f9be451184778a01e0b0062a",
+                      "toField": "a"
+                    },
+                    {
+                      "fromNode": "32aec50f252848b7b8db7d61c1b7fe0b",
+                      "fromField": "output",
+                      "toNode": "496a4a4cc6f04b7081971916c55b7faf",
+                      "toField": "input"
+                    },
+                    {
+                      "fromNode": "dedd2d5a46b8411d9ce794a35d4bf1aa",
+                      "fromField": "value",
+                      "toNode": "2b3584b995e44d4390025d6d168a3d24",
+                      "toField": "y"
+                    },
+                    {
+                      "fromNode": "2b3584b995e44d4390025d6d168a3d24",
+                      "fromField": "v2",
+                      "toNode": "496a4a4cc6f04b7081971916c55b7faf",
+                      "toField": "from"
+                    },
+                    {
+                      "fromNode": "496a4a4cc6f04b7081971916c55b7faf",
+                      "fromField": "output",
+                      "toNode": "f8f5ea7d3d3e42cc9d9ddf418bac60ad",
+                      "toField": "input"
+                    },
+                    {
+                      "fromNode": "e8a8ab994d6944959854c0ad937ed9b2",
+                      "fromField": "value",
+                      "toNode": "496a4a4cc6f04b7081971916c55b7faf",
+                      "toField": "to"
+                    },
+                    {
+                      "fromNode": "75481498894d4c7690e757dcf3fc97e7",
+                      "fromField": "x",
+                      "toNode": "bf06bb65c1d14a86822668d5ea55a181",
+                      "toField": "x"
+                    },
+                    {
+                      "fromNode": "75481498894d4c7690e757dcf3fc97e7",
+                      "fromField": "z",
+                      "toNode": "bf06bb65c1d14a86822668d5ea55a181",
+                      "toField": "y"
+                    },
+                    {
+                      "fromNode": "bf06bb65c1d14a86822668d5ea55a181",
+                      "fromField": "v2",
+                      "toNode": "804e71cfca374405aab037dfda9d8b9b",
+                      "toField": "uv"
+                    },
+                    {
+                      "fromNode": "75481498894d4c7690e757dcf3fc97e7",
+                      "fromField": "y",
+                      "toNode": "5f10c036af03433cb78477c1ab3e6d84",
+                      "toField": "b"
+                    },
+                    {
+                      "fromNode": "5f10c036af03433cb78477c1ab3e6d84",
+                      "fromField": "output",
+                      "toNode": "32aec50f252848b7b8db7d61c1b7fe0b",
+                      "toField": "a"
+                    },
+                    {
+                      "fromNode": "5f10c036af03433cb78477c1ab3e6d84",
+                      "fromField": "output",
+                      "toNode": "b6d7abb7242249db91c886905fecd8e7",
+                      "toField": "input"
+                    },
+                    {
+                      "fromNode": "1449f692d6fd4d648556ba58f91b3268",
+                      "fromField": "value",
+                      "toNode": "804e71cfca374405aab037dfda9d8b9b",
+                      "toField": "scale"
+                    },
+                    {
+                      "fromNode": "804e71cfca374405aab037dfda9d8b9b",
+                      "fromField": "output",
+                      "toNode": "5028f8710842457ab517d742167fef52",
+                      "toField": "a"
+                    },
+                    {
+                      "fromNode": "7dbabbec7eb84cc69319c3c9499e59c7",
+                      "fromField": "value",
+                      "toNode": "5028f8710842457ab517d742167fef52",
+                      "toField": "b"
+                    },
+                    {
+                      "fromNode": "5028f8710842457ab517d742167fef52",
+                      "fromField": "output",
+                      "toNode": "5f10c036af03433cb78477c1ab3e6d84",
+                      "toField": "a"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "name": "Min Y",
+                      "type": "Float",
+                      "data": {
+                        "x": 2.299999952316284
+                      }
+                    }
+                  ],
+                  "groups": [
+                    {
+                      "name": "Angle based alpha",
+                      "nodes": [
+                        "58d969f11176475f8ecc33bdcaee9b57",
+                        "730b07d7b9cf4e35aeb87e3bb72217c2",
+                        "122b09a08daa479bb335e47b98bf4708",
+                        "601406503c1b4776a7e71ea0056b7f24",
+                        "3ec5716fb7904df58aebccf87bbdcfd3",
+                        "b71656f83a9344608a44a04eeead98f4",
+                        "5628234eb26f4b64a7084cbe0e013287",
+                        "fa227b59e0fb4a31a6c83a11ebb7052b",
+                        "bf40df8c98094cd1b0564446f731aca2"
+                      ]
+                    },
+                    {
+                      "name": "Distance of scene",
+                      "nodes": [
+                        "364ec61db81a4cdda780d958743aeb21",
+                        "5082ff0411514e368dfb6b38593657fa",
+                        "e459c5396f1c4241832e1ede82b3ccca",
+                        "e3f69bc80d374113bc42931811ce8a89",
+                        "d5c601fa74814553af004891ddca0422",
+                        "a190124048c3469e821668100d9fbe52",
+                        "ad1c5c086fbb4574b9d633cc382636ea",
+                        "8ea08de0306c4a2abddbed6e186d8151",
+                        "91d8ad30956f403ab91ab891eb3d865e",
+                        "0c9690072bed4276a4c38b255433c7b3"
+                      ]
+                    },
+                    {
+                      "name": "Distance band width",
+                      "nodes": [
+                        "a2dbcee0974d4753bf24b38681f47cfb"
+                      ]
+                    },
+                    {
+                      "name": "World Y position",
+                      "nodes": [
+                        "fc96358ccea94b78ae601b8c7a2ab379",
+                        "75481498894d4c7690e757dcf3fc97e7"
+                      ]
+                    },
+                    {
+                      "name": "Min band width",
+                      "nodes": [
+                        "dedd2d5a46b8411d9ce794a35d4bf1aa"
+                      ]
+                    },
+                    {
+                      "name": "Minimum-based alpha",
+                      "nodes": [
+                        "536fd05307f44485bed38b9b74c3d56e",
+                        "e8a8ab994d6944959854c0ad937ed9b2",
+                        "e17a426ffadb4e64b9c10649d15efe5c",
+                        "2b3584b995e44d4390025d6d168a3d24",
+                        "3b9aacc01a564e89a214ad6d08daab10",
+                        "b4231a67558745bf99e1401427c34c19",
+                        "496a4a4cc6f04b7081971916c55b7faf",
+                        "32aec50f252848b7b8db7d61c1b7fe0b",
+                        "f8f5ea7d3d3e42cc9d9ddf418bac60ad",
+                        "d4d6f254c0ae40b6b05b5e408aaa3094",
+                        "7a1ed8f8993142d585fbc4434311b4c3"
+                      ]
+                    },
+                    {
+                      "name": "Base shield color",
+                      "nodes": [
+                        "1eb533a8d6a6451e81b9c9a92fc09ab2"
+                      ]
+                    },
+                    {
+                      "name": "Base alpha",
+                      "nodes": [
+                        "a55d31f60f0e4c4589d452a66676e40a"
+                      ]
+                    },
+                    {
+                      "name": "Minimum-base alpha multiplier",
+                      "nodes": [
+                        "0c601c4238db4f6fa44f31a804d5ae26",
+                        "c62bf5fa090b44fa83f1c7303a767352",
+                        "b8e6b5ed300149cfadd47824ab87e0a1",
+                        "b6d7abb7242249db91c886905fecd8e7"
+                      ]
+                    },
+                    {
+                      "name": "Scene based alpha",
+                      "nodes": [
+                        "bdaebe0ec4124809a9ee7fab46d719b1",
+                        "4862c59348bc4b059b28e86886b0b5d7",
+                        "c9da28824e704af18dbe1dc287a61461",
+                        "b03071bf83f84d72aea3c9becff9757a",
+                        "b7ad323e113a4b88ad060d3bb2617d9a",
+                        "a5e2684bd0f04546bf5b88eaeab8de50"
+                      ]
+                    }
+                  ]
+                }
               }
             ]
           }

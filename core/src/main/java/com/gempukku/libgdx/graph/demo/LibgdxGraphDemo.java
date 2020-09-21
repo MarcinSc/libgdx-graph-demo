@@ -56,6 +56,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     private String scifiPedestalId;
     private String crateId;
     private String cellId;
+    private String shipShieldId;
 
     @Override
     public void create() {
@@ -89,6 +90,29 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         movieScript.setSubtitleText(9f, Color.WHITE, "");
         movieScript.setSubtitleText(9.5f, Color.WHITE, "- This is GDX-255 requesting permission to enter the hangar.");
         movieScript.setSubtitleText(13f, Color.WHITE, "- GDX-255, this is Interdimensional Control - request granted.");
+        setupHangarEnvironment(movieScript, hangarSceneStart, hangarSceneLength);
+
+        float luminarisScale = 0.22f;
+        float luminarisStartingX = -50f;
+        float luminarisY = 1.6f;
+        ActorScript luminarisHangarActor = new ActorScript(luminarisId, hangarSceneStart, hangarSceneLength)
+                .setScale(0, hangarSceneLength, luminarisScale, luminarisScale)
+                .setRotation(0, hangarSceneLength, new Vector3(0, 1, 0), 90, 90)
+                .setPosition(0, 13 - hangarSceneStart, new Vector3(luminarisStartingX, luminarisY + 1f, 0), new Vector3(luminarisStartingX, luminarisY + 1f, 0))
+                .setPosition(14 - hangarSceneStart, 5f, new Vector3(luminarisStartingX, luminarisY + 1f, 0), new Vector3(0f, luminarisY, 0f), Interpolation.smooth);
+        movieScript.addActorScript(luminarisHangarActor);
+        movieScript.setSubtitleText(18f, Color.WHITE, "");
+        movieScript.setSubtitleText(20f, Color.WHITE, "- GDX-255, raise your shields and prepare for interdimensional transfer.");
+        Vector3 shipShieldPosition = new Vector3(0f, 2f, 0);
+        movieScript.addActorScript(
+                new ActorScript(shipShieldId, 21f, hangarSceneStart + hangarSceneLength - 19f)
+                        .setPosition(0, hangarSceneStart + hangarSceneLength - 19f, shipShieldPosition, shipShieldPosition)
+                        .setPipelineFloatProperty("Min Y", 0f, 3f, -1f, 10f));
+
+        return movieScript;
+    }
+
+    private void setupHangarEnvironment(MovieScript movieScript, float hangarSceneStart, float hangarSceneLength) {
         movieScript.addActorScript(new ActorScript(hangarFloorId, hangarSceneStart, hangarSceneLength));
         movieScript.addActorScript(new ActorScript(hangarWallId, hangarSceneStart, hangarSceneLength));
         movieScript.addActorScript(new ActorScript(hangarShieldId, hangarSceneStart, hangarSceneLength));
@@ -115,19 +139,6 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
                             .setPosition(0, hangarSceneLength, cellPosition, cellPosition));
 
         }
-
-        float luminarisScale = 0.22f;
-        float luminarisStartingX = -50f;
-        float luminarisY = 1.6f;
-        ActorScript luminarisHangarActor = new ActorScript(luminarisId, hangarSceneStart, hangarSceneLength)
-                .setScale(0, hangarSceneLength, luminarisScale, luminarisScale)
-                .setRotation(0, hangarSceneLength, new Vector3(0, 1, 0), 90, 90)
-                .setPosition(0, 13 - hangarSceneStart, new Vector3(luminarisStartingX, luminarisY + 1f, 0), new Vector3(luminarisStartingX, luminarisY + 1f, 0))
-                .setPosition(14 - hangarSceneStart, 5f, new Vector3(luminarisStartingX, luminarisY + 1f, 0), new Vector3(0f, luminarisY, 0f), Interpolation.smooth);
-        movieScript.addActorScript(luminarisHangarActor);
-        movieScript.setSubtitleText(18f, Color.WHITE, "");
-
-        return movieScript;
     }
 
     private Camera createCamera() {
@@ -205,6 +216,12 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         disposables.add(hangarShield);
         hangarShieldId = models.registerModel(hangarShield);
         models.addModelDefaultTag(hangarShieldId, "Hangar Shield");
+
+        Model shipShield = modelBuilder.createSphere(18f, 8f, 12f, 50, 50, new Material(),
+                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+        disposables.add(shipShield);
+        shipShieldId = models.registerModel(shipShield);
+        models.addModelDefaultTag(shipShieldId, "Ship Shield");
 
         return models;
     }

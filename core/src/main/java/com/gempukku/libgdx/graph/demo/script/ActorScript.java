@@ -12,7 +12,7 @@ public class ActorScript extends AbstractScript {
     private GraphShaderModelInstance graphShaderModelInstance;
 
     private Vector3 position = new Vector3();
-    private float scale;
+    private float scale = 1f;
     private Vector3 rotateAxis = new Vector3(0, 1f, 0);
     private float rotateDegrees;
 
@@ -159,5 +159,39 @@ public class ActorScript extends AbstractScript {
                 .translate(position)
                 .scale(scale, scale, scale)
                 .rotate(rotateAxis.x, rotateAxis.y, rotateAxis.z, rotateDegrees);
+    }
+
+    public ActorScript setPipelineFloatProperty(String property, float start, float length, float fromAmount, float toAmount) {
+        addKeyframe(
+                new Keyframe() {
+                    @Override
+                    public float getTime() {
+                        return start + length;
+                    }
+
+                    @Override
+                    public void performKeyframe() {
+                        graphShaderModelInstance.setProperty(property, toAmount);
+                    }
+                });
+        addAction(
+                new Action() {
+                    @Override
+                    public float getStart() {
+                        return start;
+                    }
+
+                    @Override
+                    public float getLength() {
+                        return length;
+                    }
+
+                    @Override
+                    public void execute(float timeSinceStart) {
+                        float value = fromAmount + (timeSinceStart / length) * (toAmount - fromAmount);
+                        graphShaderModelInstance.setProperty(property, value);
+                    }
+                });
+        return this;
     }
 }
