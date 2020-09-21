@@ -85,11 +85,17 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         // Hangar scene
         float hangarSceneStart = 6f;
         float hangarSceneLength = 60f;
+        createHangarScene(movieScript, hangarSceneStart, hangarSceneLength);
+
+        return movieScript;
+    }
+
+    private void createHangarScene(MovieScript movieScript, float hangarSceneStart, float hangarSceneLength) {
         movieScript.setPipelineFloatProperty("Blackout", hangarSceneStart, 3f, 1, 0);
         movieScript.setPipelineFloatProperty("Blur", hangarSceneStart, 3f, 10, 0);
-        movieScript.setSubtitleText(9f, Color.WHITE, "");
-        movieScript.setSubtitleText(9.5f, Color.WHITE, "- This is GDX-255 requesting permission to enter the hangar.");
-        movieScript.setSubtitleText(13f, Color.WHITE, "- GDX-255, this is Interdimensional Control - request granted.");
+        movieScript.setSubtitleText(hangarSceneStart + 3f, Color.WHITE, "");
+        movieScript.setSubtitleText(hangarSceneStart + 3.5f, Color.WHITE, "- This is GDX-255 requesting permission to enter the hangar.");
+        movieScript.setSubtitleText(hangarSceneStart + 7f, Color.WHITE, "- GDX-255, this is Interdimensional Control - request granted.");
         setupHangarEnvironment(movieScript, hangarSceneStart, hangarSceneLength);
 
         float luminarisScale = 0.22f;
@@ -99,25 +105,23 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         ActorScript luminarisActor = new ActorScript(luminarisId, hangarSceneStart, hangarSceneLength)
                 .setScale(0, hangarSceneLength, luminarisScale, luminarisScale)
                 .setRotation(0, hangarSceneLength, new Vector3(0, 1, 0), 90, 90)
-                .setPosition(0, 13 - hangarSceneStart, new Vector3(luminarisStartingX, luminarisY + luminarisStartY, 0), new Vector3(luminarisStartingX, luminarisY + luminarisStartY, 0))
-                .setPosition(14 - hangarSceneStart, 5f, new Vector3(luminarisStartingX, luminarisY + luminarisStartY, 0), new Vector3(0f, luminarisY, 0f), Interpolation.smooth)
-                .removeTag(32f - hangarSceneStart, "Default")
-                .addTag(32f - hangarSceneStart, "Dissolve")
-                .setFloatProperty("Dissolve Strength", 32 - hangarSceneStart, 5f, -0.2f, 1f);
+                .setPosition(0, 8f, new Vector3(luminarisStartingX, luminarisY + luminarisStartY, 0), new Vector3(luminarisStartingX, luminarisY + luminarisStartY, 0))
+                .setPosition(8f, 5f, new Vector3(luminarisStartingX, luminarisY + luminarisStartY, 0), new Vector3(0f, luminarisY, 0f), Interpolation.smooth)
+                .removeTag(26f, "Default")
+                .addTag(26f, "Dissolve")
+                .setFloatProperty("Dissolve Strength", 26f, 5f, -0.2f, 1f);
         movieScript.addActorScript(luminarisActor);
-        movieScript.setSubtitleText(18f, Color.WHITE, "");
-        movieScript.setSubtitleText(20f, Color.WHITE, "- GDX-255, raise your shields and prepare for interdimensional transfer.");
+        movieScript.setSubtitleText(hangarSceneStart + 12f, Color.WHITE, "");
+        movieScript.setSubtitleText(hangarSceneStart + 14, Color.WHITE, "- GDX-255, raise your shields and prepare for interdimensional transfer.");
         Vector3 shipShieldPosition = new Vector3(0f, 2f, 0);
         movieScript.addActorScript(
-                new ActorScript(shipShieldId, 23f, hangarSceneStart + hangarSceneLength - 19f)
-                        .setPosition(0, hangarSceneStart + hangarSceneLength - 19f, shipShieldPosition, shipShieldPosition)
+                new ActorScript(shipShieldId, hangarSceneStart + 17f, 14f)
+                        .setPosition(0, 0, shipShieldPosition, shipShieldPosition)
                         .setFloatProperty("Min Y", 0f, 5f, -1f, 8f));
-        movieScript.setSubtitleText(25f, Color.WHITE, "");
-        movieScript.setSubtitleText(28f, Color.WHITE, "- Shields raised, and we're ready for transfer.");
-        movieScript.setSubtitleText(30.7f, Color.WHITE, "");
-        movieScript.setSubtitleText(31f, Color.WHITE, "- Affirmative. Initiating interdimensional transfer.");
-
-        return movieScript;
+        movieScript.setSubtitleText(hangarSceneStart + 19f, Color.WHITE, "");
+        movieScript.setSubtitleText(hangarSceneStart + 22f, Color.WHITE, "- Shields raised, and we're ready for transfer.");
+        movieScript.setSubtitleText(hangarSceneStart + 24.7f, Color.WHITE, "");
+        movieScript.setSubtitleText(hangarSceneStart + 25f, Color.WHITE, "- Affirmative. Initiating interdimensional transfer.");
     }
 
     private void setupHangarEnvironment(MovieScript movieScript, float hangarSceneStart, float hangarSceneLength) {
