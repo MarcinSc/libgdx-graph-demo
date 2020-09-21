@@ -86,8 +86,8 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         MovieScript movieScript = new MovieScript(subtitleLabel, camera, models, pipelineRenderer);
         // Introduction
         movieScript.setSubtitleText(0f, Color.WHITE, "This is not a game.\nThis is a libGDX-Graph Demo.");
-        movieScript.setSubtitleText(2.5f, Color.WHITE, "");
-        movieScript.setSubtitleText(2.8f, Color.WHITE, "No shaders were written during creation of this demo.\n" +
+        movieScript.setSubtitleText(2.3f, Color.WHITE, "");
+        movieScript.setSubtitleText(2.6f, Color.WHITE, "No shaders were written during creation of this demo.\n" +
                 "All graphical assets were downloaded from cgtrader.com");
         movieScript.setSubtitleText(6.2f, Color.WHITE, "");
         movieScript.setSubtitleText(6.5f, Color.WHITE, "You may press SPACE to pause/unpause the movie.");
