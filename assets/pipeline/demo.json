@@ -2,36 +2,30 @@
   "version": "0.1.0",
   "nodes": [
     {
-      "id": "72be9695e45949ccb5f449dbacdfd619",
+      "id": "d9db7c9a047846b385582537f4268bdc",
       "type": "Property",
-      "x": 51.0,
-      "y": 653.0,
+      "x": 140.0,
+      "y": 380.0,
       "data": {
-        "name": "Camera",
-        "type": "Camera"
+        "name": "Bloom radius",
+        "type": "Float"
       }
     },
     {
-      "id": "a9ef339d56654f4c8f7445b45b3bed0b",
+      "id": "243e45939de341d1b34525d91114a9ec",
       "type": "Property",
-      "x": 179.0,
-      "y": 103.0,
+      "x": 141.0,
+      "y": 300.0,
       "data": {
-        "name": "Stage",
-        "type": "Stage"
+        "name": "Bloom strength",
+        "type": "Float"
       }
-    },
-    {
-      "id": "a179464e0afc45e182771a77e7db8ebc",
-      "type": "GaussianBlur",
-      "x": 388.0,
-      "y": 378.0
     },
     {
       "id": "74c0761d419449fb99b31c13c264b892",
       "type": "Property",
-      "x": 124.0,
-      "y": 240.0,
+      "x": 146.0,
+      "y": 210.0,
       "data": {
         "name": "Blackout",
         "type": "Float"
@@ -41,54 +35,29 @@
       "id": "651b4acde71d4e838ceff49e0129eed4",
       "type": "ColorTint",
       "x": 388.0,
-      "y": 240.0
+      "y": 210.0
     },
     {
-      "id": "dffb152d405a49d38792e850749129b2",
-      "type": "UIRenderer",
-      "x": 388.0,
-      "y": 118.0
+      "id": "9cd5812e915e4e83a4af02371c3f4101",
+      "type": "Bloom",
+      "x": 368.0,
+      "y": 327.0
     },
     {
       "id": "1995a8bfe5054beeab0fb8d051c80506",
       "type": "Property",
       "x": 50.0,
-      "y": 713.0,
+      "y": 799.0,
       "data": {
         "name": "Models",
         "type": "GraphModels"
       }
     },
     {
-      "id": "end",
-      "type": "PipelineEnd",
-      "x": 388.0,
-      "y": 50.0
-    },
-    {
-      "id": "975a44028889445686cd7e7ac67244d8",
-      "type": "Property",
-      "x": 162.0,
-      "y": 368.0,
-      "data": {
-        "name": "Blur",
-        "type": "Float"
-      }
-    },
-    {
-      "id": "d54b356d4a1242cab5e6cb3f836b1930",
-      "type": "ValueColor",
-      "x": 160.0,
-      "y": 839.0,
-      "data": {
-        "color": "000000ff"
-      }
-    },
-    {
       "id": "ff6f63af3181472da525343236652acd",
       "type": "GraphShaderRenderer",
       "x": 308.0,
-      "y": 467.0,
+      "y": 552.0,
       "data": {
         "renderPasses": [
           {
@@ -2319,10 +2288,67 @@
       }
     },
     {
+      "id": "72be9695e45949ccb5f449dbacdfd619",
+      "type": "Property",
+      "x": 51.0,
+      "y": 739.0,
+      "data": {
+        "name": "Camera",
+        "type": "Camera"
+      }
+    },
+    {
+      "id": "a9ef339d56654f4c8f7445b45b3bed0b",
+      "type": "Property",
+      "x": 179.0,
+      "y": 103.0,
+      "data": {
+        "name": "Stage",
+        "type": "Stage"
+      }
+    },
+    {
+      "id": "a179464e0afc45e182771a77e7db8ebc",
+      "type": "GaussianBlur",
+      "x": 388.0,
+      "y": 464.0
+    },
+    {
+      "id": "dffb152d405a49d38792e850749129b2",
+      "type": "UIRenderer",
+      "x": 388.0,
+      "y": 118.0
+    },
+    {
+      "id": "end",
+      "type": "PipelineEnd",
+      "x": 388.0,
+      "y": 50.0
+    },
+    {
+      "id": "975a44028889445686cd7e7ac67244d8",
+      "type": "Property",
+      "x": 162.0,
+      "y": 454.0,
+      "data": {
+        "name": "Blur",
+        "type": "Float"
+      }
+    },
+    {
+      "id": "d54b356d4a1242cab5e6cb3f836b1930",
+      "type": "ValueColor",
+      "x": 160.0,
+      "y": 925.0,
+      "data": {
+        "color": "000000ff"
+      }
+    },
+    {
       "id": "746da9b276d442f0bc74ed9847a26a4b",
       "type": "PipelineStart",
       "x": 388.0,
-      "y": 817.0
+      "y": 903.0
     }
   ],
   "connections": [
@@ -2381,16 +2407,34 @@
       "toField": "input"
     },
     {
-      "fromNode": "a179464e0afc45e182771a77e7db8ebc",
+      "fromNode": "74c0761d419449fb99b31c13c264b892",
+      "fromField": "value",
+      "toNode": "651b4acde71d4e838ceff49e0129eed4",
+      "toField": "strength"
+    },
+    {
+      "fromNode": "9cd5812e915e4e83a4af02371c3f4101",
       "fromField": "output",
       "toNode": "651b4acde71d4e838ceff49e0129eed4",
       "toField": "input"
     },
     {
-      "fromNode": "74c0761d419449fb99b31c13c264b892",
+      "fromNode": "a179464e0afc45e182771a77e7db8ebc",
+      "fromField": "output",
+      "toNode": "9cd5812e915e4e83a4af02371c3f4101",
+      "toField": "input"
+    },
+    {
+      "fromNode": "d9db7c9a047846b385582537f4268bdc",
       "fromField": "value",
-      "toNode": "651b4acde71d4e838ceff49e0129eed4",
-      "toField": "strength"
+      "toNode": "9cd5812e915e4e83a4af02371c3f4101",
+      "toField": "bloomRadius"
+    },
+    {
+      "fromNode": "243e45939de341d1b34525d91114a9ec",
+      "fromField": "value",
+      "toNode": "9cd5812e915e4e83a4af02371c3f4101",
+      "toField": "bloomStrength"
     }
   ],
   "properties": [
@@ -2415,6 +2459,20 @@
     },
     {
       "name": "Blackout",
+      "type": "Float",
+      "data": {
+        "x": 0.0
+      }
+    },
+    {
+      "name": "Bloom radius",
+      "type": "Float",
+      "data": {
+        "x": 0.0
+      }
+    },
+    {
+      "name": "Bloom strength",
       "type": "Float",
       "data": {
         "x": 0.0
