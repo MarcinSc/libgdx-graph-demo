@@ -161,7 +161,7 @@ public class ActorScript extends AbstractScript {
                 .rotate(rotateAxis.x, rotateAxis.y, rotateAxis.z, rotateDegrees);
     }
 
-    public ActorScript setPipelineFloatProperty(String property, float start, float length, float fromAmount, float toAmount) {
+    public ActorScript setFloatProperty(String property, float start, float length, float fromAmount, float toAmount) {
         addKeyframe(
                 new Keyframe() {
                     @Override
@@ -190,6 +190,38 @@ public class ActorScript extends AbstractScript {
                     public void execute(float timeSinceStart) {
                         float value = fromAmount + (timeSinceStart / length) * (toAmount - fromAmount);
                         graphShaderModelInstance.setProperty(property, value);
+                    }
+                });
+        return this;
+    }
+
+    public ActorScript removeTag(float time, String tag) {
+        addKeyframe(
+                new Keyframe() {
+                    @Override
+                    public float getTime() {
+                        return time;
+                    }
+
+                    @Override
+                    public void performKeyframe() {
+                        graphShaderModelInstance.removeTag(tag);
+                    }
+                });
+        return this;
+    }
+
+    public ActorScript addTag(float time, String tag) {
+        addKeyframe(
+                new Keyframe() {
+                    @Override
+                    public float getTime() {
+                        return time;
+                    }
+
+                    @Override
+                    public void performKeyframe() {
+                        graphShaderModelInstance.addTag(tag);
                     }
                 });
         return this;

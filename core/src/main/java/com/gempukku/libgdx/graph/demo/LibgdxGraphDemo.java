@@ -70,7 +70,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
 
         script = createScript(subtitleLabel, camera, models, pipelineRenderer);
         // TODO: Temp - move to hangar scene
-        script.update(6f);
+        script.update(30f);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -95,19 +95,27 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         float luminarisScale = 0.22f;
         float luminarisStartingX = -50f;
         float luminarisY = 1.6f;
-        ActorScript luminarisHangarActor = new ActorScript(luminarisId, hangarSceneStart, hangarSceneLength)
+        float luminarisStartY = 4f;
+        ActorScript luminarisActor = new ActorScript(luminarisId, hangarSceneStart, hangarSceneLength)
                 .setScale(0, hangarSceneLength, luminarisScale, luminarisScale)
                 .setRotation(0, hangarSceneLength, new Vector3(0, 1, 0), 90, 90)
-                .setPosition(0, 13 - hangarSceneStart, new Vector3(luminarisStartingX, luminarisY + 1f, 0), new Vector3(luminarisStartingX, luminarisY + 1f, 0))
-                .setPosition(14 - hangarSceneStart, 5f, new Vector3(luminarisStartingX, luminarisY + 1f, 0), new Vector3(0f, luminarisY, 0f), Interpolation.smooth);
-        movieScript.addActorScript(luminarisHangarActor);
+                .setPosition(0, 13 - hangarSceneStart, new Vector3(luminarisStartingX, luminarisY + luminarisStartY, 0), new Vector3(luminarisStartingX, luminarisY + luminarisStartY, 0))
+                .setPosition(14 - hangarSceneStart, 5f, new Vector3(luminarisStartingX, luminarisY + luminarisStartY, 0), new Vector3(0f, luminarisY, 0f), Interpolation.smooth)
+                .removeTag(32f - hangarSceneStart, "Default")
+                .addTag(32f - hangarSceneStart, "Dissolve")
+                .setFloatProperty("Dissolve Strength", 32 - hangarSceneStart, 5f, -0.2f, 1f);
+        movieScript.addActorScript(luminarisActor);
         movieScript.setSubtitleText(18f, Color.WHITE, "");
         movieScript.setSubtitleText(20f, Color.WHITE, "- GDX-255, raise your shields and prepare for interdimensional transfer.");
         Vector3 shipShieldPosition = new Vector3(0f, 2f, 0);
         movieScript.addActorScript(
-                new ActorScript(shipShieldId, 21f, hangarSceneStart + hangarSceneLength - 19f)
+                new ActorScript(shipShieldId, 23f, hangarSceneStart + hangarSceneLength - 19f)
                         .setPosition(0, hangarSceneStart + hangarSceneLength - 19f, shipShieldPosition, shipShieldPosition)
-                        .setPipelineFloatProperty("Min Y", 0f, 3f, -1f, 10f));
+                        .setFloatProperty("Min Y", 0f, 5f, -1f, 8f));
+        movieScript.setSubtitleText(25f, Color.WHITE, "");
+        movieScript.setSubtitleText(28f, Color.WHITE, "- Shields raised, and we're ready for transfer.");
+        movieScript.setSubtitleText(30.7f, Color.WHITE, "");
+        movieScript.setSubtitleText(31f, Color.WHITE, "- Affirmative. Initiating interdimensional transfer.");
 
         return movieScript;
     }
@@ -217,7 +225,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         hangarShieldId = models.registerModel(hangarShield);
         models.addModelDefaultTag(hangarShieldId, "Hangar Shield");
 
-        Model shipShield = modelBuilder.createSphere(18f, 8f, 12f, 50, 50, new Material(),
+        Model shipShield = modelBuilder.createSphere(18f, 6f, 12f, 50, 50, new Material(),
                 VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
         disposables.add(shipShield);
         shipShieldId = models.registerModel(shipShield);

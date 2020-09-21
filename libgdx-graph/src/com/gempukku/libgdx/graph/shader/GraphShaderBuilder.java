@@ -113,6 +113,19 @@ public class GraphShaderBuilder {
                 Collections.singleton("position"), vertexShaderBuilder, fragmentShaderBuilder, graphShader, graphShader).get("position");
 
         fragmentShaderBuilder.addFunction("packFloatToVec3", GLSLFragmentReader.getFragment("packFloatToVec3"));
+
+        Map<String, Map<String, GraphShaderNodeBuilder.FieldOutput>> fragmentNodeOutputs = new HashMap<>();
+        GraphShaderNodeBuilder.FieldOutput alphaField = getOutput(findInputVertex(graph, "end", "alpha"),
+                designTime, true, graph, graphShader, graphShader, fragmentNodeOutputs, vertexShaderBuilder, fragmentShaderBuilder);
+        String alpha = (alphaField != null) ? alphaField.getRepresentation() : "1.0";
+        GraphShaderNodeBuilder.FieldOutput alphaClipField = getOutput(findInputVertex(graph, "end", "alphaClip"),
+                designTime, true, graph, graphShader, graphShader, fragmentNodeOutputs, vertexShaderBuilder, fragmentShaderBuilder);
+        String alphaClip = (alphaClipField != null) ? alphaClipField.getRepresentation() : "0.0";
+        if (alphaField != null || alphaClipField != null) {
+            fragmentShaderBuilder.addMainLine("// End Graph Node");
+            fragmentShaderBuilder.addMainLine("if (" + alpha + " <= " + alphaClip + ")");
+            fragmentShaderBuilder.addMainLine("  discard;");
+        }
         fragmentShaderBuilder.addMainLine("gl_FragColor = vec4(packFloatToVec3(distance(" + positionField.getRepresentation() + ", " + cameraPositionField.getRepresentation() + ")), 1.0);");
 
 
