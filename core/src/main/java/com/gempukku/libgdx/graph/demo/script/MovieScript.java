@@ -2,6 +2,7 @@ package com.gempukku.libgdx.graph.demo.script;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 import com.gempukku.libgdx.graph.pipeline.PipelineRenderer;
@@ -93,6 +94,10 @@ public class MovieScript extends AbstractScript {
     }
 
     public void setPipelineFloatProperty(String property, float fromTime, float length, float fromAmount, float toAmount) {
+        setPipelineFloatProperty(property, fromTime, length, fromAmount, toAmount, Interpolation.linear);
+    }
+
+    public void setPipelineFloatProperty(String property, float fromTime, float length, float fromAmount, float toAmount, Interpolation interpolation) {
         addKeyframe(
                 new Keyframe() {
                     @Override
@@ -120,7 +125,7 @@ public class MovieScript extends AbstractScript {
                     @Override
                     public void execute(float timeSinceStart) {
                         float value = fromAmount + (timeSinceStart / length) * (toAmount - fromAmount);
-                        pipelineRenderer.setPipelineProperty(property, value);
+                        pipelineRenderer.setPipelineProperty(property, interpolation.apply(value));
                     }
                 });
     }

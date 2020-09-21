@@ -84,14 +84,14 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
 
         // Hangar scene
         float hangarSceneStart = 6f;
-        float hangarSceneLength = 60f;
+        float hangarSceneLength = 33f;
         createHangarScene(movieScript, hangarSceneStart, hangarSceneLength);
 
         return movieScript;
     }
 
     private void createHangarScene(MovieScript movieScript, float hangarSceneStart, float hangarSceneLength) {
-        movieScript.setPipelineFloatProperty("Blackout", hangarSceneStart, 3f, 1, 0);
+        movieScript.setPipelineFloatProperty("Blackout", hangarSceneStart, 3f, 1, 0, Interpolation.pow3In);
         movieScript.setPipelineFloatProperty("Blur", hangarSceneStart, 3f, 10, 0);
         movieScript.setSubtitleText(hangarSceneStart + 3f, Color.WHITE, "");
         movieScript.setSubtitleText(hangarSceneStart + 3.5f, Color.WHITE, "- This is GDX-255 requesting permission to enter the hangar.");
@@ -115,13 +115,16 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         movieScript.setSubtitleText(hangarSceneStart + 14, Color.WHITE, "- GDX-255, raise your shields and prepare for interdimensional transfer.");
         Vector3 shipShieldPosition = new Vector3(0f, 2f, 0);
         movieScript.addActorScript(
-                new ActorScript(shipShieldId, hangarSceneStart + 17f, 14f)
+                new ActorScript(shipShieldId, hangarSceneStart + 17f, 13.5f)
                         .setPosition(0, 0, shipShieldPosition, shipShieldPosition)
                         .setFloatProperty("Min Y", 0f, 5f, -1f, 8f));
         movieScript.setSubtitleText(hangarSceneStart + 19f, Color.WHITE, "");
         movieScript.setSubtitleText(hangarSceneStart + 22f, Color.WHITE, "- Shields raised, and we're ready for transfer.");
         movieScript.setSubtitleText(hangarSceneStart + 24.7f, Color.WHITE, "");
         movieScript.setSubtitleText(hangarSceneStart + 25f, Color.WHITE, "- Affirmative. Initiating interdimensional transfer.");
+        movieScript.setSubtitleText(hangarSceneStart + 31f, Color.WHITE, "");
+        movieScript.setPipelineFloatProperty("Blackout", hangarSceneStart + 31f, 2f, 0, 1, Interpolation.pow3In);
+        movieScript.setPipelineFloatProperty("Blur", hangarSceneStart + 31f, 2f, 0, 10);
     }
 
     private void setupHangarEnvironment(MovieScript movieScript, float hangarSceneStart, float hangarSceneLength) {
