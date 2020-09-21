@@ -44,28 +44,18 @@ public class SplitShaderNodeBuilder extends ConfigurationCommonShaderNodeBuilder
             throw new UnsupportedOperationException();
         }
 
-        commonShaderBuilder.addMainLine("// Split Node");
-
         Map<String, DefaultFieldOutput> result = new HashMap<>();
         if (producedOutputs.contains("x")) {
-            String name = "x_" + nodeId;
-            commonShaderBuilder.addMainLine("float " + name + " = " + x + ";");
-            result.put("x", new DefaultFieldOutput(ShaderFieldType.Float, name));
+            result.put("x", new DefaultFieldOutput(ShaderFieldType.Float, x));
         }
         if (producedOutputs.contains("y")) {
-            String name = "y_" + nodeId;
-            commonShaderBuilder.addMainLine("float " + name + " = " + y + ";");
-            result.put("y", new DefaultFieldOutput(ShaderFieldType.Float, name));
+            result.put("y", new DefaultFieldOutput(ShaderFieldType.Float, y));
         }
         if (producedOutputs.contains("z")) {
-            String name = "z_" + nodeId;
-            commonShaderBuilder.addMainLine("float " + name + " = " + z + ";");
-            result.put("z", new DefaultFieldOutput(ShaderFieldType.Float, name));
+            result.put("z", new DefaultFieldOutput(ShaderFieldType.Float, z));
         }
         if (producedOutputs.contains("w")) {
-            String name = "w_" + nodeId;
-            commonShaderBuilder.addMainLine("float " + name + " = " + w + ";");
-            result.put("w", new DefaultFieldOutput(ShaderFieldType.Float, name));
+            result.put("w", new DefaultFieldOutput(ShaderFieldType.Float, w));
         }
         return result;
     }

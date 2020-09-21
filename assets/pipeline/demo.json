@@ -519,7 +519,7 @@
                       "id": "eccc4a8c5aa74518998ce46a77e1e46d",
                       "type": "ValueFloat",
                       "x": 50.0,
-                      "y": 109.99995422363281,
+                      "y": 109.0,
                       "data": {
                         "v1": 0.20000000298023224
                       }
@@ -527,7 +527,7 @@
                     {
                       "id": "69395c614ce34e109ceb8bb03c9a6ac9",
                       "type": "EmissiveTexture",
-                      "x": 698.9998779296875,
+                      "x": 698.0,
                       "y": 888.0,
                       "data": {
                         "previewPath": null
@@ -536,7 +536,7 @@
                     {
                       "id": "0a0a4c0273a44db4957b1b171a9f7fbf",
                       "type": "DiffuseTexture",
-                      "x": 694.9998779296875,
+                      "x": 694.0,
                       "y": 473.0,
                       "data": {
                         "previewPath": null
@@ -557,26 +557,17 @@
                     {
                       "id": "9bf98e3a68934749b2e3767e8f17128f",
                       "type": "AttributePosition",
-                      "x": 50.000030517578125,
+                      "x": 50.0,
                       "y": 333.0,
                       "data": {
                         "coordinates": "object"
                       }
                     },
                     {
-                      "id": "a6e48fb736e14aa29d5bdc47eceab588",
-                      "type": "ValueFloat",
-                      "x": 1102.0,
-                      "y": 95.0,
-                      "data": {
-                        "v1": 1.0
-                      }
-                    },
-                    {
                       "id": "18d8125b359e42df80ca4d16213657a3",
                       "type": "ValueFloat",
-                      "x": 505.9999084472656,
-                      "y": 103.99995422363281,
+                      "x": 505.0,
+                      "y": 103.0,
                       "data": {
                         "v1": 0.10000000149011612
                       }
@@ -602,7 +593,7 @@
                     {
                       "id": "61b20f721df743258e123af05848beac",
                       "type": "Remap",
-                      "x": 504.0000305175781,
+                      "x": 504.0,
                       "y": 278.0
                     },
                     {
@@ -622,12 +613,6 @@
                         "blending": "alpha",
                         "depthTest": "less"
                       }
-                    },
-                    {
-                      "id": "a7da8a5229f3466ca480532566224530",
-                      "type": "Clamp",
-                      "x": 1298.0,
-                      "y": 223.0
                     },
                     {
                       "id": "0ab3826312ad49eeafd559ce255bd84a",
@@ -668,7 +653,7 @@
                     {
                       "id": "a723f79e50b7411ea77b0482811346d4",
                       "type": "SimplexNoise3D",
-                      "x": 283.0000305175781,
+                      "x": 283.0,
                       "y": 339.0
                     },
                     {
@@ -711,7 +696,7 @@
                     {
                       "id": "0486e2da30a34a97bbe9e6b93510d5cc",
                       "type": "ValueVector2",
-                      "x": 293.0000305175781,
+                      "x": 293.0,
                       "y": 276.0,
                       "data": {
                         "v1": -1.0,
@@ -719,13 +704,10 @@
                       }
                     },
                     {
-                      "id": "9028bc67f69c4eed968f0f9b17f9725b",
-                      "type": "ValueFloat",
-                      "x": 1102.0,
-                      "y": 157.0,
-                      "data": {
-                        "v1": 0.0
-                      }
+                      "id": "00aa99711e2e4d749162b4310854a55a",
+                      "type": "Saturate",
+                      "x": 1299.0,
+                      "y": 269.0
                     },
                     {
                       "id": "0f4c9a1812d34cf899cc0b2dba66f7e1",
@@ -740,8 +722,8 @@
                     {
                       "id": "737909467cae4627a3fb8a6e9b205f66",
                       "type": "ValueVector2",
-                      "x": 293.0000305175781,
-                      "y": 213.9999542236328,
+                      "x": 293.0,
+                      "y": 213.0,
                       "data": {
                         "v1": 0.0,
                         "v2": 1.0
@@ -870,18 +852,6 @@
                       "toField": "edge"
                     },
                     {
-                      "fromNode": "9028bc67f69c4eed968f0f9b17f9725b",
-                      "fromField": "value",
-                      "toNode": "a7da8a5229f3466ca480532566224530",
-                      "toField": "min"
-                    },
-                    {
-                      "fromNode": "a6e48fb736e14aa29d5bdc47eceab588",
-                      "fromField": "value",
-                      "toNode": "a7da8a5229f3466ca480532566224530",
-                      "toField": "max"
-                    },
-                    {
                       "fromNode": "0ab3826312ad49eeafd559ce255bd84a",
                       "fromField": "value",
                       "toNode": "7b32bdb031a44553aa1eac88610a77f0",
@@ -936,12 +906,6 @@
                       "toField": "to"
                     },
                     {
-                      "fromNode": "85e2bc667fd947c2bd2d37b9eda55101",
-                      "fromField": "output",
-                      "toNode": "a7da8a5229f3466ca480532566224530",
-                      "toField": "input"
-                    },
-                    {
                       "fromNode": "6a10fc567ea742498b7ca23a103d56a9",
                       "fromField": "output",
                       "toNode": "8b05e95bd24a4217afce31eef3df43d2",
@@ -951,12 +915,6 @@
                       "fromNode": "0f4c9a1812d34cf899cc0b2dba66f7e1",
                       "fromField": "value",
                       "toNode": "8b05e95bd24a4217afce31eef3df43d2",
-                      "toField": "a"
-                    },
-                    {
-                      "fromNode": "a7da8a5229f3466ca480532566224530",
-                      "fromField": "output",
-                      "toNode": "5a3a852da8a64d168e4e417e800a047e",
                       "toField": "a"
                     },
                     {
@@ -970,6 +928,18 @@
                       "fromField": "value",
                       "toNode": "5a3a852da8a64d168e4e417e800a047e",
                       "toField": "b"
+                    },
+                    {
+                      "fromNode": "85e2bc667fd947c2bd2d37b9eda55101",
+                      "fromField": "output",
+                      "toNode": "00aa99711e2e4d749162b4310854a55a",
+                      "toField": "input"
+                    },
+                    {
+                      "fromNode": "00aa99711e2e4d749162b4310854a55a",
+                      "fromField": "output",
+                      "toNode": "5a3a852da8a64d168e4e417e800a047e",
+                      "toField": "a"
                     }
                   ],
                   "properties": [
@@ -982,6 +952,12 @@
                     }
                   ],
                   "groups": [
+                    {
+                      "name": "Noise scale",
+                      "nodes": [
+                        "eccc4a8c5aa74518998ce46a77e1e46d"
+                      ]
+                    },
                     {
                       "name": "Dissolve band width",
                       "nodes": [
@@ -998,21 +974,6 @@
                       ]
                     },
                     {
-                      "name": "Burnout value",
-                      "nodes": [
-                        "6a10fc567ea742498b7ca23a103d56a9",
-                        "ce8e88b298784077a787a87705926001",
-                        "5a3a852da8a64d168e4e417e800a047e",
-                        "a7da8a5229f3466ca480532566224530",
-                        "85e2bc667fd947c2bd2d37b9eda55101",
-                        "8444dff3f3b4420aae3e2316367a14a9",
-                        "9028bc67f69c4eed968f0f9b17f9725b",
-                        "a6e48fb736e14aa29d5bdc47eceab588",
-                        "8b05e95bd24a4217afce31eef3df43d2",
-                        "912d259b500e4713aae3037c779a19f2"
-                      ]
-                    },
-                    {
                       "name": "Emissive component",
                       "nodes": [
                         "69395c614ce34e109ceb8bb03c9a6ac9",
@@ -1022,15 +983,21 @@
                       ]
                     },
                     {
-                      "name": "Burnout color",
+                      "name": "Burnout value",
                       "nodes": [
-                        "0ab3826312ad49eeafd559ce255bd84a"
+                        "6a10fc567ea742498b7ca23a103d56a9",
+                        "ce8e88b298784077a787a87705926001",
+                        "5a3a852da8a64d168e4e417e800a047e",
+                        "85e2bc667fd947c2bd2d37b9eda55101",
+                        "8444dff3f3b4420aae3e2316367a14a9",
+                        "8b05e95bd24a4217afce31eef3df43d2",
+                        "912d259b500e4713aae3037c779a19f2"
                       ]
                     },
                     {
-                      "name": "Noise scale",
+                      "name": "Burnout color",
                       "nodes": [
-                        "eccc4a8c5aa74518998ce46a77e1e46d"
+                        "0ab3826312ad49eeafd559ce255bd84a"
                       ]
                     },
                     {
@@ -1083,12 +1050,6 @@
                       "type": "Add",
                       "x": 1822.0,
                       "y": 398.0
-                    },
-                    {
-                      "id": "c9da28824e704af18dbe1dc287a61461",
-                      "type": "Clamp",
-                      "x": 1432.0,
-                      "y": 240.0
                     },
                     {
                       "id": "1eb533a8d6a6451e81b9c9a92fc09ab2",
@@ -1191,19 +1152,16 @@
                       }
                     },
                     {
+                      "id": "6541ee83462d4227a6f5daaa26e33e11",
+                      "type": "Saturate",
+                      "x": 1432.0,
+                      "y": 286.0
+                    },
+                    {
                       "id": "d7f362fd0ca64d4ba2799d8bb61499fd",
                       "type": "VoronoiDistance",
                       "x": 1645.0,
                       "y": 713.0
-                    },
-                    {
-                      "id": "b7ad323e113a4b88ad060d3bb2617d9a",
-                      "type": "ValueFloat",
-                      "x": 1233.0,
-                      "y": 130.0,
-                      "data": {
-                        "v1": 1.0
-                      }
                     },
                     {
                       "id": "364ec61db81a4cdda780d958743aeb21",
@@ -1270,15 +1228,6 @@
                       "type": "Multiply",
                       "x": 657.0,
                       "y": 382.0
-                    },
-                    {
-                      "id": "a5e2684bd0f04546bf5b88eaeab8de50",
-                      "type": "ValueFloat",
-                      "x": 1234.0,
-                      "y": 194.0,
-                      "data": {
-                        "v1": 0.0
-                      }
                     },
                     {
                       "id": "a2dbcee0974d4753bf24b38681f47cfb",
@@ -1382,18 +1331,6 @@
                       "toField": "b"
                     },
                     {
-                      "fromNode": "a5e2684bd0f04546bf5b88eaeab8de50",
-                      "fromField": "value",
-                      "toNode": "c9da28824e704af18dbe1dc287a61461",
-                      "toField": "min"
-                    },
-                    {
-                      "fromNode": "b7ad323e113a4b88ad060d3bb2617d9a",
-                      "fromField": "value",
-                      "toNode": "c9da28824e704af18dbe1dc287a61461",
-                      "toField": "max"
-                    },
-                    {
                       "fromNode": "4cc8843985b548a59349326c01e93b4c",
                       "fromField": "value",
                       "toNode": "d19edd1a882346efa7768bdb109f4d27",
@@ -1430,12 +1367,6 @@
                       "toField": "color"
                     },
                     {
-                      "fromNode": "c9da28824e704af18dbe1dc287a61461",
-                      "fromField": "output",
-                      "toNode": "4862c59348bc4b059b28e86886b0b5d7",
-                      "toField": "b"
-                    },
-                    {
                       "fromNode": "b03071bf83f84d72aea3c9becff9757a",
                       "fromField": "value",
                       "toNode": "4862c59348bc4b059b28e86886b0b5d7",
@@ -1452,12 +1383,6 @@
                       "fromField": "value",
                       "toNode": "bdaebe0ec4124809a9ee7fab46d719b1",
                       "toField": "b"
-                    },
-                    {
-                      "fromNode": "bdaebe0ec4124809a9ee7fab46d719b1",
-                      "fromField": "output",
-                      "toNode": "c9da28824e704af18dbe1dc287a61461",
-                      "toField": "input"
                     },
                     {
                       "fromNode": "17990a01244b4165a1187ced457a46e0",
@@ -1488,10 +1413,34 @@
                       "fromField": "output",
                       "toNode": "bc59614f7be143978c7c61ce4701dac7",
                       "toField": "b"
+                    },
+                    {
+                      "fromNode": "bdaebe0ec4124809a9ee7fab46d719b1",
+                      "fromField": "output",
+                      "toNode": "6541ee83462d4227a6f5daaa26e33e11",
+                      "toField": "input"
+                    },
+                    {
+                      "fromNode": "6541ee83462d4227a6f5daaa26e33e11",
+                      "fromField": "output",
+                      "toNode": "4862c59348bc4b059b28e86886b0b5d7",
+                      "toField": "b"
                     }
                   ],
                   "properties": [],
                   "groups": [
+                    {
+                      "name": "Base shield color",
+                      "nodes": [
+                        "1eb533a8d6a6451e81b9c9a92fc09ab2"
+                      ]
+                    },
+                    {
+                      "name": "Distance band width",
+                      "nodes": [
+                        "a2dbcee0974d4753bf24b38681f47cfb"
+                      ]
+                    },
                     {
                       "name": "Distance of scene",
                       "nodes": [
@@ -1508,12 +1457,6 @@
                       ]
                     },
                     {
-                      "name": "Base shield color",
-                      "nodes": [
-                        "1eb533a8d6a6451e81b9c9a92fc09ab2"
-                      ]
-                    },
-                    {
                       "name": "Base shield pattern",
                       "nodes": [
                         "e09d5ee5e4ca48d59c085216caa2cb2a",
@@ -1525,12 +1468,6 @@
                         "bc59614f7be143978c7c61ce4701dac7",
                         "d7f362fd0ca64d4ba2799d8bb61499fd",
                         "70c870117a4745cea28f7a1a44b141b4"
-                      ]
-                    },
-                    {
-                      "name": "Distance band width",
-                      "nodes": [
-                        "a2dbcee0974d4753bf24b38681f47cfb"
                       ]
                     }
                   ]
@@ -1672,17 +1609,8 @@
                     {
                       "id": "e17a426ffadb4e64b9c10649d15efe5c",
                       "type": "Power",
-                      "x": 2139.0,
+                      "x": 2138.0,
                       "y": 1093.0
-                    },
-                    {
-                      "id": "b4231a67558745bf99e1401427c34c19",
-                      "type": "ValueFloat",
-                      "x": 1728.0,
-                      "y": 939.0,
-                      "data": {
-                        "v1": 1.0
-                      }
                     },
                     {
                       "id": "8ea08de0306c4a2abddbed6e186d8151",
@@ -1704,6 +1632,12 @@
                       "data": {
                         "coordinates": "world"
                       }
+                    },
+                    {
+                      "id": "a517d0d52ca24a318e5f52feb4d0388d",
+                      "type": "Saturate",
+                      "x": 1931.0,
+                      "y": 1115.0
                     },
                     {
                       "id": "e3f69bc80d374113bc42931811ce8a89",
@@ -1744,15 +1678,6 @@
                       "type": "Add",
                       "x": 1195.0,
                       "y": 1207.0
-                    },
-                    {
-                      "id": "536fd05307f44485bed38b9b74c3d56e",
-                      "type": "ValueFloat",
-                      "x": 1728.0,
-                      "y": 1002.0,
-                      "data": {
-                        "v1": 0.0
-                      }
                     },
                     {
                       "id": "d5c601fa74814553af004891ddca0422",
@@ -1910,12 +1835,6 @@
                       "type": "Merge",
                       "x": 510.0,
                       "y": 1319.0
-                    },
-                    {
-                      "id": "f8f5ea7d3d3e42cc9d9ddf418bac60ad",
-                      "type": "Clamp",
-                      "x": 1937.0,
-                      "y": 1069.0
                     },
                     {
                       "id": "7a1ed8f8993142d585fbc4434311b4c3",
@@ -2199,18 +2118,6 @@
                       "toField": "b"
                     },
                     {
-                      "fromNode": "536fd05307f44485bed38b9b74c3d56e",
-                      "fromField": "value",
-                      "toNode": "f8f5ea7d3d3e42cc9d9ddf418bac60ad",
-                      "toField": "min"
-                    },
-                    {
-                      "fromNode": "b4231a67558745bf99e1401427c34c19",
-                      "fromField": "value",
-                      "toNode": "f8f5ea7d3d3e42cc9d9ddf418bac60ad",
-                      "toField": "max"
-                    },
-                    {
                       "fromNode": "31a08d4be30c48dcb9000568e5969960",
                       "fromField": "output",
                       "toNode": "c9e0c730f9be451184778a01e0b0062a",
@@ -2221,12 +2128,6 @@
                       "fromField": "output",
                       "toNode": "c854dee7a44a4299b88a664c627aef05",
                       "toField": "b"
-                    },
-                    {
-                      "fromNode": "f8f5ea7d3d3e42cc9d9ddf418bac60ad",
-                      "fromField": "output",
-                      "toNode": "e17a426ffadb4e64b9c10649d15efe5c",
-                      "toField": "a"
                     },
                     {
                       "fromNode": "7a1ed8f8993142d585fbc4434311b4c3",
@@ -2257,12 +2158,6 @@
                       "fromField": "v2",
                       "toNode": "496a4a4cc6f04b7081971916c55b7faf",
                       "toField": "from"
-                    },
-                    {
-                      "fromNode": "496a4a4cc6f04b7081971916c55b7faf",
-                      "fromField": "output",
-                      "toNode": "f8f5ea7d3d3e42cc9d9ddf418bac60ad",
-                      "toField": "input"
                     },
                     {
                       "fromNode": "e8a8ab994d6944959854c0ad937ed9b2",
@@ -2329,6 +2224,18 @@
                       "fromField": "output",
                       "toNode": "5028f8710842457ab517d742167fef52",
                       "toField": "b"
+                    },
+                    {
+                      "fromNode": "496a4a4cc6f04b7081971916c55b7faf",
+                      "fromField": "output",
+                      "toNode": "a517d0d52ca24a318e5f52feb4d0388d",
+                      "toField": "input"
+                    },
+                    {
+                      "fromNode": "a517d0d52ca24a318e5f52feb4d0388d",
+                      "fromField": "output",
+                      "toNode": "e17a426ffadb4e64b9c10649d15efe5c",
+                      "toField": "a"
                     }
                   ],
                   "properties": [
@@ -2342,36 +2249,6 @@
                   ],
                   "groups": [
                     {
-                      "name": "Distance band width",
-                      "nodes": [
-                        "a2dbcee0974d4753bf24b38681f47cfb"
-                      ]
-                    },
-                    {
-                      "name": "World Y position",
-                      "nodes": [
-                        "fc96358ccea94b78ae601b8c7a2ab379",
-                        "75481498894d4c7690e757dcf3fc97e7"
-                      ]
-                    },
-                    {
-                      "name": "Base alpha",
-                      "nodes": [
-                        "a55d31f60f0e4c4589d452a66676e40a"
-                      ]
-                    },
-                    {
-                      "name": "Scene based alpha",
-                      "nodes": [
-                        "bdaebe0ec4124809a9ee7fab46d719b1",
-                        "4862c59348bc4b059b28e86886b0b5d7",
-                        "c9da28824e704af18dbe1dc287a61461",
-                        "b03071bf83f84d72aea3c9becff9757a",
-                        "b7ad323e113a4b88ad060d3bb2617d9a",
-                        "a5e2684bd0f04546bf5b88eaeab8de50"
-                      ]
-                    },
-                    {
                       "name": "Minium-based alpha multiplier",
                       "nodes": [
                         "0c601c4238db4f6fa44f31a804d5ae26",
@@ -2381,9 +2258,32 @@
                       ]
                     },
                     {
-                      "name": "Base shield color",
+                      "name": "Y-level noise",
                       "nodes": [
-                        "1eb533a8d6a6451e81b9c9a92fc09ab2"
+                        "1449f692d6fd4d648556ba58f91b3268",
+                        "5028f8710842457ab517d742167fef52",
+                        "bf06bb65c1d14a86822668d5ea55a181",
+                        "804e71cfca374405aab037dfda9d8b9b"
+                      ]
+                    },
+                    {
+                      "name": "Distance band width",
+                      "nodes": [
+                        "a2dbcee0974d4753bf24b38681f47cfb"
+                      ]
+                    },
+                    {
+                      "name": "Minimum-based alpha",
+                      "nodes": [
+                        "a517d0d52ca24a318e5f52feb4d0388d",
+                        "e8a8ab994d6944959854c0ad937ed9b2",
+                        "e17a426ffadb4e64b9c10649d15efe5c",
+                        "3b9aacc01a564e89a214ad6d08daab10",
+                        "2b3584b995e44d4390025d6d168a3d24",
+                        "496a4a4cc6f04b7081971916c55b7faf",
+                        "32aec50f252848b7b8db7d61c1b7fe0b",
+                        "d4d6f254c0ae40b6b05b5e408aaa3094",
+                        "7a1ed8f8993142d585fbc4434311b4c3"
                       ]
                     },
                     {
@@ -2399,26 +2299,9 @@
                       ]
                     },
                     {
-                      "name": "Y-level noise",
+                      "name": "Base alpha",
                       "nodes": [
-                        "1449f692d6fd4d648556ba58f91b3268",
-                        "5028f8710842457ab517d742167fef52",
-                        "bf06bb65c1d14a86822668d5ea55a181",
-                        "804e71cfca374405aab037dfda9d8b9b"
-                      ]
-                    },
-                    {
-                      "name": "Angle based alpha",
-                      "nodes": [
-                        "58d969f11176475f8ecc33bdcaee9b57",
-                        "730b07d7b9cf4e35aeb87e3bb72217c2",
-                        "122b09a08daa479bb335e47b98bf4708",
-                        "601406503c1b4776a7e71ea0056b7f24",
-                        "3ec5716fb7904df58aebccf87bbdcfd3",
-                        "b71656f83a9344608a44a04eeead98f4",
-                        "5628234eb26f4b64a7084cbe0e013287",
-                        "fa227b59e0fb4a31a6c83a11ebb7052b",
-                        "bf40df8c98094cd1b0564446f731aca2"
+                        "a55d31f60f0e4c4589d452a66676e40a"
                       ]
                     },
                     {
@@ -2437,19 +2320,41 @@
                       ]
                     },
                     {
-                      "name": "Minimum-based alpha",
+                      "name": "Base shield color",
                       "nodes": [
-                        "536fd05307f44485bed38b9b74c3d56e",
-                        "e8a8ab994d6944959854c0ad937ed9b2",
-                        "e17a426ffadb4e64b9c10649d15efe5c",
-                        "2b3584b995e44d4390025d6d168a3d24",
-                        "3b9aacc01a564e89a214ad6d08daab10",
-                        "b4231a67558745bf99e1401427c34c19",
-                        "496a4a4cc6f04b7081971916c55b7faf",
-                        "32aec50f252848b7b8db7d61c1b7fe0b",
-                        "f8f5ea7d3d3e42cc9d9ddf418bac60ad",
-                        "d4d6f254c0ae40b6b05b5e408aaa3094",
-                        "7a1ed8f8993142d585fbc4434311b4c3"
+                        "1eb533a8d6a6451e81b9c9a92fc09ab2"
+                      ]
+                    },
+                    {
+                      "name": "Angle based alpha",
+                      "nodes": [
+                        "58d969f11176475f8ecc33bdcaee9b57",
+                        "730b07d7b9cf4e35aeb87e3bb72217c2",
+                        "122b09a08daa479bb335e47b98bf4708",
+                        "601406503c1b4776a7e71ea0056b7f24",
+                        "3ec5716fb7904df58aebccf87bbdcfd3",
+                        "b71656f83a9344608a44a04eeead98f4",
+                        "5628234eb26f4b64a7084cbe0e013287",
+                        "fa227b59e0fb4a31a6c83a11ebb7052b",
+                        "bf40df8c98094cd1b0564446f731aca2"
+                      ]
+                    },
+                    {
+                      "name": "Scene based alpha",
+                      "nodes": [
+                        "bdaebe0ec4124809a9ee7fab46d719b1",
+                        "4862c59348bc4b059b28e86886b0b5d7",
+                        "c9da28824e704af18dbe1dc287a61461",
+                        "b03071bf83f84d72aea3c9becff9757a",
+                        "b7ad323e113a4b88ad060d3bb2617d9a",
+                        "a5e2684bd0f04546bf5b88eaeab8de50"
+                      ]
+                    },
+                    {
+                      "name": "World Y position",
+                      "nodes": [
+                        "fc96358ccea94b78ae601b8c7a2ab379",
+                        "75481498894d4c7690e757dcf3fc97e7"
                       ]
                     }
                   ]

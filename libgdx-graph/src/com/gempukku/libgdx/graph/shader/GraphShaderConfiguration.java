@@ -34,6 +34,7 @@ import com.gempukku.libgdx.graph.shader.node.math.common.LerpShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.math.common.MaximumShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.math.common.MinimumShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.math.common.ModuloShaderNodeBuilder;
+import com.gempukku.libgdx.graph.shader.node.math.common.SaturateShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.math.common.SignShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.math.common.SmoothstepShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.math.common.StepShaderNodeBuilder;
@@ -122,6 +123,7 @@ public class GraphShaderConfiguration {
         addGraphShaderNodeBuilder(new MaximumShaderNodeBuilder());
         addGraphShaderNodeBuilder(new MaximumShaderNodeBuilder());
         addGraphShaderNodeBuilder(new ClampShaderNodeBuilder());
+        addGraphShaderNodeBuilder(new SaturateShaderNodeBuilder());
         addGraphShaderNodeBuilder(new LerpShaderNodeBuilder());
         addGraphShaderNodeBuilder(new StepShaderNodeBuilder());
         addGraphShaderNodeBuilder(new SmoothstepShaderNodeBuilder());
