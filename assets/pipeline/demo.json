@@ -100,30 +100,60 @@
                   "version": "0.1.0",
                   "nodes": [
                     {
+                      "id": "4efeae348ca049559e561924bfe584e8",
+                      "type": "Add",
+                      "x": 762.0,
+                      "y": 555.0
+                    },
+                    {
                       "id": "6987f6e629054920b29f3232b1394a97",
                       "type": "Multiply",
                       "x": 532.0,
-                      "y": 369.0
+                      "y": 296.0
                     },
                     {
-                      "id": "0a0a4c0273a44db4957b1b171a9f7fbf",
-                      "type": "DiffuseTexture",
-                      "x": 50.0,
-                      "y": 144.0,
+                      "id": "69395c614ce34e109ceb8bb03c9a6ac9",
+                      "type": "EmissiveTexture",
+                      "x": 90.0,
+                      "y": 471.0,
                       "data": {
                         "previewPath": null
                       }
                     },
                     {
+                      "id": "ad1a3f16ae4d4b98ac304ee009d95080",
+                      "type": "EmissiveColor",
+                      "x": 357.0,
+                      "y": 741.0,
+                      "data": {
+                        "default": "ffffffff"
+                      }
+                    },
+                    {
+                      "id": "0a0a4c0273a44db4957b1b171a9f7fbf",
+                      "type": "DiffuseTexture",
+                      "x": 50.0,
+                      "y": 71.0,
+                      "data": {
+                        "previewPath": null
+                      }
+                    },
+                    {
+                      "id": "c7b65b9427604047b2b3cb94f5b3caa6",
+                      "type": "Sampler2D",
+                      "x": 357.0,
+                      "y": 583.0
+                    },
+                    {
                       "id": "0920db5a2b9642e8b860c79248df8ebd",
                       "type": "Sampler2D",
                       "x": 309.0,
-                      "y": 277.0
+                      "y": 204.0
                     },
                     {
                       "id": "end",
                       "type": "ShaderEnd",
-                      "x": 741.0,
+                      "x": 971.0,
                       "y": 50.0,
                       "data": {
                         "culling": "back",
@@ -135,17 +165,23 @@
                     {
                       "id": "5030de7d49af4f308322d23d0300b7ad",
                       "type": "AttributeUV",
-                      "x": 105.0,
-                      "y": 61.0,
+                      "x": 104.0,
+                      "y": 374.0,
                       "data": {
                         "channel": "UV0"
                       }
                     },
                     {
+                      "id": "29ba54c012d845018d134404d34584af",
+                      "type": "Multiply",
+                      "x": 559.0,
+                      "y": 623.0
+                    },
+                    {
                       "id": "39e3dd27eaad47369017eb321d82467a",
                       "type": "DiffuseColor",
                       "x": 309.0,
-                      "y": 446.0,
+                      "y": 373.0,
                       "data": {
                         "default": "ffffffff"
                       }
@@ -177,7 +213,43 @@
                       "toField": "b"
                     },
                     {
+                      "fromNode": "69395c614ce34e109ceb8bb03c9a6ac9",
+                      "fromField": "texture",
+                      "toNode": "c7b65b9427604047b2b3cb94f5b3caa6",
+                      "toField": "texture"
+                    },
+                    {
+                      "fromNode": "5030de7d49af4f308322d23d0300b7ad",
+                      "fromField": "uv",
+                      "toNode": "c7b65b9427604047b2b3cb94f5b3caa6",
+                      "toField": "uv"
+                    },
+                    {
+                      "fromNode": "ad1a3f16ae4d4b98ac304ee009d95080",
+                      "fromField": "color",
+                      "toNode": "29ba54c012d845018d134404d34584af",
+                      "toField": "a"
+                    },
+                    {
+                      "fromNode": "c7b65b9427604047b2b3cb94f5b3caa6",
+                      "fromField": "color",
+                      "toNode": "29ba54c012d845018d134404d34584af",
+                      "toField": "b"
+                    },
+                    {
+                      "fromNode": "29ba54c012d845018d134404d34584af",
+                      "fromField": "output",
+                      "toNode": "4efeae348ca049559e561924bfe584e8",
+                      "toField": "a"
+                    },
+                    {
                       "fromNode": "6987f6e629054920b29f3232b1394a97",
+                      "fromField": "output",
+                      "toNode": "4efeae348ca049559e561924bfe584e8",
+                      "toField": "b"
+                    },
+                    {
+                      "fromNode": "4efeae348ca049559e561924bfe584e8",
                       "fromField": "output",
                       "toNode": "end",
                       "toField": "color"
@@ -455,12 +527,12 @@
                       "id": "bdaebe0ec4124809a9ee7fab46d719b1",
                       "type": "Multiply",
                       "x": 1234.0,
-                      "y": 263.0000305175781
+                      "y": 263.0
                     },
                     {
                       "id": "e09d5ee5e4ca48d59c085216caa2cb2a",
                       "type": "Multiply",
-                      "x": 1258.0001220703125,
+                      "x": 1258.0,
                       "y": 567.0
                     },
                     {
@@ -473,7 +545,7 @@
                       "id": "c9da28824e704af18dbe1dc287a61461",
                       "type": "Clamp",
                       "x": 1432.0,
-                      "y": 240.00003051757812
+                      "y": 240.0
                     },
                     {
                       "id": "1eb533a8d6a6451e81b9c9a92fc09ab2",
@@ -487,7 +559,7 @@
                     {
                       "id": "9659ad53a4774cbb869aa48affd8a9e1",
                       "type": "Split",
-                      "x": 1059.0001220703125,
+                      "x": 1059.0,
                       "y": 692.0
                     },
                     {
@@ -524,7 +596,7 @@
                       "id": "4862c59348bc4b059b28e86886b0b5d7",
                       "type": "Subtract",
                       "x": 1641.0,
-                      "y": 317.0000305175781
+                      "y": 317.0
                     },
                     {
                       "id": "e459c5396f1c4241832e1ede82b3ccca",
@@ -585,7 +657,7 @@
                       "id": "b7ad323e113a4b88ad060d3bb2617d9a",
                       "type": "ValueFloat",
                       "x": 1233.0,
-                      "y": 130.00003051757812,
+                      "y": 130.0,
                       "data": {
                         "v1": 1.0
                       }
@@ -629,7 +701,7 @@
                     {
                       "id": "70c870117a4745cea28f7a1a44b141b4",
                       "type": "AttributePosition",
-                      "x": 821.0001220703125,
+                      "x": 821.0,
                       "y": 737.0,
                       "data": {
                         "coordinates": "object"
@@ -638,10 +710,10 @@
                     {
                       "id": "994205c6b1304cc3805b7293993c0c83",
                       "type": "ValueFloat",
-                      "x": 1055.0001220703125,
+                      "x": 1055.0,
                       "y": 502.0,
                       "data": {
-                        "v1": 0.5
+                        "v1": 0.20000000298023224
                       }
                     },
                     {
@@ -660,7 +732,7 @@
                       "id": "a5e2684bd0f04546bf5b88eaeab8de50",
                       "type": "ValueFloat",
                       "x": 1234.0,
-                      "y": 194.00003051757812,
+                      "y": 194.0,
                       "data": {
                         "v1": 0.0
                       }
@@ -878,12 +950,6 @@
                   "properties": [],
                   "groups": [
                     {
-                      "name": "Base shield color",
-                      "nodes": [
-                        "1eb533a8d6a6451e81b9c9a92fc09ab2"
-                      ]
-                    },
-                    {
                       "name": "Distance of scene",
                       "nodes": [
                         "364ec61db81a4cdda780d958743aeb21",
@@ -899,9 +965,9 @@
                       ]
                     },
                     {
-                      "name": "Distance band width",
+                      "name": "Base shield color",
                       "nodes": [
-                        "a2dbcee0974d4753bf24b38681f47cfb"
+                        "1eb533a8d6a6451e81b9c9a92fc09ab2"
                       ]
                     },
                     {
@@ -916,6 +982,12 @@
                         "bc59614f7be143978c7c61ce4701dac7",
                         "d7f362fd0ca64d4ba2799d8bb61499fd",
                         "70c870117a4745cea28f7a1a44b141b4"
+                      ]
+                    },
+                    {
+                      "name": "Distance band width",
+                      "nodes": [
+                        "a2dbcee0974d4753bf24b38681f47cfb"
                       ]
                     }
                   ]

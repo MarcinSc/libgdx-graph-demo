@@ -54,6 +54,8 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     private String hangarShieldId;
     private String luminarisId;
     private String scifiPedestalId;
+    private String crateId;
+    private String cellId;
 
     @Override
     public void create() {
@@ -93,6 +95,26 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         movieScript.addActorScript(
                 new ActorScript(scifiPedestalId, hangarSceneStart, hangarSceneLength)
                         .setScale(0, hangarSceneLength, 0.002f, 0.002f));
+        for (int i = 0; i < 5; i++) {
+            Vector3 createPosition1 = new Vector3(-3 + i, 0, -9);
+            Vector3 createPosition2 = new Vector3(-3 + i, 0, -8);
+            movieScript.addActorScript(
+                    new ActorScript(crateId, hangarSceneStart, hangarSceneLength)
+                            .setScale(0, hangarSceneLength, 0.8f, 0.8f)
+                            .setPosition(0, hangarSceneLength, createPosition1, createPosition1));
+            movieScript.addActorScript(
+                    new ActorScript(crateId, hangarSceneStart, hangarSceneLength)
+                            .setScale(0, hangarSceneLength, 0.8f, 0.8f)
+                            .setPosition(0, hangarSceneLength, createPosition2, createPosition2));
+        }
+        for (int i = 0; i < 6; i++) {
+            Vector3 cellPosition = new Vector3(3 + i * 0.4f, 0.4f, -9);
+            movieScript.addActorScript(
+                    new ActorScript(cellId, hangarSceneStart, hangarSceneLength)
+                            .setScale(0, hangarSceneLength, 0.002f, 0.002f)
+                            .setPosition(0, hangarSceneLength, cellPosition, cellPosition));
+
+        }
 
         float luminarisScale = 0.22f;
         float luminarisStartingX = -50f;
@@ -101,8 +123,9 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
                 .setScale(0, hangarSceneLength, luminarisScale, luminarisScale)
                 .setRotation(0, hangarSceneLength, new Vector3(0, 1, 0), 90, 90)
                 .setPosition(0, 13 - hangarSceneStart, new Vector3(luminarisStartingX, luminarisY + 1f, 0), new Vector3(luminarisStartingX, luminarisY + 1f, 0))
-                .setPosition(13 - hangarSceneStart, 5f, new Vector3(luminarisStartingX, luminarisY + 1f, 0), new Vector3(0f, luminarisY, 0f), Interpolation.smooth);
+                .setPosition(14 - hangarSceneStart, 5f, new Vector3(luminarisStartingX, luminarisY + 1f, 0), new Vector3(0f, luminarisY, 0f), Interpolation.smooth);
         movieScript.addActorScript(luminarisHangarActor);
+        movieScript.setSubtitleText(18f, Color.WHITE, "");
 
         return movieScript;
     }
@@ -114,7 +137,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
 
         camera.position.set(8f, 4f, 8f);
         camera.up.set(0f, 1f, 0f);
-        camera.lookAt(0, 1f, 0f);
+        camera.lookAt(0, 3f, 0f);
         camera.update();
 
         return camera;
@@ -138,6 +161,16 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         disposables.add(scifiPedestalModel);
         scifiPedestalId = models.registerModel(scifiPedestalModel);
         models.addModelDefaultTag(scifiPedestalId, "Default");
+
+        Model crateModel = jsonModelLoader.loadModel(Gdx.files.internal("model/crate/crate.g3dj"));
+        disposables.add(crateModel);
+        crateId = models.registerModel(crateModel);
+        models.addModelDefaultTag(crateId, "Default");
+
+        Model cellModel = jsonModelLoader.loadModel(Gdx.files.internal("model/cell/cell.g3dj"));
+        disposables.add(cellModel);
+        cellId = models.registerModel(cellModel);
+        models.addModelDefaultTag(cellId, "Default");
 
         ModelBuilder modelBuilder = new ModelBuilder();
         Model hangarFloor = modelBuilder.createRect(

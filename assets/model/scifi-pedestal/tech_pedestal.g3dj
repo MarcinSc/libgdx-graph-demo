@@ -97299,12 +97299,29 @@
         0.800000,
         0.800000,
         0.800000
-      ]
+      ],
+      "emissive": [
+        0.200000,
+        0.200000,
+        0.200000
+      ],
+      "opacity": 1.000000,
+      "specular": [
+        0.200000,
+        0.200000,
+        0.200000
+      ],
+      "shininess": 20.000000,
       "textures": [
         {
           "id": "Map #1",
           "filename": "tech_pedestal_COL.png",
           "type": "DIFFUSE"
+        },
+        {
+          "id": "Map #2",
+          "filename": "tech_pedestal_EMIT.png",
+          "type": "EMISSIVE"
         }
       ]
     }
