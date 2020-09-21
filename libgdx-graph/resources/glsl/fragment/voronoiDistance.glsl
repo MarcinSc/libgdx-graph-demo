@@ -13,7 +13,7 @@ vec2 voronoiDistanceRandom2(vec2 p) {
 // WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
 // OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-float voronoiDistance(vec2 x)
+float voronoiDistance(vec2 x, float progress)
 {
     vec2 n = floor(x);
     vec2 f = fract(x);
@@ -29,6 +29,7 @@ float voronoiDistance(vec2 x)
         {
             vec2 g = vec2(float(i), float(j));
             vec2 o = voronoiDistanceRandom2(n + g);
+            o = 0.5 + 0.5 * sin(progress + 6.2831 * o);
             vec2 r = g + o - f;
             float d = dot(r, r);
 
@@ -50,6 +51,7 @@ float voronoiDistance(vec2 x)
         {
             vec2 g = mg + vec2(float(i), float(j));
             vec2 o = voronoiDistanceRandom2(n + g);
+            o = 0.5 + 0.5 * sin(progress + 6.2831 * o);
             vec2 r = g + o - f;
 
             if (dot(mr-r, mr-r)>0.00001) {

@@ -24,6 +24,9 @@ public class VoronoiDistanceShaderNodeBuilder extends ConfigurationCommonShaderN
                                                                  CommonShaderBuilder commonShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
         FieldOutput uvValue = inputs.get("uv");
         FieldOutput scaleValue = inputs.get("scale");
+        FieldOutput progressValue = inputs.get("progress");
+
+        String progress = (progressValue != null) ? progressValue.getRepresentation() : "0.0";
 
         if (!commonShaderBuilder.containsFunction("voronoiDistance")) {
             commonShaderBuilder.addFunction("voronoiDistance", GLSLFragmentReader.getFragment("voronoiDistance"));
@@ -32,9 +35,9 @@ public class VoronoiDistanceShaderNodeBuilder extends ConfigurationCommonShaderN
         commonShaderBuilder.addMainLine("// Voronoi distance node");
         String name = "result_" + nodeId;
         if (uvValue.getFieldType() == ShaderFieldType.Vector2) {
-            commonShaderBuilder.addMainLine("float " + name + " = voronoiDistance(" + uvValue.getRepresentation() + " * " + scaleValue.getRepresentation() + ");");
+            commonShaderBuilder.addMainLine("float " + name + " = voronoiDistance(" + uvValue.getRepresentation() + " * " + scaleValue.getRepresentation() + ", " + progress + ");");
         } else {
-            commonShaderBuilder.addMainLine("float " + name + " = voronoiDistance(vec2(" + uvValue.getRepresentation() + ", 0.0) * " + scaleValue.getRepresentation() + ");");
+            commonShaderBuilder.addMainLine("float " + name + " = voronoiDistance(vec2(" + uvValue.getRepresentation() + ", 0.0) * " + scaleValue.getRepresentation() + ", " + progress + ");");
         }
 
         return Collections.singletonMap("output", new DefaultFieldOutput(ShaderFieldType.Float, name));

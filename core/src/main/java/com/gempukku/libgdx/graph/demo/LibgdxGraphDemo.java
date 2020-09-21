@@ -85,16 +85,17 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     private MovieScript createScript(Label subtitleLabel, Camera camera, GraphShaderModels models, PipelineRenderer pipelineRenderer) {
         MovieScript movieScript = new MovieScript(subtitleLabel, camera, models, pipelineRenderer);
         // Introduction
-        movieScript.setSubtitleText(0f, Color.WHITE, "This is not a game.\nThis is a libGDX-Graph Demo.\n" +
-                "No shaders were written during creation of this demo.\n" +
-                "All graphical assets were free and not created by me.");
-        movieScript.setSubtitleText(5f, Color.WHITE, "");
-        movieScript.setSubtitleText(5.5f, Color.WHITE, "You may press SPACE to pause/unpause the movie.");
-        movieScript.setSubtitleText(8.3f, Color.WHITE, "");
-        movieScript.setSubtitleText(8.5f, new Color(0.8f, 0.8f, 1f, 1f), "A few centuries ago, in a far away galaxy...");
+        movieScript.setSubtitleText(0f, Color.WHITE, "This is not a game.\nThis is a libGDX-Graph Demo.");
+        movieScript.setSubtitleText(2.5f, Color.WHITE, "");
+        movieScript.setSubtitleText(2.8f, Color.WHITE, "No shaders were written during creation of this demo.\n" +
+                "All graphical assets were downloaded from cgtrader.com");
+        movieScript.setSubtitleText(6.2f, Color.WHITE, "");
+        movieScript.setSubtitleText(6.5f, Color.WHITE, "You may press SPACE to pause/unpause the movie.");
+        movieScript.setSubtitleText(9.3f, Color.WHITE, "");
+        movieScript.setSubtitleText(9.5f, new Color(0.8f, 0.8f, 1f, 1f), "A few centuries ago, in a far away galaxy...");
 
         // Hangar scene
-        float hangarSceneStart = 9f;
+        float hangarSceneStart = 10f;
         float hangarSceneLength = 33f;
         createHangarScene(movieScript, hangarSceneStart, hangarSceneLength);
 
