@@ -38,7 +38,7 @@ public class ActorScript extends AbstractScript {
         this.graphShaderModelInstance = graphShaderModelInstance;
     }
 
-    public void setScale(float start, float length, float scaleStart, float scaleEnd) {
+    public ActorScript setScale(float start, float length, float scaleStart, float scaleEnd) {
         addKeyframe(
                 new Keyframe() {
                     @Override
@@ -70,13 +70,14 @@ public class ActorScript extends AbstractScript {
                         updateTransform();
                     }
                 });
+        return this;
     }
 
-    public void setPosition(float start, float length, Vector3 positionStart, Vector3 positionEnd) {
-        setPosition(start, length, positionStart, positionEnd, Interpolation.linear);
+    public ActorScript setPosition(float start, float length, Vector3 positionStart, Vector3 positionEnd) {
+        return setPosition(start, length, positionStart, positionEnd, Interpolation.linear);
     }
 
-    public void setPosition(float start, float length, Vector3 positionStart, Vector3 positionEnd, Interpolation interpolation) {
+    public ActorScript setPosition(float start, float length, Vector3 positionStart, Vector3 positionEnd, Interpolation interpolation) {
         addKeyframe(
                 new Keyframe() {
                     @Override
@@ -113,9 +114,10 @@ public class ActorScript extends AbstractScript {
                     }
                 }
         );
+        return this;
     }
 
-    public void setRotation(float start, float length, Vector3 axis, float degreesStart, float degreesEnd) {
+    public ActorScript setRotation(float start, float length, Vector3 axis, float degreesStart, float degreesEnd) {
         addKeyframe(
                 new Keyframe() {
                     @Override
@@ -149,6 +151,7 @@ public class ActorScript extends AbstractScript {
                         updateTransform();
                     }
                 });
+        return this;
     }
 
     private void updateTransform() {

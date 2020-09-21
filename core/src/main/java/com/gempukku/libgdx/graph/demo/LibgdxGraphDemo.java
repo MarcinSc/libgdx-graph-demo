@@ -27,6 +27,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.UBJsonReader;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.gempukku.libgdx.graph.GraphLoader;
 import com.gempukku.libgdx.graph.demo.script.ActorScript;
@@ -52,6 +53,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     private String hangarWallId;
     private String hangarShieldId;
     private String luminarisId;
+    private String scifiPedestalId;
 
     @Override
     public void create() {
@@ -88,15 +90,18 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         movieScript.addActorScript(new ActorScript(hangarFloorId, hangarSceneStart, hangarSceneLength));
         movieScript.addActorScript(new ActorScript(hangarWallId, hangarSceneStart, hangarSceneLength));
         movieScript.addActorScript(new ActorScript(hangarShieldId, hangarSceneStart, hangarSceneLength));
+        movieScript.addActorScript(
+                new ActorScript(scifiPedestalId, hangarSceneStart, hangarSceneLength)
+                        .setScale(0, hangarSceneLength, 0.002f, 0.002f));
 
         float luminarisScale = 0.22f;
         float luminarisStartingX = -50f;
         float luminarisY = 1.6f;
-        ActorScript luminarisHangarActor = new ActorScript(luminarisId, hangarSceneStart, hangarSceneLength);
-        luminarisHangarActor.setScale(0, hangarSceneLength, luminarisScale, luminarisScale);
-        luminarisHangarActor.setRotation(0, hangarSceneLength, new Vector3(0, 1, 0), 90, 90);
-        luminarisHangarActor.setPosition(0, 13 - hangarSceneStart, new Vector3(luminarisStartingX, luminarisY + 1f, 0), new Vector3(luminarisStartingX, luminarisY + 1f, 0));
-        luminarisHangarActor.setPosition(13 - hangarSceneStart, 5f, new Vector3(luminarisStartingX, luminarisY + 1f, 0), new Vector3(0f, luminarisY, 0f), Interpolation.smooth);
+        ActorScript luminarisHangarActor = new ActorScript(luminarisId, hangarSceneStart, hangarSceneLength)
+                .setScale(0, hangarSceneLength, luminarisScale, luminarisScale)
+                .setRotation(0, hangarSceneLength, new Vector3(0, 1, 0), 90, 90)
+                .setPosition(0, 13 - hangarSceneStart, new Vector3(luminarisStartingX, luminarisY + 1f, 0), new Vector3(luminarisStartingX, luminarisY + 1f, 0))
+                .setPosition(13 - hangarSceneStart, 5f, new Vector3(luminarisStartingX, luminarisY + 1f, 0), new Vector3(0f, luminarisY, 0f), Interpolation.smooth);
         movieScript.addActorScript(luminarisHangarActor);
 
         return movieScript;
@@ -121,11 +126,18 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
 
         JsonReader jsonReader = new JsonReader();
         G3dModelLoader jsonModelLoader = new G3dModelLoader(jsonReader);
+        UBJsonReader binaryReader = new UBJsonReader();
+        G3dModelLoader binaryModelLoader = new G3dModelLoader(binaryReader);
 
         Model luminarisModel = jsonModelLoader.loadModel(Gdx.files.internal("model/luminaris/luminaris.g3dj"));
         disposables.add(luminarisModel);
         luminarisId = models.registerModel(luminarisModel);
         models.addModelDefaultTag(luminarisId, "Default");
+
+        Model scifiPedestalModel = jsonModelLoader.loadModel(Gdx.files.internal("model/scifi-pedestal/tech_pedestal.g3dj"));
+        disposables.add(scifiPedestalModel);
+        scifiPedestalId = models.registerModel(scifiPedestalModel);
+        models.addModelDefaultTag(scifiPedestalId, "Default");
 
         ModelBuilder modelBuilder = new ModelBuilder();
         Model hangarFloor = modelBuilder.createRect(
