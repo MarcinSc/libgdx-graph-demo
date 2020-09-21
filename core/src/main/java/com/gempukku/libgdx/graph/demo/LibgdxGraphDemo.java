@@ -3,6 +3,7 @@ package com.gempukku.libgdx.graph.demo;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Cubemap;
@@ -59,6 +60,10 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     private String crateId;
     private String cellId;
     private String shipShieldId;
+    private Label pauseLabel;
+
+    private boolean lastSpacePressed = false;
+    private boolean paused = false;
 
     @Override
     public void create() {
@@ -84,10 +89,12 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
                 "No shaders were written during creation of this demo.\n" +
                 "All graphical assets were free and not created by me.");
         movieScript.setSubtitleText(5f, Color.WHITE, "");
-        movieScript.setSubtitleText(5.5f, new Color(0.8f, 0.8f, 1f, 1f), "A few centuries ago, in a far away galaxy...");
+        movieScript.setSubtitleText(5.5f, Color.WHITE, "You may press SPACE to pause/unpause the movie.");
+        movieScript.setSubtitleText(8.3f, Color.WHITE, "");
+        movieScript.setSubtitleText(8.5f, new Color(0.8f, 0.8f, 1f, 1f), "A few centuries ago, in a far away galaxy...");
 
         // Hangar scene
-        float hangarSceneStart = 6f;
+        float hangarSceneStart = 9f;
         float hangarSceneLength = 33f;
         createHangarScene(movieScript, hangarSceneStart, hangarSceneLength);
 
@@ -251,6 +258,11 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         stage = new Stage(new ScreenViewport());
         disposables.add(stage);
 
+        pauseLabel = new Label("", skin);
+        pauseLabel.setFontScale(2f);
+        pauseLabel.setAlignment(Align.center);
+        pauseLabel.setColor(Color.YELLOW);
+
         Label label = new Label("", skin);
         label.setFontScale(2f);
         label.setAlignment(Align.center);
@@ -261,7 +273,10 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         tbl.setFillParent(true);
         tbl.align(Align.bottom);
 
+        tbl.add(pauseLabel).width(Value.percentWidth(0.8f, tbl)).height(Value.percentHeight(0.2f, tbl));
+        tbl.row();
         tbl.add(label).width(Value.percentWidth(0.8f, tbl)).height(Value.percentHeight(0.2f, tbl));
+        tbl.row();
 
         stage.addActor(tbl);
         return label;
@@ -275,8 +290,20 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     @Override
     public void render() {
         float delta = Gdx.graphics.getDeltaTime();
-        script.update(delta);
         stage.act(delta);
+
+        boolean spacePressed = Gdx.input.isKeyPressed(Input.Keys.SPACE);
+        if (!lastSpacePressed && spacePressed) {
+            paused = !paused;
+            pauseLabel.setText(paused ? "Paused" : "");
+            lastSpacePressed = true;
+        }
+        if (lastSpacePressed && !spacePressed) {
+            lastSpacePressed = false;
+        }
+        if (!paused) {
+            script.update(delta);
+        }
 
         pipelineRenderer.render(delta, RenderOutputs.drawToScreen);
     }
