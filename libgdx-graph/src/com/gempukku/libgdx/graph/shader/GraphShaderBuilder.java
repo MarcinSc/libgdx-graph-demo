@@ -100,6 +100,8 @@ public class GraphShaderBuilder {
 
         buildVertexShader(graph, designTime, graphShader, vertexShaderBuilder, fragmentShaderBuilder);
 
+        fragmentShaderBuilder.addUniformVariable("u_cameraClipping", "vec2", true, UniformSetters.cameraClipping);
+
         AttributePositionShaderNodeBuilder position = new AttributePositionShaderNodeBuilder();
         JsonValue positionData = new JsonValue(JsonValue.ValueType.object);
         positionData.addChild("coordinates", new JsonValue("world"));
@@ -256,6 +258,8 @@ public class GraphShaderBuilder {
                 if (vertexInfo != null) {
                     Map<String, ? extends GraphShaderNodeBuilder.FieldOutput> output = buildNode(designTime, fragmentShader, graph, context, graphShader, vertexInfo.getNodeFrom(), nodeOutputs, vertexShaderBuilder, fragmentShaderBuilder);
                     GraphShaderNodeBuilder.FieldOutput fieldOutput = output.get(vertexInfo.getFieldFrom());
+                    if (fieldOutput == null)
+                        System.out.println("!");
                     ShaderFieldType fieldType = fieldOutput.getFieldType();
                     if (!nodeInput.getAcceptedPropertyTypes().contains(fieldType))
                         throw new IllegalStateException("Producer produces a field of value not compatible with consumer");

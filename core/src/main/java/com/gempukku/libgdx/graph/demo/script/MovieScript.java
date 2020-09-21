@@ -37,6 +37,7 @@ public class MovieScript extends AbstractScript {
                     @Override
                     public void performKeyframe() {
                         GraphShaderModelInstance modelInstance = models.createModelInstance(modelId);
+                        actorScript.setGraphShaderModelInstance(modelInstance);
                         addAction(
                                 new Action() {
                                     private float lastTimeSinceStart;

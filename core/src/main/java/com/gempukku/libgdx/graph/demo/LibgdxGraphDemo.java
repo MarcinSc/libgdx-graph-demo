@@ -16,6 +16,8 @@ import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.GLFrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -48,6 +50,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     private Script script;
     private String hangarFloorId;
     private String hangarWallId;
+    private String hangarShieldId;
     private String luminarisId;
 
     @Override
@@ -76,17 +79,25 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
 
         // Hangar scene
         float hangarSceneStart = 6f;
-        float hangarSceneLength = 10f;
+        float hangarSceneLength = 60f;
         movieScript.setPipelineFloatProperty("Blackout", hangarSceneStart, 3f, 1, 0);
         movieScript.setPipelineFloatProperty("Blur", hangarSceneStart, 3f, 10, 0);
         movieScript.setSubtitleText(9f, Color.WHITE, "");
         movieScript.setSubtitleText(9.5f, Color.WHITE, "- This is GDX-255 requesting permission to enter the hangar.");
         movieScript.setSubtitleText(13f, Color.WHITE, "- GDX-255, this is Interdimensional Control - request granted.");
-        ActorScript hangarFloorScript = new ActorScript(hangarFloorId, hangarSceneStart, hangarSceneLength);
-        movieScript.addActorScript(hangarFloorScript);
-        ActorScript hangarWallScript = new ActorScript(hangarWallId, hangarSceneStart, hangarSceneLength);
-        movieScript.addActorScript(hangarWallScript);
+        movieScript.addActorScript(new ActorScript(hangarFloorId, hangarSceneStart, hangarSceneLength));
+        movieScript.addActorScript(new ActorScript(hangarWallId, hangarSceneStart, hangarSceneLength));
+        movieScript.addActorScript(new ActorScript(hangarShieldId, hangarSceneStart, hangarSceneLength));
 
+        float luminarisScale = 0.22f;
+        float luminarisStartingX = -50f;
+        float luminarisY = 1.6f;
+        ActorScript luminarisHangarActor = new ActorScript(luminarisId, hangarSceneStart, hangarSceneLength);
+        luminarisHangarActor.setScale(0, hangarSceneLength, luminarisScale, luminarisScale);
+        luminarisHangarActor.setRotation(0, hangarSceneLength, new Vector3(0, 1, 0), 90, 90);
+        luminarisHangarActor.setPosition(0, 13 - hangarSceneStart, new Vector3(luminarisStartingX, luminarisY + 1f, 0), new Vector3(luminarisStartingX, luminarisY + 1f, 0));
+        luminarisHangarActor.setPosition(13 - hangarSceneStart, 5f, new Vector3(luminarisStartingX, luminarisY + 1f, 0), new Vector3(-13f, luminarisY, 0f), Interpolation.smooth);
+        movieScript.addActorScript(luminarisHangarActor);
 
         return movieScript;
     }
@@ -96,9 +107,9 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         camera.near = 0.5f;
         camera.far = 100f;
 
-        camera.position.set(8f, 1f, 8f);
+        camera.position.set(8f, 4f, 8f);
         camera.up.set(0f, 1f, 0f);
-        camera.lookAt(0, 0, 0f);
+        camera.lookAt(0, 1f, 0f);
         camera.update();
 
         return camera;
@@ -106,6 +117,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
 
     private GraphShaderModels createModels() {
         GraphShaderModels models = new GraphShaderModels();
+        disposables.add(models);
 
         JsonReader jsonReader = new JsonReader();
         G3dModelLoader jsonModelLoader = new G3dModelLoader(jsonReader);
@@ -114,10 +126,6 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         disposables.add(luminarisModel);
         luminarisId = models.registerModel(luminarisModel);
         models.addModelDefaultTag(luminarisId, "Default");
-//
-//        float shipScale = 0.008f;
-//        GraphShaderModelInstance shipModelInstance = models.createModelInstance(luminarisId);
-//        shipModelInstance.getTransformMatrix().scale(shipScale, shipScale, shipScale);
 
         ModelBuilder modelBuilder = new ModelBuilder();
         Model hangarFloor = modelBuilder.createRect(
@@ -141,6 +149,17 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         disposables.add(hangarWall);
         hangarWallId = models.registerModel(hangarWall);
         models.addModelDefaultTag(hangarWallId, "Hangar Wall");
+
+        Model hangarShield = modelBuilder.createRect(
+                -10, 20, 10,
+                -10, 0, 10,
+                -10, 0, -10,
+                -10, 20, -10,
+                0, 0, 1,
+                new Material(), VertexAttributes.Usage.Position);
+        disposables.add(hangarShield);
+        hangarShieldId = models.registerModel(hangarShield);
+        models.addModelDefaultTag(hangarShieldId, "Hangar Shield");
 
         return models;
     }

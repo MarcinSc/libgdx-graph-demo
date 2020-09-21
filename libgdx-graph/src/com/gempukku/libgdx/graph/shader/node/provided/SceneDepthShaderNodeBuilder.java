@@ -29,16 +29,22 @@ public class SceneDepthShaderNodeBuilder extends ConfigurationCommonShaderNodeBu
     @Override
     protected Map<String, ? extends FieldOutput> buildCommonNode(boolean designTime, String nodeId, JsonValue data, Map<String, FieldOutput> inputs, Set<String> producedOutputs,
                                                                  CommonShaderBuilder commonShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
-        commonShaderBuilder.addUniformVariable("u_sceneDepthTexture", "sampler2D", true, UniformSetters.depthTexture);
-        if (!commonShaderBuilder.containsFunction("unpackVec3ToFloat")) {
-            commonShaderBuilder.addFunction("unpackVec3ToFloat", GLSLFragmentReader.getFragment("unpackVec3ToFloat"));
-        }
+        if (designTime) {
+            return Collections.singletonMap("depth", new DefaultFieldOutput(ShaderFieldType.Float, "0.0"));
+        } else {
+            commonShaderBuilder.addUniformVariable("u_cameraClipping", "vec2", true, UniformSetters.cameraClipping);
 
-        FieldOutput screenPosition = inputs.get("screenPosition");
-        String screenPositionValue = screenPosition != null ? screenPosition.getRepresentation() : "gl_FragCoord";
-        String name = "depth_" + nodeId;
-        commonShaderBuilder.addMainLine("// Scene depth node");
-        commonShaderBuilder.addMainLine("float " + name + " = unpackVec3ToFloat(texture2D(u_sceneDepthTexture, " + screenPositionValue + ".x, " + screenPositionValue + ".y).rgb);");
-        return Collections.singletonMap("output", new DefaultFieldOutput(ShaderFieldType.Float, name));
+            commonShaderBuilder.addUniformVariable("u_sceneDepthTexture", "sampler2D", true, UniformSetters.depthTexture);
+            if (!commonShaderBuilder.containsFunction("unpackVec3ToFloat")) {
+                commonShaderBuilder.addFunction("unpackVec3ToFloat", GLSLFragmentReader.getFragment("unpackVec3ToFloat"));
+            }
+
+            FieldOutput screenPosition = inputs.get("screenPosition");
+            String screenPositionValue = screenPosition != null ? screenPosition.getRepresentation() : "gl_FragCoord";
+            String name = "depth_" + nodeId;
+            commonShaderBuilder.addMainLine("// Scene depth node");
+            commonShaderBuilder.addMainLine("float " + name + " = unpackVec3ToFloat(texture2D(u_sceneDepthTexture, " + screenPositionValue + ".xy).rgb);");
+            return Collections.singletonMap("depth", new DefaultFieldOutput(ShaderFieldType.Float, name));
+        }
     }
 }

@@ -34,6 +34,20 @@ public class UniformSetters {
             shader.setUniform(location, shaderContext.getCamera().direction);
         }
     };
+    public final static UniformRegistry.UniformSetter cameraClipping = new UniformRegistry.UniformSetter() {
+        @Override
+        public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
+            Camera camera = shaderContext.getCamera();
+            shader.setUniform(location, camera.near, camera.far);
+        }
+    };
+    public final static UniformRegistry.UniformSetter pixelSize = new UniformRegistry.UniformSetter() {
+        @Override
+        public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
+            Camera camera = shaderContext.getCamera();
+            shader.setUniform(location, 1f / camera.viewportWidth, 1f / camera.viewportHeight);
+        }
+    };
     public final static UniformRegistry.UniformSetter worldTrans = new UniformRegistry.UniformSetter() {
         @Override
         public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
