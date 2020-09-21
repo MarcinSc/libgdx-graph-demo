@@ -1,0 +1,25 @@
+apply plugin: 'application'
+
+sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
+mainClassName = 'com.gempukku.libgdx.graph.demo.desktop.DesktopLauncher'
+eclipse.project.name = appName + '-desktop'
+sourceCompatibility = 8.0
+
+dependencies {
+	implementation project(':core')
+	implementation "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+	implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+}
+
+jar {
+	archiveFileName = "${appName}-${archiveVersion.get()}.jar"
+	dependsOn configurations.runtimeClasspath
+	from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } } 
+	manifest {
+		attributes 'Main-Class': project.mainClassName
+	}
+}
+
+run {
+	ignoreExitValue = true
+}
