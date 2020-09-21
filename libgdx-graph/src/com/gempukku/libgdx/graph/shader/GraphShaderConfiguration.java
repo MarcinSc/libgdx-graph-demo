@@ -70,6 +70,7 @@ import com.gempukku.libgdx.graph.shader.node.provided.FragmentCoordinatesShaderN
 import com.gempukku.libgdx.graph.shader.node.provided.InstanceIdShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.provided.PixelSizeShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.provided.SceneDepthShaderNodeBuilder;
+import com.gempukku.libgdx.graph.shader.node.provided.ScreenPositionShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.provided.TimeGraphShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.texture.Sampler2DShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.value.ValueBooleanShaderNodeBuilder;
@@ -198,6 +199,7 @@ public class GraphShaderConfiguration {
         addGraphShaderNodeBuilder(new CameraDirectionShaderNodeBuilder());
         addGraphShaderNodeBuilder(new FragmentCoordinatesShaderNodeBuilder());
         addGraphShaderNodeBuilder(new SceneDepthShaderNodeBuilder());
+        addGraphShaderNodeBuilder(new ScreenPositionShaderNodeBuilder());
         addGraphShaderNodeBuilder(new PixelSizeShaderNodeBuilder());
         addGraphShaderNodeBuilder(new InstanceIdShaderNodeBuilder());
 

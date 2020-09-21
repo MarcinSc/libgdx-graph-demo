@@ -1026,7 +1026,7 @@
                     {
                       "id": "4cc8843985b548a59349326c01e93b4c",
                       "type": "ValueVector2",
-                      "x": 1630.0,
+                      "x": 1043.0,
                       "y": 420.0,
                       "data": {
                         "v1": 0.10000000149011612,
@@ -1036,25 +1036,25 @@
                     {
                       "id": "bdaebe0ec4124809a9ee7fab46d719b1",
                       "type": "Multiply",
-                      "x": 1234.0,
+                      "x": 647.0,
                       "y": 263.0
                     },
                     {
                       "id": "e09d5ee5e4ca48d59c085216caa2cb2a",
                       "type": "Multiply",
-                      "x": 1258.0,
+                      "x": 671.0,
                       "y": 567.0
                     },
                     {
                       "id": "d19edd1a882346efa7768bdb109f4d27",
                       "type": "Add",
-                      "x": 1822.0,
+                      "x": 1235.0,
                       "y": 398.0
                     },
                     {
                       "id": "1eb533a8d6a6451e81b9c9a92fc09ab2",
                       "type": "ValueColor",
-                      "x": 2016.0,
+                      "x": 1429.0,
                       "y": 825.0,
                       "data": {
                         "color": "6e83ffff"
@@ -1063,67 +1063,61 @@
                     {
                       "id": "9659ad53a4774cbb869aa48affd8a9e1",
                       "type": "Split",
-                      "x": 1059.0,
+                      "x": 472.0,
                       "y": 692.0
                     },
                     {
                       "id": "4b72611652f24f7dbc48542220dc3280",
                       "type": "Merge",
-                      "x": 1258.0,
+                      "x": 671.0,
                       "y": 668.0
                     },
                     {
                       "id": "d5c601fa74814553af004891ddca0422",
                       "type": "Subtract",
-                      "x": 1039.0,
-                      "y": 382.0
+                      "x": 450.0,
+                      "y": 374.0
                     },
                     {
                       "id": "bc59614f7be143978c7c61ce4701dac7",
                       "type": "Add",
-                      "x": 1453.0,
+                      "x": 866.0,
                       "y": 714.0
                     },
                     {
                       "id": "91d8ad30956f403ab91ab891eb3d865e",
                       "type": "CameraPosition",
-                      "x": 665.0,
-                      "y": 159.0
+                      "x": 65.0,
+                      "y": 246.0
                     },
                     {
-                      "id": "0c9690072bed4276a4c38b255433c7b3",
-                      "type": "Merge",
-                      "x": 465.0,
-                      "y": 336.0
+                      "id": "015a1f5e28b14f3280b8647e2996c882",
+                      "type": "ScreenPosition",
+                      "x": 60.0,
+                      "y": 397.0
                     },
                     {
                       "id": "4862c59348bc4b059b28e86886b0b5d7",
                       "type": "Subtract",
-                      "x": 1641.0,
+                      "x": 1054.0,
                       "y": 317.0
-                    },
-                    {
-                      "id": "e459c5396f1c4241832e1ede82b3ccca",
-                      "type": "PixelSize",
-                      "x": 466.0,
-                      "y": 228.0
                     },
                     {
                       "id": "c87b26148bd34ab3916ff8ae8dc91389",
                       "type": "Time",
-                      "x": 1056.0,
+                      "x": 469.0,
                       "y": 561.0
                     },
                     {
                       "id": "17990a01244b4165a1187ced457a46e0",
                       "type": "Remap",
-                      "x": 2005.0,
+                      "x": 1418.0,
                       "y": 506.0
                     },
                     {
                       "id": "b2596c53c1b84e80ae7dc613b5ecebed",
                       "type": "ValueVector2",
-                      "x": 1819.0,
+                      "x": 1232.0,
                       "y": 529.0,
                       "data": {
                         "v1": 0.0,
@@ -1133,7 +1127,7 @@
                     {
                       "id": "b03071bf83f84d72aea3c9becff9757a",
                       "type": "ValueFloat",
-                      "x": 1433.0,
+                      "x": 846.0,
                       "y": 347.0,
                       "data": {
                         "v1": 1.0
@@ -1142,7 +1136,7 @@
                     {
                       "id": "end",
                       "type": "ShaderEnd",
-                      "x": 2256.0,
+                      "x": 1669.0,
                       "y": 426.0,
                       "data": {
                         "culling": "back",
@@ -1154,20 +1148,20 @@
                     {
                       "id": "6541ee83462d4227a6f5daaa26e33e11",
                       "type": "Saturate",
-                      "x": 1432.0,
+                      "x": 845.0,
                       "y": 286.0
                     },
                     {
                       "id": "d7f362fd0ca64d4ba2799d8bb61499fd",
                       "type": "VoronoiDistance",
-                      "x": 1645.0,
+                      "x": 1058.0,
                       "y": 713.0
                     },
                     {
                       "id": "364ec61db81a4cdda780d958743aeb21",
                       "type": "AttributePosition",
-                      "x": 649.0,
-                      "y": 218.0,
+                      "x": 50.0,
+                      "y": 305.0,
                       "data": {
                         "coordinates": "world"
                       }
@@ -1175,13 +1169,13 @@
                     {
                       "id": "5082ff0411514e368dfb6b38593657fa",
                       "type": "Distance",
-                      "x": 856.0,
-                      "y": 219.0
+                      "x": 257.0,
+                      "y": 306.0
                     },
                     {
                       "id": "89ba5800885449fa89c35840dbebc7f1",
                       "type": "ValueFloat",
-                      "x": 1452.0,
+                      "x": 865.0,
                       "y": 649.0,
                       "data": {
                         "v1": 1.0
@@ -1190,19 +1184,13 @@
                     {
                       "id": "a190124048c3469e821668100d9fbe52",
                       "type": "SceneDepth",
-                      "x": 841.0,
-                      "y": 405.0
-                    },
-                    {
-                      "id": "8ea08de0306c4a2abddbed6e186d8151",
-                      "type": "Split",
-                      "x": 272.0,
-                      "y": 337.0
+                      "x": 252.0,
+                      "y": 397.0
                     },
                     {
                       "id": "70c870117a4745cea28f7a1a44b141b4",
                       "type": "AttributePosition",
-                      "x": 821.0,
+                      "x": 234.0,
                       "y": 737.0,
                       "data": {
                         "coordinates": "object"
@@ -1211,28 +1199,16 @@
                     {
                       "id": "994205c6b1304cc3805b7293993c0c83",
                       "type": "ValueFloat",
-                      "x": 1055.0,
+                      "x": 468.0,
                       "y": 502.0,
                       "data": {
                         "v1": 0.20000000298023224
                       }
                     },
                     {
-                      "id": "e3f69bc80d374113bc42931811ce8a89",
-                      "type": "FragmentCoordinate",
-                      "x": 50.0,
-                      "y": 406.0
-                    },
-                    {
-                      "id": "ad1c5c086fbb4574b9d633cc382636ea",
-                      "type": "Multiply",
-                      "x": 657.0,
-                      "y": 382.0
-                    },
-                    {
                       "id": "a2dbcee0974d4753bf24b38681f47cfb",
                       "type": "ValueFloat",
-                      "x": 1039.0,
+                      "x": 452.0,
                       "y": 50.0,
                       "data": {
                         "v1": 0.5
@@ -1289,24 +1265,6 @@
                       "toField": "uv"
                     },
                     {
-                      "fromNode": "e3f69bc80d374113bc42931811ce8a89",
-                      "fromField": "output",
-                      "toNode": "8ea08de0306c4a2abddbed6e186d8151",
-                      "toField": "input"
-                    },
-                    {
-                      "fromNode": "8ea08de0306c4a2abddbed6e186d8151",
-                      "fromField": "x",
-                      "toNode": "0c9690072bed4276a4c38b255433c7b3",
-                      "toField": "x"
-                    },
-                    {
-                      "fromNode": "8ea08de0306c4a2abddbed6e186d8151",
-                      "fromField": "y",
-                      "toNode": "0c9690072bed4276a4c38b255433c7b3",
-                      "toField": "y"
-                    },
-                    {
                       "fromNode": "364ec61db81a4cdda780d958743aeb21",
                       "fromField": "position",
                       "toNode": "5082ff0411514e368dfb6b38593657fa",
@@ -1341,24 +1299,6 @@
                       "fromField": "output",
                       "toNode": "17990a01244b4165a1187ced457a46e0",
                       "toField": "to"
-                    },
-                    {
-                      "fromNode": "0c9690072bed4276a4c38b255433c7b3",
-                      "fromField": "v2",
-                      "toNode": "ad1c5c086fbb4574b9d633cc382636ea",
-                      "toField": "a"
-                    },
-                    {
-                      "fromNode": "ad1c5c086fbb4574b9d633cc382636ea",
-                      "fromField": "output",
-                      "toNode": "a190124048c3469e821668100d9fbe52",
-                      "toField": "screenPosition"
-                    },
-                    {
-                      "fromNode": "e459c5396f1c4241832e1ede82b3ccca",
-                      "fromField": "size",
-                      "toNode": "ad1c5c086fbb4574b9d633cc382636ea",
-                      "toField": "b"
                     },
                     {
                       "fromNode": "1eb533a8d6a6451e81b9c9a92fc09ab2",
@@ -1425,37 +1365,16 @@
                       "fromField": "output",
                       "toNode": "4862c59348bc4b059b28e86886b0b5d7",
                       "toField": "b"
+                    },
+                    {
+                      "fromNode": "015a1f5e28b14f3280b8647e2996c882",
+                      "fromField": "output",
+                      "toNode": "a190124048c3469e821668100d9fbe52",
+                      "toField": "screenPosition"
                     }
                   ],
                   "properties": [],
                   "groups": [
-                    {
-                      "name": "Base shield color",
-                      "nodes": [
-                        "1eb533a8d6a6451e81b9c9a92fc09ab2"
-                      ]
-                    },
-                    {
-                      "name": "Distance band width",
-                      "nodes": [
-                        "a2dbcee0974d4753bf24b38681f47cfb"
-                      ]
-                    },
-                    {
-                      "name": "Distance of scene",
-                      "nodes": [
-                        "364ec61db81a4cdda780d958743aeb21",
-                        "5082ff0411514e368dfb6b38593657fa",
-                        "e459c5396f1c4241832e1ede82b3ccca",
-                        "e3f69bc80d374113bc42931811ce8a89",
-                        "d5c601fa74814553af004891ddca0422",
-                        "a190124048c3469e821668100d9fbe52",
-                        "ad1c5c086fbb4574b9d633cc382636ea",
-                        "8ea08de0306c4a2abddbed6e186d8151",
-                        "91d8ad30956f403ab91ab891eb3d865e",
-                        "0c9690072bed4276a4c38b255433c7b3"
-                      ]
-                    },
                     {
                       "name": "Base shield pattern",
                       "nodes": [
@@ -1468,6 +1387,29 @@
                         "bc59614f7be143978c7c61ce4701dac7",
                         "d7f362fd0ca64d4ba2799d8bb61499fd",
                         "70c870117a4745cea28f7a1a44b141b4"
+                      ]
+                    },
+                    {
+                      "name": "Distance of scene",
+                      "nodes": [
+                        "015a1f5e28b14f3280b8647e2996c882",
+                        "364ec61db81a4cdda780d958743aeb21",
+                        "5082ff0411514e368dfb6b38593657fa",
+                        "d5c601fa74814553af004891ddca0422",
+                        "a190124048c3469e821668100d9fbe52",
+                        "91d8ad30956f403ab91ab891eb3d865e"
+                      ]
+                    },
+                    {
+                      "name": "Base shield color",
+                      "nodes": [
+                        "1eb533a8d6a6451e81b9c9a92fc09ab2"
+                      ]
+                    },
+                    {
+                      "name": "Distance band width",
+                      "nodes": [
+                        "a2dbcee0974d4753bf24b38681f47cfb"
                       ]
                     }
                   ]
@@ -1540,8 +1482,8 @@
                     {
                       "id": "91d8ad30956f403ab91ab891eb3d865e",
                       "type": "CameraPosition",
-                      "x": 900.0,
-                      "y": 160.0
+                      "x": 891.0,
+                      "y": 259.0
                     },
                     {
                       "id": "32aec50f252848b7b8db7d61c1b7fe0b",
@@ -1600,8 +1542,8 @@
                     {
                       "id": "364ec61db81a4cdda780d958743aeb21",
                       "type": "AttributePosition",
-                      "x": 884.0,
-                      "y": 219.0,
+                      "x": 875.0,
+                      "y": 318.0,
                       "data": {
                         "coordinates": "world"
                       }
@@ -1611,12 +1553,6 @@
                       "type": "Power",
                       "x": 2138.0,
                       "y": 1093.0
-                    },
-                    {
-                      "id": "8ea08de0306c4a2abddbed6e186d8151",
-                      "type": "Split",
-                      "x": 507.0,
-                      "y": 338.0
                     },
                     {
                       "id": "fa227b59e0fb4a31a6c83a11ebb7052b",
@@ -1640,12 +1576,6 @@
                       "y": 1115.0
                     },
                     {
-                      "id": "e3f69bc80d374113bc42931811ce8a89",
-                      "type": "FragmentCoordinate",
-                      "x": 285.0,
-                      "y": 407.0
-                    },
-                    {
                       "id": "b71656f83a9344608a44a04eeead98f4",
                       "type": "Subtract",
                       "x": 1581.0,
@@ -1660,12 +1590,6 @@
                         "name": "Min Y",
                         "type": "Float"
                       }
-                    },
-                    {
-                      "id": "ad1c5c086fbb4574b9d633cc382636ea",
-                      "type": "Multiply",
-                      "x": 892.0,
-                      "y": 383.0
                     },
                     {
                       "id": "c62bf5fa090b44fa83f1c7303a767352",
@@ -1692,12 +1616,6 @@
                       "y": 1069.0
                     },
                     {
-                      "id": "0c9690072bed4276a4c38b255433c7b3",
-                      "type": "Merge",
-                      "x": 700.0,
-                      "y": 337.0
-                    },
-                    {
                       "id": "b6d7abb7242249db91c886905fecd8e7",
                       "type": "Step",
                       "x": 1900.0,
@@ -1708,12 +1626,6 @@
                       "type": "Clamp",
                       "x": 2005.0,
                       "y": 549.0
-                    },
-                    {
-                      "id": "e459c5396f1c4241832e1ede82b3ccca",
-                      "type": "PixelSize",
-                      "x": 701.0,
-                      "y": 229.0
                     },
                     {
                       "id": "601406503c1b4776a7e71ea0056b7f24",
@@ -1788,8 +1700,8 @@
                     {
                       "id": "5082ff0411514e368dfb6b38593657fa",
                       "type": "Distance",
-                      "x": 1091.0,
-                      "y": 220.0
+                      "x": 1082.0,
+                      "y": 319.0
                     },
                     {
                       "id": "c854dee7a44a4299b88a664c627aef05",
@@ -1811,6 +1723,12 @@
                       "type": "Add",
                       "x": 2234.0,
                       "y": 562.0
+                    },
+                    {
+                      "id": "4fed7beb6acf4563a025619bf9fde118",
+                      "type": "ScreenPosition",
+                      "x": 885.0,
+                      "y": 406.0
                     },
                     {
                       "id": "a190124048c3469e821668100d9fbe52",
@@ -1884,24 +1802,6 @@
                   ],
                   "connections": [
                     {
-                      "fromNode": "e3f69bc80d374113bc42931811ce8a89",
-                      "fromField": "output",
-                      "toNode": "8ea08de0306c4a2abddbed6e186d8151",
-                      "toField": "input"
-                    },
-                    {
-                      "fromNode": "8ea08de0306c4a2abddbed6e186d8151",
-                      "fromField": "x",
-                      "toNode": "0c9690072bed4276a4c38b255433c7b3",
-                      "toField": "x"
-                    },
-                    {
-                      "fromNode": "8ea08de0306c4a2abddbed6e186d8151",
-                      "fromField": "y",
-                      "toNode": "0c9690072bed4276a4c38b255433c7b3",
-                      "toField": "y"
-                    },
-                    {
                       "fromNode": "364ec61db81a4cdda780d958743aeb21",
                       "fromField": "position",
                       "toNode": "5082ff0411514e368dfb6b38593657fa",
@@ -1936,24 +1836,6 @@
                       "fromField": "value",
                       "toNode": "c9da28824e704af18dbe1dc287a61461",
                       "toField": "max"
-                    },
-                    {
-                      "fromNode": "0c9690072bed4276a4c38b255433c7b3",
-                      "fromField": "v2",
-                      "toNode": "ad1c5c086fbb4574b9d633cc382636ea",
-                      "toField": "a"
-                    },
-                    {
-                      "fromNode": "ad1c5c086fbb4574b9d633cc382636ea",
-                      "fromField": "output",
-                      "toNode": "a190124048c3469e821668100d9fbe52",
-                      "toField": "screenPosition"
-                    },
-                    {
-                      "fromNode": "e459c5396f1c4241832e1ede82b3ccca",
-                      "fromField": "size",
-                      "toNode": "ad1c5c086fbb4574b9d633cc382636ea",
-                      "toField": "b"
                     },
                     {
                       "fromNode": "c9da28824e704af18dbe1dc287a61461",
@@ -2236,6 +2118,12 @@
                       "fromField": "output",
                       "toNode": "e17a426ffadb4e64b9c10649d15efe5c",
                       "toField": "a"
+                    },
+                    {
+                      "fromNode": "4fed7beb6acf4563a025619bf9fde118",
+                      "fromField": "output",
+                      "toNode": "a190124048c3469e821668100d9fbe52",
+                      "toField": "screenPosition"
                     }
                   ],
                   "properties": [
@@ -2249,15 +2137,6 @@
                   ],
                   "groups": [
                     {
-                      "name": "Minium-based alpha multiplier",
-                      "nodes": [
-                        "0c601c4238db4f6fa44f31a804d5ae26",
-                        "c62bf5fa090b44fa83f1c7303a767352",
-                        "b8e6b5ed300149cfadd47824ab87e0a1",
-                        "b6d7abb7242249db91c886905fecd8e7"
-                      ]
-                    },
-                    {
                       "name": "Y-level noise",
                       "nodes": [
                         "1449f692d6fd4d648556ba58f91b3268",
@@ -2267,9 +2146,52 @@
                       ]
                     },
                     {
-                      "name": "Distance band width",
+                      "name": "Min band width",
                       "nodes": [
-                        "a2dbcee0974d4753bf24b38681f47cfb"
+                        "dedd2d5a46b8411d9ce794a35d4bf1aa"
+                      ]
+                    },
+                    {
+                      "name": "Distance of scene",
+                      "nodes": [
+                        "364ec61db81a4cdda780d958743aeb21",
+                        "5082ff0411514e368dfb6b38593657fa",
+                        "4fed7beb6acf4563a025619bf9fde118",
+                        "d5c601fa74814553af004891ddca0422",
+                        "a190124048c3469e821668100d9fbe52",
+                        "91d8ad30956f403ab91ab891eb3d865e"
+                      ]
+                    },
+                    {
+                      "name": "Minium-based alpha multiplier",
+                      "nodes": [
+                        "0c601c4238db4f6fa44f31a804d5ae26",
+                        "c62bf5fa090b44fa83f1c7303a767352",
+                        "b8e6b5ed300149cfadd47824ab87e0a1",
+                        "b6d7abb7242249db91c886905fecd8e7"
+                      ]
+                    },
+                    {
+                      "name": "Y-level noise strength",
+                      "nodes": [
+                        "7dbabbec7eb84cc69319c3c9499e59c7"
+                      ]
+                    },
+                    {
+                      "name": "Base shield color",
+                      "nodes": [
+                        "1eb533a8d6a6451e81b9c9a92fc09ab2"
+                      ]
+                    },
+                    {
+                      "name": "Scene based alpha",
+                      "nodes": [
+                        "bdaebe0ec4124809a9ee7fab46d719b1",
+                        "4862c59348bc4b059b28e86886b0b5d7",
+                        "c9da28824e704af18dbe1dc287a61461",
+                        "b03071bf83f84d72aea3c9becff9757a",
+                        "b7ad323e113a4b88ad060d3bb2617d9a",
+                        "a5e2684bd0f04546bf5b88eaeab8de50"
                       ]
                     },
                     {
@@ -2287,45 +2209,6 @@
                       ]
                     },
                     {
-                      "name": "Y-level noise strength",
-                      "nodes": [
-                        "7dbabbec7eb84cc69319c3c9499e59c7"
-                      ]
-                    },
-                    {
-                      "name": "Min band width",
-                      "nodes": [
-                        "dedd2d5a46b8411d9ce794a35d4bf1aa"
-                      ]
-                    },
-                    {
-                      "name": "Base alpha",
-                      "nodes": [
-                        "a55d31f60f0e4c4589d452a66676e40a"
-                      ]
-                    },
-                    {
-                      "name": "Distance of scene",
-                      "nodes": [
-                        "364ec61db81a4cdda780d958743aeb21",
-                        "5082ff0411514e368dfb6b38593657fa",
-                        "e459c5396f1c4241832e1ede82b3ccca",
-                        "e3f69bc80d374113bc42931811ce8a89",
-                        "d5c601fa74814553af004891ddca0422",
-                        "a190124048c3469e821668100d9fbe52",
-                        "ad1c5c086fbb4574b9d633cc382636ea",
-                        "8ea08de0306c4a2abddbed6e186d8151",
-                        "91d8ad30956f403ab91ab891eb3d865e",
-                        "0c9690072bed4276a4c38b255433c7b3"
-                      ]
-                    },
-                    {
-                      "name": "Base shield color",
-                      "nodes": [
-                        "1eb533a8d6a6451e81b9c9a92fc09ab2"
-                      ]
-                    },
-                    {
                       "name": "Angle based alpha",
                       "nodes": [
                         "58d969f11176475f8ecc33bdcaee9b57",
@@ -2340,21 +2223,22 @@
                       ]
                     },
                     {
-                      "name": "Scene based alpha",
-                      "nodes": [
-                        "bdaebe0ec4124809a9ee7fab46d719b1",
-                        "4862c59348bc4b059b28e86886b0b5d7",
-                        "c9da28824e704af18dbe1dc287a61461",
-                        "b03071bf83f84d72aea3c9becff9757a",
-                        "b7ad323e113a4b88ad060d3bb2617d9a",
-                        "a5e2684bd0f04546bf5b88eaeab8de50"
-                      ]
-                    },
-                    {
                       "name": "World Y position",
                       "nodes": [
                         "fc96358ccea94b78ae601b8c7a2ab379",
                         "75481498894d4c7690e757dcf3fc97e7"
+                      ]
+                    },
+                    {
+                      "name": "Base alpha",
+                      "nodes": [
+                        "a55d31f60f0e4c4589d452a66676e40a"
+                      ]
+                    },
+                    {
+                      "name": "Distance band width",
+                      "nodes": [
+                        "a2dbcee0974d4753bf24b38681f47cfb"
                       ]
                     }
                   ]
