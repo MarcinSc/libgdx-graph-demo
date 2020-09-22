@@ -20,12 +20,14 @@ public class PipelineRendererImpl implements PipelineRenderer {
     private Map<String, WritablePipelineProperty> pipelinePropertyMap;
     private EndPipelineNode endNode;
     private TimeKeeper timeKeeper;
+    private PipelineRenderingContextImpl pipelineRenderingContext;
 
     public PipelineRendererImpl(Iterable<PipelineNode> nodes, Map<String, WritablePipelineProperty> pipelinePropertyMap, EndPipelineNode endNode) {
         this.nodes = nodes;
         this.pipelinePropertyMap = pipelinePropertyMap;
         this.endNode = endNode;
         this.timeKeeper = new DefaultTimeKeeper();
+        pipelineRenderingContext = new PipelineRenderingContextImpl();
     }
 
     @Override
@@ -70,34 +72,13 @@ public class PipelineRendererImpl implements PipelineRenderer {
     @Override
     public void render(float delta, final RenderOutput renderOutput) {
         timeKeeper.updateTime(delta);
+        pipelineRenderingContext.setRenderOutput(renderOutput);
 
         for (PipelineNode node : nodes) {
             node.startFrame(delta);
         }
 
-        PipelineRenderingContext context = new PipelineRenderingContext() {
-            @Override
-            public int getRenderWidth() {
-                return renderOutput.getRenderWidth();
-            }
-
-            @Override
-            public int getRenderHeight() {
-                return renderOutput.getRenderHeight();
-            }
-
-            @Override
-            public PipelinePropertySource getPipelinePropertySource() {
-                return PipelineRendererImpl.this;
-            }
-
-            @Override
-            public TimeProvider getTimeProvider() {
-                return timeKeeper;
-            }
-        };
-
-        RenderPipeline renderPipeline = endNode.executePipeline(context);
+        RenderPipeline renderPipeline = endNode.executePipeline(pipelineRenderingContext);
         renderOutput.output(renderPipeline);
 
         for (PipelineNode node : nodes) {
@@ -109,6 +90,34 @@ public class PipelineRendererImpl implements PipelineRenderer {
     public void dispose() {
         for (PipelineNode node : nodes) {
             node.dispose();
+        }
+    }
+
+    private class PipelineRenderingContextImpl implements PipelineRenderingContext {
+        private RenderOutput renderOutput;
+
+        public void setRenderOutput(RenderOutput renderOutput) {
+            this.renderOutput = renderOutput;
+        }
+
+        @Override
+        public int getRenderWidth() {
+            return renderOutput.getRenderWidth();
+        }
+
+        @Override
+        public int getRenderHeight() {
+            return renderOutput.getRenderHeight();
+        }
+
+        @Override
+        public PipelinePropertySource getPipelinePropertySource() {
+            return PipelineRendererImpl.this;
+        }
+
+        @Override
+        public TimeProvider getTimeProvider() {
+            return timeKeeper;
         }
     }
 }

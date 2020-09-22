@@ -28,20 +28,12 @@ public class PropertyPipelineNodeProducer implements PipelineNodeProducer {
         final String propertyName = data.getString("name");
         final PipelineFieldType fieldType = PipelineFieldType.valueOf(data.getString("type"));
 
+        final PropertyFieldOutput fieldOutput = new PropertyFieldOutput(fieldType, propertyName);
+
         return new PipelineNode() {
             @Override
             public FieldOutput<?> getFieldOutput(String name) {
-                return new FieldOutput<Object>() {
-                    @Override
-                    public PipelineFieldType getPropertyType() {
-                        return fieldType;
-                    }
-
-                    @Override
-                    public Object getValue(PipelineRenderingContext context) {
-                        return context.getPipelinePropertySource().getPipelineProperty(propertyName).getValue();
-                    }
-                };
+                return fieldOutput;
             }
 
             @Override
@@ -59,5 +51,25 @@ public class PropertyPipelineNodeProducer implements PipelineNodeProducer {
 
             }
         };
+    }
+
+    private static class PropertyFieldOutput implements PipelineNode.FieldOutput {
+        private PipelineFieldType fieldType;
+        private String propertyName;
+
+        public PropertyFieldOutput(PipelineFieldType fieldType, String propertyName) {
+            this.fieldType = fieldType;
+            this.propertyName = propertyName;
+        }
+
+        @Override
+        public PipelineFieldType getPropertyType() {
+            return fieldType;
+        }
+
+        @Override
+        public Object getValue(PipelineRenderingContext context) {
+            return context.getPipelinePropertySource().getPipelineProperty(propertyName).getValue();
+        }
     }
 }
