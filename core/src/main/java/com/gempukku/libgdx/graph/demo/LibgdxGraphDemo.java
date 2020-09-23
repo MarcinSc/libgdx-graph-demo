@@ -90,7 +90,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
 
         script = createScript(subtitleLabel, models, pipelineRenderer);
         // TODO: Temp - move to planet scene
-        script.update(60f);
+        //script.update(60f);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -116,6 +116,8 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         float planetSceneStart = 43f;
         float planetSceneLength = 34f;
         createPlanetScene(movieScript, planetSceneStart, planetSceneLength);
+
+        movieScript.setSubtitleText(78f, Color.WHITE, "Thanks for watching!");
 
         return movieScript;
     }
