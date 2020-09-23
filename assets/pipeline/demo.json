@@ -12,22 +12,12 @@
       }
     },
     {
-      "id": "d9db7c9a047846b385582537f4268bdc",
+      "id": "4ec758b18b4e4fe0aad1ae1297ebf5c9",
       "type": "Property",
-      "x": 140.0,
-      "y": 380.0,
+      "x": 123.0,
+      "y": 269.0,
       "data": {
-        "name": "Bloom radius",
-        "type": "Float"
-      }
-    },
-    {
-      "id": "243e45939de341d1b34525d91114a9ec",
-      "type": "Property",
-      "x": 141.0,
-      "y": 300.0,
-      "data": {
-        "name": "Bloom strength",
+        "name": "Bloom Strength",
         "type": "Float"
       }
     },
@@ -1605,7 +1595,7 @@
                     },
                     {
                       "data": {
-                        "previewPath": "D:\/dev\/libgdx-graph\/libgdx-graph-test\/resources\/image\/seamless_rock_face_texture_by_hhh316.jpg"
+                        "previewPath": "D:/dev/libgdx-graph/libgdx-graph-test/resources/image/seamless_rock_face_texture_by_hhh316.jpg"
                       },
                       "x": 359.0,
                       "y": 354.0,
@@ -3809,6 +3799,16 @@
       "y": 464.0
     },
     {
+      "id": "024fbcea9e014deca3dba6be1d0d8e8e",
+      "type": "Property",
+      "x": 124.0,
+      "y": 392.0,
+      "data": {
+        "name": "Bloom Radius",
+        "type": "Float"
+      }
+    },
+    {
       "id": "dffb152d405a49d38792e850749129b2",
       "type": "UIRenderer",
       "x": 388.0,
@@ -3828,6 +3828,15 @@
       "data": {
         "name": "Blur",
         "type": "Float"
+      }
+    },
+    {
+      "id": "d264b0f9775b4bf7aeb3eb0ec74b4ea0",
+      "type": "ValueFloat",
+      "x": 123.0,
+      "y": 330.0,
+      "data": {
+        "v1": 0.8999999761581421
       }
     },
     {
@@ -3905,18 +3914,6 @@
       "toField": "input"
     },
     {
-      "fromNode": "d9db7c9a047846b385582537f4268bdc",
-      "fromField": "value",
-      "toNode": "9cd5812e915e4e83a4af02371c3f4101",
-      "toField": "bloomRadius"
-    },
-    {
-      "fromNode": "243e45939de341d1b34525d91114a9ec",
-      "fromField": "value",
-      "toNode": "9cd5812e915e4e83a4af02371c3f4101",
-      "toField": "bloomStrength"
-    },
-    {
       "fromNode": "040a8e99aa424fb38cb8c8bed673c642",
       "fromField": "value",
       "toNode": "ff6f63af3181472da525343236652acd",
@@ -3927,6 +3924,24 @@
       "fromField": "value",
       "toNode": "746da9b276d442f0bc74ed9847a26a4b",
       "toField": "background"
+    },
+    {
+      "fromNode": "4ec758b18b4e4fe0aad1ae1297ebf5c9",
+      "fromField": "value",
+      "toNode": "9cd5812e915e4e83a4af02371c3f4101",
+      "toField": "bloomStrength"
+    },
+    {
+      "fromNode": "024fbcea9e014deca3dba6be1d0d8e8e",
+      "fromField": "value",
+      "toNode": "9cd5812e915e4e83a4af02371c3f4101",
+      "toField": "bloomRadius"
+    },
+    {
+      "fromNode": "d264b0f9775b4bf7aeb3eb0ec74b4ea0",
+      "fromField": "value",
+      "toNode": "9cd5812e915e4e83a4af02371c3f4101",
+      "toField": "minimalBrightness"
     }
   ],
   "properties": [
@@ -3957,14 +3972,14 @@
       }
     },
     {
-      "name": "Bloom radius",
+      "name": "Bloom Radius",
       "type": "Float",
       "data": {
         "x": 0.0
       }
     },
     {
-      "name": "Bloom strength",
+      "name": "Bloom Strength",
       "type": "Float",
       "data": {
         "x": 0.0

@@ -70,13 +70,14 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     private String waterSurfaceId;
     private String cloudsId;
     private String goldRobotId;
+    private String nativeId;
+    private String shadowId;
+    private String lightBombId;
 
     private Label pauseLabel;
 
     private boolean lastSpacePressed = false;
     private boolean paused = false;
-    private String nativeId;
-    private String shadowId;
 
     @Override
     public void create() {
@@ -89,7 +90,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
 
         script = createScript(subtitleLabel, models, pipelineRenderer);
         // TODO: Temp - move to planet scene
-        script.update(42f);
+        script.update(60f);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -113,7 +114,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         createHangarScene(movieScript, hangarSceneStart, hangarSceneLength);
 
         float planetSceneStart = 43f;
-        float planetSceneLength = 60f;
+        float planetSceneLength = 34f;
         createPlanetScene(movieScript, planetSceneStart, planetSceneLength);
 
         return movieScript;
@@ -178,6 +179,19 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         movieScript.addCameraAction(planetSceneStart + 28f, 1f, planetSceneCamera,
                 new Vector3(3.8f, 0.8f, 5f), new Vector3(4, 0.3f, 4),
                 new Vector3(3.8f, 0.25f, 4.9f), new Vector3(4, 0.4f, 4), Interpolation.smooth);
+        Vector3 lightBombPosition = new Vector3(4.6f, 1f, 4f);
+        movieScript.addActorScript(
+                new ActorScript(lightBombId, planetSceneStart + 27f, planetSceneLength - 27f)
+                        .setScale(0, 5f, 0.05f, 1.2f)
+                        .setPosition(0, 5f, lightBombPosition, lightBombPosition));
+        movieScript.setPipelineFloatProperty("Bloom Radius", planetSceneStart + 28f, 5f,
+                1, 64f);
+        movieScript.setPipelineFloatProperty("Bloom Strength", planetSceneStart + 28f, 5f,
+                0f, 2f);
+        movieScript.setPipelineFloatProperty("Blackout", planetSceneStart + 32f, 2f, 0, 1, Interpolation.pow3In);
+        movieScript.setPipelineFloatProperty("Blur", planetSceneStart + 32f, 2f, 0, BLUR_VALUE);
+        movieScript.setSubtitleText(planetSceneStart + 31f, Color.WHITE, "- Oh no! They have light bombs!");
+        movieScript.setSubtitleText(planetSceneStart + 34f, Color.WHITE, "");
     }
 
     private void setupPlanetSurfaceEnvironment(MovieScript movieScript, float planetSceneStart, float planetSceneLength) {
@@ -365,6 +379,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         createShipShield(models, modelBuilder);
         createPlanetGround(models, modelBuilder);
         createWaterSurface(models, modelBuilder);
+        createLightBomb(models, modelBuilder);
 
         return models;
     }
@@ -468,6 +483,14 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         disposables.add(shipShield);
         shipShieldId = models.registerModel(shipShield);
         models.addModelDefaultTag(shipShieldId, "Ship Shield");
+    }
+
+    private void createLightBomb(GraphShaderModels models, ModelBuilder modelBuilder) {
+        Model lightBomb = modelBuilder.createSphere(1f, 1f, 1f, 10, 10, new Material(),
+                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+        disposables.add(lightBomb);
+        lightBombId = models.registerModel(lightBomb);
+        models.addModelDefaultTag(lightBombId, "Default");
     }
 
     private void createHangarShield(GraphShaderModels models, ModelBuilder modelBuilder) {
