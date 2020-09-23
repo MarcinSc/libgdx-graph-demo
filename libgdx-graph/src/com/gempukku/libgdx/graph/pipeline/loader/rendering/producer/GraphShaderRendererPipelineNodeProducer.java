@@ -78,6 +78,7 @@ public class GraphShaderRendererPipelineNodeProducer extends PipelineNodeProduce
                 shaderContext.setCamera(camera);
                 shaderContext.setGraphShaderEnvironment(environment);
                 shaderContext.setDepthTexture(renderPipeline.getDepthFrameBuffer().getColorBufferTexture());
+                shaderContext.setTimeProvider(pipelineRenderingContext.getTimeProvider());
 
                 for (RenderPass renderPass : renderPasses) {
                     Array<GraphShader> opaqueShaders = renderPass.getOpaqueShaders();

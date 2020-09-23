@@ -4,22 +4,18 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.utils.Array;
 import com.gempukku.libgdx.graph.pipeline.PipelineRenderer;
+import com.gempukku.libgdx.graph.shader.environment.GraphShaderEnvironment;
 import com.gempukku.libgdx.graph.shader.models.GraphShaderModelInstance;
 import com.gempukku.libgdx.graph.shader.models.GraphShaderModels;
 
 public class MovieScript extends AbstractScript {
     private Label subtitleLabel;
-    private Camera camera;
     private GraphShaderModels models;
     private PipelineRenderer pipelineRenderer;
 
-    private Array<ActorScript> actorScripts = new Array<>();
-
-    public MovieScript(Label subtitleLabel, Camera camera, GraphShaderModels models, PipelineRenderer pipelineRenderer) {
+    public MovieScript(Label subtitleLabel, GraphShaderModels models, PipelineRenderer pipelineRenderer) {
         this.subtitleLabel = subtitleLabel;
-        this.camera = camera;
         this.models = models;
         this.pipelineRenderer = pipelineRenderer;
     }
@@ -126,6 +122,36 @@ public class MovieScript extends AbstractScript {
                     public void execute(float timeSinceStart) {
                         float value = fromAmount + (timeSinceStart / length) * (toAmount - fromAmount);
                         pipelineRenderer.setPipelineProperty(property, interpolation.apply(value));
+                    }
+                });
+    }
+
+    public void setPipelineCamera(float time, String property, Camera camera) {
+        addKeyframe(
+                new Keyframe() {
+                    @Override
+                    public float getTime() {
+                        return time;
+                    }
+
+                    @Override
+                    public void performKeyframe() {
+                        pipelineRenderer.setPipelineProperty(property, camera);
+                    }
+                });
+    }
+
+    public void setPipelineLights(float time, String property, GraphShaderEnvironment lights) {
+        addKeyframe(
+                new Keyframe() {
+                    @Override
+                    public float getTime() {
+                        return time;
+                    }
+
+                    @Override
+                    public void performKeyframe() {
+                        pipelineRenderer.setPipelineProperty(property, lights);
                     }
                 });
     }

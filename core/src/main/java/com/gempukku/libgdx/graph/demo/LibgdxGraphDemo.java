@@ -7,17 +7,21 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Cubemap;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
+import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.GLFrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -36,10 +40,12 @@ import com.gempukku.libgdx.graph.demo.script.MovieScript;
 import com.gempukku.libgdx.graph.pipeline.PipelineLoaderCallback;
 import com.gempukku.libgdx.graph.pipeline.PipelineRenderer;
 import com.gempukku.libgdx.graph.pipeline.RenderOutputs;
+import com.gempukku.libgdx.graph.shader.environment.GraphShaderEnvironment;
 import com.gempukku.libgdx.graph.shader.models.GraphShaderModels;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.function.BiFunction;
 
 /**
  * {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms.
@@ -60,10 +66,12 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     private String crateId;
     private String cellId;
     private String shipShieldId;
+    private String planetGroundId;
     private Label pauseLabel;
 
     private boolean lastSpacePressed = false;
     private boolean paused = false;
+    private String waterSurfaceId;
 
     @Override
     public void create() {
@@ -71,20 +79,20 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
 
         Label subtitleLabel = createStageSubtitleLabel();
 
-        Camera camera = createCamera();
         GraphShaderModels models = createModels();
-        pipelineRenderer = loadPipelineRenderer(models, camera, stage);
+        pipelineRenderer = loadPipelineRenderer(models, stage);
 
-        script = createScript(subtitleLabel, camera, models, pipelineRenderer);
-        // TODO: Temp - move to hangar scene
-        //script.update(30f);
+        script = createScript(subtitleLabel, models, pipelineRenderer);
+        // TODO: Temp - move to planet scene
+        script.update(42f);
 
         Gdx.input.setInputProcessor(stage);
     }
 
-    private MovieScript createScript(Label subtitleLabel, Camera camera, GraphShaderModels models, PipelineRenderer pipelineRenderer) {
-        MovieScript movieScript = new MovieScript(subtitleLabel, camera, models, pipelineRenderer);
+    private MovieScript createScript(Label subtitleLabel, GraphShaderModels models, PipelineRenderer pipelineRenderer) {
+        MovieScript movieScript = new MovieScript(subtitleLabel, models, pipelineRenderer);
         // Introduction
+        movieScript.setPipelineCamera(0f, "Camera", createDefaultCamera());
         movieScript.setSubtitleText(0f, Color.WHITE, "This is not a game.\nThis is a libGDX-Graph Demo.");
         movieScript.setSubtitleText(2.3f, Color.WHITE, "");
         movieScript.setSubtitleText(2.6f, Color.WHITE, "No shaders were written during creation of this demo.\n" +
@@ -99,10 +107,26 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         float hangarSceneLength = 33f;
         createHangarScene(movieScript, hangarSceneStart, hangarSceneLength);
 
+        float planetSceneStart = 43f;
+        float planetSceneLength = 60f;
+        createPlanetScene(movieScript, planetSceneStart, planetSceneLength);
+
         return movieScript;
     }
 
+    private void createPlanetScene(MovieScript movieScript, float planetSceneStart, float planetSceneLength) {
+        movieScript.setPipelineCamera(planetSceneStart, "Camera", createPlanetSceneCamera());
+        movieScript.setPipelineLights(planetSceneStart, "Lights", createPlanetSceneLights());
+        movieScript.setPipelineFloatProperty("Blackout", planetSceneStart, 3f, 1, 0, Interpolation.pow3In);
+        movieScript.setPipelineFloatProperty("Blur", planetSceneStart, 3f, BLUR_VALUE, 0);
+        movieScript.setSubtitleText(planetSceneStart + 1f, new Color(0.8f, 0.8f, 1f, 1f), "Planet's surface in a parallel world");
+        movieScript.setSubtitleText(planetSceneStart + 4f, Color.WHITE, "");
+        movieScript.addActorScript(new ActorScript(planetGroundId, planetSceneStart, planetSceneLength));
+        movieScript.addActorScript(new ActorScript(waterSurfaceId, planetSceneStart, planetSceneLength));
+    }
+
     private void createHangarScene(MovieScript movieScript, float hangarSceneStart, float hangarSceneLength) {
+        movieScript.setPipelineCamera(hangarSceneStart, "Camera", createHangarSceneCamera());
         movieScript.setPipelineFloatProperty("Blackout", hangarSceneStart, 3f, 1, 0, Interpolation.pow3In);
         movieScript.setPipelineFloatProperty("Blur", hangarSceneStart, 3f, BLUR_VALUE, 0);
         movieScript.setSubtitleText(hangarSceneStart + 3f, Color.WHITE, "");
@@ -167,7 +191,16 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         }
     }
 
-    private Camera createCamera() {
+    private Camera createDefaultCamera() {
+        PerspectiveCamera camera = new PerspectiveCamera();
+        camera.near = 0.5f;
+        camera.far = 100f;
+        camera.update();
+
+        return camera;
+    }
+
+    private Camera createHangarSceneCamera() {
         PerspectiveCamera camera = new PerspectiveCamera();
         camera.near = 0.5f;
         camera.far = 100f;
@@ -178,6 +211,30 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         camera.update();
 
         return camera;
+    }
+
+    private Camera createPlanetSceneCamera() {
+        PerspectiveCamera camera = new PerspectiveCamera();
+        camera.near = 0.5f;
+        camera.far = 100f;
+
+        camera.position.set(8f, 1f, 8f);
+        camera.up.set(0f, 1f, 0f);
+        camera.lookAt(0, 0f, 1f);
+        camera.update();
+
+        return camera;
+    }
+
+    private GraphShaderEnvironment createPlanetSceneLights() {
+        GraphShaderEnvironment environment = new GraphShaderEnvironment();
+        environment.setAmbientColor(new Color(0.3f, 0.3f, 0.3f, 1f));
+        DirectionalLight directionalLight = new DirectionalLight();
+        directionalLight.setColor(Color.WHITE);
+        directionalLight.set(Color.WHITE, new Vector3(-1f, -1f, 0f));
+        environment.addDirectionalLight(directionalLight);
+
+        return environment;
     }
 
     private GraphShaderModels createModels() {
@@ -210,28 +267,118 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         models.addModelDefaultTag(cellId, "Default");
 
         ModelBuilder modelBuilder = new ModelBuilder();
-        Model hangarFloor = modelBuilder.createRect(
-                -10, 0, -10,
-                -10, 0, 10,
-                10, 0, 10,
-                10, 0, -10,
-                0, 1, 0,
-                new Material(), VertexAttributes.Usage.Position);
-        disposables.add(hangarFloor);
-        hangarFloorId = models.registerModel(hangarFloor);
-        models.addModelDefaultTag(hangarFloorId, "Hangar Floor");
+        createHangarFloor(models, modelBuilder);
+        createHangarWall(models, modelBuilder);
+        createHangarShield(models, modelBuilder);
+        createShipShield(models, modelBuilder);
+        createPlanetGround(models, modelBuilder);
+        createWaterSurface(models, modelBuilder);
 
-        Model hangarWall = modelBuilder.createRect(
-                -10, 20, -10,
-                -10, 0, -10,
-                10, 0, -10,
-                10, 20, -10,
-                0, 0, 1,
-                new Material(), VertexAttributes.Usage.Position);
-        disposables.add(hangarWall);
-        hangarWallId = models.registerModel(hangarWall);
-        models.addModelDefaultTag(hangarWallId, "Hangar Wall");
+        return models;
+    }
 
+    private void createWaterSurface(GraphShaderModels models, ModelBuilder modelBuilder) {
+        modelBuilder.begin();
+        MeshPartBuilder waterBuilder = modelBuilder.part("waterSurface", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal, new Material());
+        createXZPlane(waterBuilder, new Vector2(2, 2), new Vector2(10, 10), 50, 50,
+                new BiFunction<Float, Float, Float>() {
+                    @Override
+                    public Float apply(Float x, Float z) {
+                        return -0.15f;
+                    }
+                });
+        Model water = modelBuilder.end();
+        disposables.add(water);
+        waterSurfaceId = models.registerModel(water);
+        models.addModelDefaultTag(waterSurfaceId, "Water Surface");
+    }
+
+    private void createPlanetGround(GraphShaderModels models, ModelBuilder modelBuilder) {
+        modelBuilder.begin();
+        MeshPartBuilder groundBuilder = modelBuilder.part("ground", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal, new Material());
+        Vector2 tmp = new Vector2();
+        Vector2 lakeCenter = new Vector2(6, 8);
+        float lakeRadius = 3.5f;
+        float lakeDepth = 1f;
+        float lakeRadius2 = lakeRadius * lakeRadius;
+        createXZPlane(groundBuilder, new Vector2(-10, -10), new Vector2(10, 10), 100, 100,
+                new BiFunction<Float, Float, Float>() {
+                    @Override
+                    public Float apply(Float x, Float z) {
+                        float distToCenter2 = tmp.set(x, z).dst2(lakeCenter);
+                        if (distToCenter2 < lakeRadius2) {
+                            return -lakeDepth + lakeDepth * distToCenter2 / lakeRadius2;
+                        }
+                        return 0f;
+                    }
+                });
+        Model planetGround = modelBuilder.end();
+        disposables.add(planetGround);
+        planetGroundId = models.registerModel(planetGround);
+        models.addModelDefaultTag(planetGroundId, "Planet Ground");
+    }
+
+    private void createXZPlane(MeshPartBuilder meshPartBuilder, Vector2 start, Vector2 end, int xSubdivisions, int zSubdivisions, BiFunction<Float, Float, Float> heightFunction) {
+        float xStart = start.x;
+        float xMultiplier = (end.x - start.x) / xSubdivisions;
+        float zStart = start.y;
+        float zMultiplier = (end.y - start.y) / zSubdivisions;
+
+        Vector3[] posTemp = new Vector3[4];
+        for (int i = 0; i < posTemp.length; i++) {
+            posTemp[i] = new Vector3();
+        }
+
+        MeshPartBuilder.VertexInfo[] vertexInfo = new MeshPartBuilder.VertexInfo[6];
+        for (int i = 0; i < vertexInfo.length; i++) {
+            vertexInfo[i] = new MeshPartBuilder.VertexInfo();
+        }
+
+        Vector3[] normalTemp = new Vector3[2];
+        for (int i = 0; i < normalTemp.length; i++) {
+            normalTemp[i] = new Vector3();
+        }
+
+        for (int x = 0; x < xSubdivisions; x++) {
+            for (int z = 0; z < zSubdivisions; z++) {
+                float x1 = xStart + xMultiplier * x;
+                float x2 = xStart + xMultiplier * (x + 1);
+                float z1 = zStart + zMultiplier * z;
+                float z2 = zStart + zMultiplier * (z + 1);
+
+                posTemp[0].set(x1, heightFunction.apply(x1, z1), z1);
+                posTemp[1].set(x1, heightFunction.apply(x1, z2), z2);
+                posTemp[2].set(x2, heightFunction.apply(x2, z2), z2);
+                posTemp[3].set(x2, heightFunction.apply(x2, z1), z1);
+
+                // Vertices 0, 1, 2 and 2, 3, 0
+                normalTemp[0].set(posTemp[1]).sub(posTemp[0]).crs(
+                        posTemp[2].x - posTemp[1].x, posTemp[2].y - posTemp[1].y, posTemp[2].z - posTemp[1].z).nor();
+                normalTemp[1].set(posTemp[3]).sub(posTemp[2]).crs(
+                        posTemp[0].x - posTemp[3].x, posTemp[0].y - posTemp[3].y, posTemp[0].z - posTemp[3].z).nor();
+
+                vertexInfo[0].set(posTemp[0], normalTemp[0], null, null);
+                vertexInfo[1].set(posTemp[1], normalTemp[0], null, null);
+                vertexInfo[2].set(posTemp[2], normalTemp[0], null, null);
+                vertexInfo[3].set(posTemp[2], normalTemp[1], null, null);
+                vertexInfo[4].set(posTemp[3], normalTemp[1], null, null);
+                vertexInfo[5].set(posTemp[0], normalTemp[1], null, null);
+
+                meshPartBuilder.triangle(vertexInfo[0], vertexInfo[1], vertexInfo[2]);
+                meshPartBuilder.triangle(vertexInfo[3], vertexInfo[4], vertexInfo[5]);
+            }
+        }
+    }
+
+    private void createShipShield(GraphShaderModels models, ModelBuilder modelBuilder) {
+        Model shipShield = modelBuilder.createSphere(18f, 6f, 12f, 50, 50, new Material(),
+                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
+        disposables.add(shipShield);
+        shipShieldId = models.registerModel(shipShield);
+        models.addModelDefaultTag(shipShieldId, "Ship Shield");
+    }
+
+    private void createHangarShield(GraphShaderModels models, ModelBuilder modelBuilder) {
         Model hangarShield = modelBuilder.createRect(
                 -10, 20, 10,
                 -10, 0, 10,
@@ -242,14 +389,32 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         disposables.add(hangarShield);
         hangarShieldId = models.registerModel(hangarShield);
         models.addModelDefaultTag(hangarShieldId, "Hangar Shield");
+    }
 
-        Model shipShield = modelBuilder.createSphere(18f, 6f, 12f, 50, 50, new Material(),
-                VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
-        disposables.add(shipShield);
-        shipShieldId = models.registerModel(shipShield);
-        models.addModelDefaultTag(shipShieldId, "Ship Shield");
+    private void createHangarWall(GraphShaderModels models, ModelBuilder modelBuilder) {
+        Model hangarWall = modelBuilder.createRect(
+                -10, 20, -10,
+                -10, 0, -10,
+                10, 0, -10,
+                10, 20, -10,
+                0, 0, 1,
+                new Material(), VertexAttributes.Usage.Position);
+        disposables.add(hangarWall);
+        hangarWallId = models.registerModel(hangarWall);
+        models.addModelDefaultTag(hangarWallId, "Hangar Wall");
+    }
 
-        return models;
+    private void createHangarFloor(GraphShaderModels models, ModelBuilder modelBuilder) {
+        Model hangarFloor = modelBuilder.createRect(
+                -10, 0, -10,
+                -10, 0, 10,
+                10, 0, 10,
+                10, 0, -10,
+                0, 1, 0,
+                new Material(), VertexAttributes.Usage.Position);
+        disposables.add(hangarFloor);
+        hangarFloorId = models.registerModel(hangarFloor);
+        models.addModelDefaultTag(hangarFloorId, "Hangar Floor");
     }
 
     private Label createStageSubtitleLabel() {
@@ -323,13 +488,12 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         Gdx.app.debug("Unclosed", ShaderProgram.getManagedStatus());
     }
 
-    private PipelineRenderer loadPipelineRenderer(GraphShaderModels models, Camera camera, Stage stage) {
+    private PipelineRenderer loadPipelineRenderer(GraphShaderModels models, Stage stage) {
         try {
             InputStream stream = Gdx.files.internal("pipeline/demo.json").read();
             try {
                 PipelineRenderer pipelineRenderer = GraphLoader.loadGraph(stream, new PipelineLoaderCallback());
                 pipelineRenderer.setPipelineProperty("Models", models);
-                pipelineRenderer.setPipelineProperty("Camera", camera);
                 pipelineRenderer.setPipelineProperty("Stage", stage);
                 disposables.add(pipelineRenderer);
                 return pipelineRenderer;

@@ -2,6 +2,7 @@ package com.gempukku.libgdx.graph.shader;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
+import com.gempukku.libgdx.graph.TimeProvider;
 import com.gempukku.libgdx.graph.shader.environment.GraphShaderEnvironment;
 
 public interface ShaderContext {
@@ -10,4 +11,6 @@ public interface ShaderContext {
     Camera getCamera();
 
     GraphShaderEnvironment getGraphShaderEnvironment();
+
+    TimeProvider getTimeProvider();
 }

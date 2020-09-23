@@ -1,17 +1,12 @@
 package com.gempukku.libgdx.graph.shader.node.provided;
 
-import com.badlogic.gdx.graphics.g3d.Renderable;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.JsonValue;
-import com.gempukku.libgdx.graph.shader.BasicShader;
 import com.gempukku.libgdx.graph.shader.GraphShader;
 import com.gempukku.libgdx.graph.shader.GraphShaderContext;
-import com.gempukku.libgdx.graph.shader.ShaderContext;
 import com.gempukku.libgdx.graph.shader.ShaderFieldType;
-import com.gempukku.libgdx.graph.shader.UniformRegistry;
+import com.gempukku.libgdx.graph.shader.UniformSetters;
 import com.gempukku.libgdx.graph.shader.builder.CommonShaderBuilder;
 import com.gempukku.libgdx.graph.shader.config.provided.TimeShaderNodeConfiguration;
-import com.gempukku.libgdx.graph.shader.models.GraphShaderModelInstanceImpl;
 import com.gempukku.libgdx.graph.shader.node.ConfigurationCommonShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.DefaultFieldOutput;
 
@@ -29,43 +24,19 @@ public class TimeGraphShaderNodeBuilder extends ConfigurationCommonShaderNodeBui
                                                                  CommonShaderBuilder commonShaderBuilder, final GraphShaderContext graphShaderContext, GraphShader graphShader) {
         Map<String, FieldOutput> result = new HashMap<>();
         if (producedOutputs.contains("time")) {
-            commonShaderBuilder.addUniformVariable("u_time", "float", true,
-                    new UniformRegistry.UniformSetter() {
-                        @Override
-                        public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
-                            shader.setUniform(location, graphShaderContext.getTimeProvider().getTime());
-                        }
-                    });
+            commonShaderBuilder.addUniformVariable("u_time", "float", true, UniformSetters.time);
             result.put("time", new DefaultFieldOutput(ShaderFieldType.Float, "u_time"));
         }
         if (producedOutputs.contains("sinTime")) {
-            commonShaderBuilder.addUniformVariable("u_sinTime", "float", true,
-                    new UniformRegistry.UniformSetter() {
-                        @Override
-                        public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
-                            shader.setUniform(location, MathUtils.sin(graphShaderContext.getTimeProvider().getTime()));
-                        }
-                    });
+            commonShaderBuilder.addUniformVariable("u_sinTime", "float", true, UniformSetters.sinTime);
             result.put("sinTime", new DefaultFieldOutput(ShaderFieldType.Float, "u_sinTime"));
         }
         if (producedOutputs.contains("cosTime")) {
-            commonShaderBuilder.addUniformVariable("u_cosTime", "float", true,
-                    new UniformRegistry.UniformSetter() {
-                        @Override
-                        public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
-                            shader.setUniform(location, MathUtils.cos(graphShaderContext.getTimeProvider().getTime()));
-                        }
-                    });
+            commonShaderBuilder.addUniformVariable("u_cosTime", "float", true, UniformSetters.cosTime);
             result.put("cosTime", new DefaultFieldOutput(ShaderFieldType.Float, "u_cosTime"));
         }
         if (producedOutputs.contains("deltaTime")) {
-            commonShaderBuilder.addUniformVariable("u_deltaTime", "float", true,
-                    new UniformRegistry.UniformSetter() {
-                        @Override
-                        public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
-                            shader.setUniform(location, graphShaderContext.getTimeProvider().getDelta());
-                        }
-                    });
+            commonShaderBuilder.addUniformVariable("u_deltaTime", "float", true, UniformSetters.deltaTime);
             result.put("deltaTime", new DefaultFieldOutput(ShaderFieldType.Float, "u_deltaTime"));
         }
         return result;

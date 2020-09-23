@@ -190,14 +190,14 @@ public abstract class BasicShader implements UniformRegistry, Disposable {
     @Override
     public void registerUniform(final String alias, final boolean global, final UniformSetter setter) {
         if (initialized) throw new GdxRuntimeException("Cannot register an uniform after initialization");
-        validateNewUniform(alias);
+        validateNewUniform(alias, global, setter);
         uniforms.put(alias, new Uniform(alias, global, setter));
     }
 
     @Override
     public void registerStructArrayUniform(final String alias, String[] fieldNames, final boolean global, StructArrayUniformSetter setter) {
         if (initialized) throw new GdxRuntimeException("Cannot register an uniform after initialization");
-        validateNewUniform(alias);
+        validateNewStructArrayUniform(alias, global, setter);
         structArrayUniforms.put(alias, new StructArrayUniform(alias, fieldNames, global, setter));
     }
 
@@ -210,9 +210,18 @@ public abstract class BasicShader implements UniformRegistry, Disposable {
             throw new GdxRuntimeException("Attribute already registered");
     }
 
-    private void validateNewUniform(String alias) {
-        if (uniforms.containsKey(alias) || structArrayUniforms.containsKey(alias))
-            throw new GdxRuntimeException("Uniform already registered");
+    private void validateNewStructArrayUniform(String alias, boolean global, StructArrayUniformSetter setter) {
+        Uniform uniform = uniforms.get(alias);
+        if (uniform != null &&
+                (uniform.global != global || uniform.setter != setter))
+            throw new IllegalStateException("Already contains uniform of that name with a different global flag, or setter");
+    }
+
+    private void validateNewUniform(String alias, boolean global, UniformSetter setter) {
+        Uniform uniform = uniforms.get(alias);
+        if (uniform != null &&
+                (uniform.global != global || uniform.setter != setter))
+            throw new IllegalStateException("Already contains uniform of that name with a different global flag, or setter");
     }
 
     /**

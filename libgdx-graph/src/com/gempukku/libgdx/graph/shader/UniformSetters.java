@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.FloatAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
 import com.gempukku.libgdx.graph.shader.environment.GraphShaderEnvironment;
 import com.gempukku.libgdx.graph.shader.models.GraphShaderModelInstanceImpl;
@@ -54,6 +55,35 @@ public class UniformSetters {
             shader.setUniform(location, renderable.worldTransform);
         }
     };
+
+    public final static UniformRegistry.UniformSetter time = new UniformRegistry.UniformSetter() {
+        @Override
+        public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
+            shader.setUniform(location, shaderContext.getTimeProvider().getTime());
+        }
+    };
+
+    public final static UniformRegistry.UniformSetter sinTime = new UniformRegistry.UniformSetter() {
+        @Override
+        public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
+            shader.setUniform(location, MathUtils.sin(shaderContext.getTimeProvider().getTime()));
+        }
+    };
+
+    public final static UniformRegistry.UniformSetter cosTime = new UniformRegistry.UniformSetter() {
+        @Override
+        public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
+            shader.setUniform(location, MathUtils.cos(shaderContext.getTimeProvider().getTime()));
+        }
+    };
+
+    public final static UniformRegistry.UniformSetter deltaTime = new UniformRegistry.UniformSetter() {
+        @Override
+        public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
+            shader.setUniform(location, shaderContext.getTimeProvider().getDelta());
+        }
+    };
+
     public final static UniformRegistry.UniformSetter ambientLight = new UniformRegistry.UniformSetter() {
         @Override
         public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
