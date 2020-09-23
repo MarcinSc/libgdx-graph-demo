@@ -233,6 +233,22 @@ public class ActorScript extends AbstractScript {
         this.animationController = animationController;
     }
 
+    public ActorScript setAnimation(float time, String animation, float offset, float duration, int loopCount, float transitionTime) {
+        addKeyframe(
+                new Keyframe() {
+                    @Override
+                    public float getTime() {
+                        return time;
+                    }
+
+                    @Override
+                    public void performKeyframe() {
+                        animationController.animate(animation, offset, duration, loopCount, 1f, null, transitionTime);
+                    }
+                });
+        return this;
+    }
+
     public ActorScript setAnimation(float time, String animation, int loopCount, float transitionTime) {
         addKeyframe(
                 new Keyframe() {

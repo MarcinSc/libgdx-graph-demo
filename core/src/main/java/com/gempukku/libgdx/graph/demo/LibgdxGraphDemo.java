@@ -76,6 +76,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
 
     private boolean lastSpacePressed = false;
     private boolean paused = false;
+    private String nativeId;
 
     @Override
     public void create() {
@@ -167,6 +168,13 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
                         .setRotation(0, 3f, new Vector3(0, 1, 0), -90, -90)
                         .setAnimation(0, "Root|jog", -1, 0f)
                         .setAnimation(3, "Root|idle", -1, 0.5f), true);
+        float nativeScale = 0.016f;
+        Vector3 nativePosition = new Vector3(3.4f, 0, 4);
+        movieScript.addActorScript(
+                new ActorScript(nativeId, planetSceneStart, planetSceneLength)
+                        .setScale(0, planetSceneLength, nativeScale, nativeScale)
+                        .setPosition(0, planetSceneLength, nativePosition, nativePosition)
+                        .setRotation(0, 3f, new Vector3(0, 1, 0), 0, 0), false);
     }
 
     private void setupPlanetSurfaceEnvironment(MovieScript movieScript, float planetSceneStart, float planetSceneLength) {
@@ -336,6 +344,11 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         disposables.add(goldRobotModel);
         goldRobotId = models.registerModel(goldRobotModel);
         models.addModelDefaultTag(goldRobotId, "Default Lighted");
+
+        Model nativeModel = jsonModelLoader.loadModel(Gdx.files.internal("model/reptilian-worker/reptilian-worker.g3dj"));
+        disposables.add(nativeModel);
+        nativeId = models.registerModel(nativeModel);
+        models.addModelDefaultTag(nativeId, "Default Lighted");
 
         ModelBuilder modelBuilder = new ModelBuilder();
         createHangarFloor(models, modelBuilder);
