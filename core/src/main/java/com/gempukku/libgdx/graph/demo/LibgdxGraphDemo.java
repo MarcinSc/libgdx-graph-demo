@@ -35,6 +35,7 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.UBJsonReader;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.gempukku.libgdx.graph.GraphLoader;
+import com.gempukku.libgdx.graph.demo.script.Action;
 import com.gempukku.libgdx.graph.demo.script.ActorScript;
 import com.gempukku.libgdx.graph.demo.script.MovieScript;
 import com.gempukku.libgdx.graph.pipeline.PipelineLoaderCallback;
@@ -72,6 +73,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     private boolean lastSpacePressed = false;
     private boolean paused = false;
     private String waterSurfaceId;
+    private String cloudsId;
 
     @Override
     public void create() {
@@ -115,14 +117,57 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     }
 
     private void createPlanetScene(MovieScript movieScript, float planetSceneStart, float planetSceneLength) {
-        movieScript.setPipelineCamera(planetSceneStart, "Camera", createPlanetSceneCamera());
+        Camera planetSceneCamera = createPlanetSceneCamera();
+
+        movieScript.setPipelineCamera(planetSceneStart, "Camera", planetSceneCamera);
         movieScript.setPipelineLights(planetSceneStart, "Lights", createPlanetSceneLights());
+        movieScript.setPipelineColor(planetSceneStart, "Background Color", Color.valueOf("2DB7EDFF"));
+
         movieScript.setPipelineFloatProperty("Blackout", planetSceneStart, 3f, 1, 0, Interpolation.pow3In);
         movieScript.setPipelineFloatProperty("Blur", planetSceneStart, 3f, BLUR_VALUE, 0);
         movieScript.setSubtitleText(planetSceneStart + 1f, new Color(0.8f, 0.8f, 1f, 1f), "Planet's surface in a parallel world");
         movieScript.setSubtitleText(planetSceneStart + 4f, Color.WHITE, "");
         movieScript.addActorScript(new ActorScript(planetGroundId, planetSceneStart, planetSceneLength));
         movieScript.addActorScript(new ActorScript(waterSurfaceId, planetSceneStart, planetSceneLength));
+        float cloudsHeight = 10f;
+        float cloudsDistance = 20f;
+        movieScript.addActorScript(
+                new ActorScript(cloudsId, planetSceneStart, planetSceneLength)
+                        .setScale(0, planetSceneLength, 0.001f, 0.001f)
+                        .setPosition(0, planetSceneLength, new Vector3(-20f - cloudsDistance, cloudsHeight, 20f - cloudsDistance), new Vector3(0f - cloudsDistance, cloudsHeight, -0f - cloudsDistance))
+                        .setRotation(0, planetSceneLength, new Vector3(0, 1, 0), 90, 90));
+        movieScript.addActorScript(
+                new ActorScript(cloudsId, planetSceneStart, planetSceneLength)
+                        .setScale(0, planetSceneLength, 0.001f, 0.001f)
+                        .setPosition(0, planetSceneLength, new Vector3(-0f - cloudsDistance, cloudsHeight, 0f - cloudsDistance), new Vector3(20f - cloudsDistance, cloudsHeight, -20f - cloudsDistance))
+                        .setRotation(0, planetSceneLength, new Vector3(0, 1, 0), 270, 270));
+
+        float cameraZoomLength = 5f;
+        Vector3 cameraStartPosition = new Vector3(planetSceneCamera.position);
+        Vector3 cameraEndPosition = new Vector3(6, 1, 6);
+        movieScript.addAction(
+                new Action() {
+                    @Override
+                    public float getStart() {
+                        return planetSceneStart + 3f;
+                    }
+
+                    @Override
+                    public float getLength() {
+                        return cameraZoomLength;
+                    }
+
+                    @Override
+                    public void execute(float timeSinceStart) {
+                        float progress = timeSinceStart / cameraZoomLength;
+                        float value = Interpolation.smooth.apply(progress);
+                        planetSceneCamera.position.set(
+                                cameraStartPosition.x + value * (cameraEndPosition.x - cameraStartPosition.x),
+                                cameraStartPosition.y + value * (cameraEndPosition.y - cameraStartPosition.y),
+                                cameraStartPosition.z + value * (cameraEndPosition.z - cameraStartPosition.z));
+                        planetSceneCamera.update();
+                    }
+                });
     }
 
     private void createHangarScene(MovieScript movieScript, float hangarSceneStart, float hangarSceneLength) {
@@ -218,9 +263,9 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         camera.near = 0.5f;
         camera.far = 100f;
 
-        camera.position.set(8f, 1f, 8f);
+        camera.position.set(8f, 3f, 8f);
         camera.up.set(0f, 1f, 0f);
-        camera.lookAt(0, 0f, 1f);
+        camera.lookAt(0, 0.5f, 0f);
         camera.update();
 
         return camera;
@@ -265,6 +310,11 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         disposables.add(cellModel);
         cellId = models.registerModel(cellModel);
         models.addModelDefaultTag(cellId, "Default");
+
+        Model cloudsModel = jsonModelLoader.loadModel(Gdx.files.internal("model/cloud/cloud.g3dj"));
+        disposables.add(cloudsModel);
+        cloudsId = models.registerModel(cloudsModel);
+        models.addModelDefaultTag(cloudsId, "Default Lighted");
 
         ModelBuilder modelBuilder = new ModelBuilder();
         createHangarFloor(models, modelBuilder);

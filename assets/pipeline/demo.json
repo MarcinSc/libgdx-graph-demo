@@ -42,6 +42,16 @@
       }
     },
     {
+      "id": "a0fcee29879d467f9bdde0787f5c21ec",
+      "type": "Property",
+      "x": 140.0,
+      "y": 925.0,
+      "data": {
+        "name": "Background Color",
+        "type": "Color"
+      }
+    },
+    {
       "id": "651b4acde71d4e838ceff49e0129eed4",
       "type": "ColorTint",
       "x": 388.0,
@@ -1089,6 +1099,202 @@
                       "fromField": "value",
                       "toNode": "19f911d99ec3400dbc9680002b7463a9",
                       "toField": "shininess"
+                    }
+                  ],
+                  "properties": [],
+                  "groups": []
+                }
+              },
+              {
+                "id": "e3bdbb324a254cffbd1ec7c8135a369a",
+                "tag": "Default Lighted",
+                "shader": {
+                  "version": "0.1.0",
+                  "nodes": [
+                    {
+                      "id": "7c590ef6890943d991c8d8b068708f85",
+                      "type": "AttributeUV",
+                      "x": 93.0,
+                      "y": 725.0,
+                      "data": {
+                        "channel": "UV0"
+                      }
+                    },
+                    {
+                      "id": "bc057b238ed84651a8d5bc10749c846b",
+                      "type": "Multiply",
+                      "x": 502.0,
+                      "y": 610.0
+                    },
+                    {
+                      "id": "545e2e192098424eaa722c3a3eee2526",
+                      "type": "AttributePosition",
+                      "x": 344.0,
+                      "y": 903.0,
+                      "data": {
+                        "coordinates": "world"
+                      }
+                    },
+                    {
+                      "id": "071bcb27b68f4fd283831af98e4cfb8c",
+                      "type": "EmissiveColor",
+                      "x": 371.0,
+                      "y": 362.0,
+                      "data": {
+                        "default": "000000ff"
+                      }
+                    },
+                    {
+                      "id": "4af4d88ba493460a870dc25cb751a8e8",
+                      "type": "DiffuseTexture",
+                      "x": 50.0,
+                      "y": 399.0,
+                      "data": {
+                        "previewPath": null
+                      }
+                    },
+                    {
+                      "id": "ff46fe795ba94d709609ce04ded86129",
+                      "type": "AttributeNormal",
+                      "x": 348.0,
+                      "y": 825.0,
+                      "data": {
+                        "coordinates": "world"
+                      }
+                    },
+                    {
+                      "id": "395c5362ab8d407781821c98f0517e6b",
+                      "type": "DiffuseColor",
+                      "x": 304.0,
+                      "y": 628.0,
+                      "data": {
+                        "default": "ffffffff"
+                      }
+                    },
+                    {
+                      "id": "f80e1ef8b55a41168574d2eb2b1f5bfb",
+                      "type": "Sampler2D",
+                      "x": 302.0,
+                      "y": 469.0
+                    },
+                    {
+                      "id": "3f9994a5bc414243b78db97b2f5b03b4",
+                      "type": "Sampler2D",
+                      "x": 382.0,
+                      "y": 172.0
+                    },
+                    {
+                      "id": "end",
+                      "type": "ShaderEnd",
+                      "x": 1023.0,
+                      "y": 463.0,
+                      "data": {
+                        "culling": "back",
+                        "transparency": "opaque",
+                        "blending": "alpha",
+                        "depthTest": "less"
+                      }
+                    },
+                    {
+                      "id": "67eee84678ab448089571948d6307eb4",
+                      "type": "Lighting",
+                      "x": 795.0,
+                      "y": 682.0
+                    },
+                    {
+                      "id": "4ad2e040a34d46cc81c1bfded857739a",
+                      "type": "Multiply",
+                      "x": 582.0,
+                      "y": 326.0
+                    },
+                    {
+                      "id": "708ae3d9f0e245a8a318d1f54cd265d3",
+                      "type": "EmissiveTexture",
+                      "x": 100.0,
+                      "y": 50.0,
+                      "data": {
+                        "previewPath": null
+                      }
+                    }
+                  ],
+                  "connections": [
+                    {
+                      "fromNode": "67eee84678ab448089571948d6307eb4",
+                      "fromField": "output",
+                      "toNode": "end",
+                      "toField": "color"
+                    },
+                    {
+                      "fromNode": "545e2e192098424eaa722c3a3eee2526",
+                      "fromField": "position",
+                      "toNode": "67eee84678ab448089571948d6307eb4",
+                      "toField": "position"
+                    },
+                    {
+                      "fromNode": "ff46fe795ba94d709609ce04ded86129",
+                      "fromField": "normal",
+                      "toNode": "67eee84678ab448089571948d6307eb4",
+                      "toField": "normal"
+                    },
+                    {
+                      "fromNode": "4af4d88ba493460a870dc25cb751a8e8",
+                      "fromField": "texture",
+                      "toNode": "f80e1ef8b55a41168574d2eb2b1f5bfb",
+                      "toField": "texture"
+                    },
+                    {
+                      "fromNode": "7c590ef6890943d991c8d8b068708f85",
+                      "fromField": "uv",
+                      "toNode": "f80e1ef8b55a41168574d2eb2b1f5bfb",
+                      "toField": "uv"
+                    },
+                    {
+                      "fromNode": "395c5362ab8d407781821c98f0517e6b",
+                      "fromField": "color",
+                      "toNode": "bc057b238ed84651a8d5bc10749c846b",
+                      "toField": "a"
+                    },
+                    {
+                      "fromNode": "f80e1ef8b55a41168574d2eb2b1f5bfb",
+                      "fromField": "color",
+                      "toNode": "bc057b238ed84651a8d5bc10749c846b",
+                      "toField": "b"
+                    },
+                    {
+                      "fromNode": "bc057b238ed84651a8d5bc10749c846b",
+                      "fromField": "output",
+                      "toNode": "67eee84678ab448089571948d6307eb4",
+                      "toField": "albedo"
+                    },
+                    {
+                      "fromNode": "7c590ef6890943d991c8d8b068708f85",
+                      "fromField": "uv",
+                      "toNode": "3f9994a5bc414243b78db97b2f5b03b4",
+                      "toField": "uv"
+                    },
+                    {
+                      "fromNode": "708ae3d9f0e245a8a318d1f54cd265d3",
+                      "fromField": "texture",
+                      "toNode": "3f9994a5bc414243b78db97b2f5b03b4",
+                      "toField": "texture"
+                    },
+                    {
+                      "fromNode": "071bcb27b68f4fd283831af98e4cfb8c",
+                      "fromField": "color",
+                      "toNode": "4ad2e040a34d46cc81c1bfded857739a",
+                      "toField": "a"
+                    },
+                    {
+                      "fromNode": "3f9994a5bc414243b78db97b2f5b03b4",
+                      "fromField": "color",
+                      "toNode": "4ad2e040a34d46cc81c1bfded857739a",
+                      "toField": "b"
+                    },
+                    {
+                      "fromNode": "4ad2e040a34d46cc81c1bfded857739a",
+                      "fromField": "output",
+                      "toNode": "67eee84678ab448089571948d6307eb4",
+                      "toField": "emission"
                     }
                   ],
                   "properties": [],
@@ -3025,15 +3231,6 @@
       }
     },
     {
-      "id": "d54b356d4a1242cab5e6cb3f836b1930",
-      "type": "ValueColor",
-      "x": 160.0,
-      "y": 925.0,
-      "data": {
-        "color": "000000ff"
-      }
-    },
-    {
       "id": "746da9b276d442f0bc74ed9847a26a4b",
       "type": "PipelineStart",
       "x": 388.0,
@@ -3052,12 +3249,6 @@
       "fromField": "output",
       "toNode": "ff6f63af3181472da525343236652acd",
       "toField": "input"
-    },
-    {
-      "fromNode": "d54b356d4a1242cab5e6cb3f836b1930",
-      "fromField": "value",
-      "toNode": "746da9b276d442f0bc74ed9847a26a4b",
-      "toField": "background"
     },
     {
       "fromNode": "dffb152d405a49d38792e850749129b2",
@@ -3130,6 +3321,12 @@
       "fromField": "value",
       "toNode": "ff6f63af3181472da525343236652acd",
       "toField": "lights"
+    },
+    {
+      "fromNode": "a0fcee29879d467f9bdde0787f5c21ec",
+      "fromField": "value",
+      "toNode": "746da9b276d442f0bc74ed9847a26a4b",
+      "toField": "background"
     }
   ],
   "properties": [
@@ -3176,6 +3373,13 @@
     {
       "name": "Lights",
       "type": "GraphLights"
+    },
+    {
+      "name": "Background Color",
+      "type": "Color",
+      "data": {
+        "color": "000000ff"
+      }
     }
   ],
   "groups": []

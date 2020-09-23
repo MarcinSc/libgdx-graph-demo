@@ -155,4 +155,19 @@ public class MovieScript extends AbstractScript {
                     }
                 });
     }
+
+    public void setPipelineColor(float time, String property, Color color) {
+        addKeyframe(
+                new Keyframe() {
+                    @Override
+                    public float getTime() {
+                        return time;
+                    }
+
+                    @Override
+                    public void performKeyframe() {
+                        pipelineRenderer.setPipelineProperty(property, color);
+                    }
+                });
+    }
 }

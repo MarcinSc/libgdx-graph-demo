@@ -12,7 +12,7 @@ public class AbstractScript implements Script {
         keyframes.add(keyframe);
     }
 
-    protected void addAction(Action action) {
+    public void addAction(Action action) {
         actions.add(action);
     }
 
