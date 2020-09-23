@@ -1112,6 +1112,15 @@
                   "version": "0.1.0",
                   "nodes": [
                     {
+                      "id": "6258ed006a674cac8551c88d7e25a503",
+                      "type": "Shininess",
+                      "x": 579.0,
+                      "y": 506.0,
+                      "data": {
+                        "default": 32.0
+                      }
+                    },
+                    {
                       "id": "7c590ef6890943d991c8d8b068708f85",
                       "type": "AttributeUV",
                       "x": 93.0,
@@ -1139,7 +1148,7 @@
                       "id": "071bcb27b68f4fd283831af98e4cfb8c",
                       "type": "EmissiveColor",
                       "x": 371.0,
-                      "y": 362.0,
+                      "y": 361.9999694824219,
                       "data": {
                         "default": "000000ff"
                       }
@@ -1295,6 +1304,12 @@
                       "fromField": "output",
                       "toNode": "67eee84678ab448089571948d6307eb4",
                       "toField": "emission"
+                    },
+                    {
+                      "fromNode": "6258ed006a674cac8551c88d7e25a503",
+                      "fromField": "value",
+                      "toNode": "67eee84678ab448089571948d6307eb4",
+                      "toField": "shininess"
                     }
                   ],
                   "properties": [],

@@ -2,6 +2,7 @@ package com.gempukku.libgdx.graph.demo.script;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.gempukku.libgdx.graph.pipeline.PipelineRenderer;
@@ -21,6 +22,10 @@ public class MovieScript extends AbstractScript {
     }
 
     public void addActorScript(ActorScript actorScript) {
+        addActorScript(actorScript, false);
+    }
+
+    public void addActorScript(ActorScript actorScript, boolean animate) {
         String modelId = actorScript.getModelId();
         float start = actorScript.getStart();
         float length = actorScript.getLength();
@@ -35,6 +40,12 @@ public class MovieScript extends AbstractScript {
                     public void performKeyframe() {
                         GraphShaderModelInstance modelInstance = models.createModelInstance(modelId);
                         actorScript.setGraphShaderModelInstance(modelInstance);
+                        AnimationController animationController = null;
+                        if (animate) {
+                            animationController = models.createAnimationController(modelInstance.getId());
+                            actorScript.setAnimationController(animationController);
+                        }
+                        AnimationController finalAnimationController = animationController;
                         addAction(
                                 new Action() {
                                     private float lastTimeSinceStart;
@@ -52,6 +63,8 @@ public class MovieScript extends AbstractScript {
                                     @Override
                                     public void execute(float timeSinceStart) {
                                         actorScript.update(timeSinceStart - lastTimeSinceStart);
+                                        if (finalAnimationController != null)
+                                            finalAnimationController.update(timeSinceStart - lastTimeSinceStart);
                                         lastTimeSinceStart = timeSinceStart;
                                     }
                                 });

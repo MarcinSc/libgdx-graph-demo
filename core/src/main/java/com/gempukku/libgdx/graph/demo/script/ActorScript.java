@@ -1,5 +1,6 @@
 package com.gempukku.libgdx.graph.demo.script;
 
+import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector3;
 import com.gempukku.libgdx.graph.shader.models.GraphShaderModelInstance;
@@ -15,6 +16,7 @@ public class ActorScript extends AbstractScript {
     private float scale = 1f;
     private Vector3 rotateAxis = new Vector3(0, 1f, 0);
     private float rotateDegrees;
+    private AnimationController animationController;
 
     public ActorScript(String modelId, float start, float length) {
         this.modelId = modelId;
@@ -222,6 +224,26 @@ public class ActorScript extends AbstractScript {
                     @Override
                     public void performKeyframe() {
                         graphShaderModelInstance.addTag(tag);
+                    }
+                });
+        return this;
+    }
+
+    public void setAnimationController(AnimationController animationController) {
+        this.animationController = animationController;
+    }
+
+    public ActorScript setAnimation(float time, String animation, int loopCount, float transitionTime) {
+        addKeyframe(
+                new Keyframe() {
+                    @Override
+                    public float getTime() {
+                        return time;
+                    }
+
+                    @Override
+                    public void performKeyframe() {
+                        animationController.animate(animation, loopCount, null, transitionTime);
                     }
                 });
         return this;

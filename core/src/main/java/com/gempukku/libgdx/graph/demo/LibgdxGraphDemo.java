@@ -68,12 +68,14 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     private String cellId;
     private String shipShieldId;
     private String planetGroundId;
+    private String waterSurfaceId;
+    private String cloudsId;
+    private String goldRobotId;
+
     private Label pauseLabel;
 
     private boolean lastSpacePressed = false;
     private boolean paused = false;
-    private String waterSurfaceId;
-    private String cloudsId;
 
     @Override
     public void create() {
@@ -127,20 +129,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         movieScript.setPipelineFloatProperty("Blur", planetSceneStart, 3f, BLUR_VALUE, 0);
         movieScript.setSubtitleText(planetSceneStart + 1f, new Color(0.8f, 0.8f, 1f, 1f), "Planet's surface in a parallel world");
         movieScript.setSubtitleText(planetSceneStart + 4f, Color.WHITE, "");
-        movieScript.addActorScript(new ActorScript(planetGroundId, planetSceneStart, planetSceneLength));
-        movieScript.addActorScript(new ActorScript(waterSurfaceId, planetSceneStart, planetSceneLength));
-        float cloudsHeight = 10f;
-        float cloudsDistance = 20f;
-        movieScript.addActorScript(
-                new ActorScript(cloudsId, planetSceneStart, planetSceneLength)
-                        .setScale(0, planetSceneLength, 0.001f, 0.001f)
-                        .setPosition(0, planetSceneLength, new Vector3(-20f - cloudsDistance, cloudsHeight, 20f - cloudsDistance), new Vector3(0f - cloudsDistance, cloudsHeight, -0f - cloudsDistance))
-                        .setRotation(0, planetSceneLength, new Vector3(0, 1, 0), 90, 90));
-        movieScript.addActorScript(
-                new ActorScript(cloudsId, planetSceneStart, planetSceneLength)
-                        .setScale(0, planetSceneLength, 0.001f, 0.001f)
-                        .setPosition(0, planetSceneLength, new Vector3(-0f - cloudsDistance, cloudsHeight, 0f - cloudsDistance), new Vector3(20f - cloudsDistance, cloudsHeight, -20f - cloudsDistance))
-                        .setRotation(0, planetSceneLength, new Vector3(0, 1, 0), 270, 270));
+        setupPlanetSurfaceEnvironment(movieScript, planetSceneStart, planetSceneLength);
 
         float cameraZoomLength = 5f;
         Vector3 cameraStartPosition = new Vector3(planetSceneCamera.position);
@@ -168,6 +157,33 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
                         planetSceneCamera.update();
                     }
                 });
+        movieScript.setSubtitleText(planetSceneStart + 7f, Color.WHITE, "- Deploy scout robot.");
+        float robotScale = 0.003f;
+        float robotLifeLength = planetSceneLength - 8f;
+        movieScript.addActorScript(
+                new ActorScript(goldRobotId, planetSceneStart + 8f, robotLifeLength)
+                        .setScale(0, robotLifeLength, robotScale, robotScale)
+                        .setPosition(0, 3f, new Vector3(8, 0, 4), new Vector3(4.6f, 0, 4))
+                        .setRotation(0, 3f, new Vector3(0, 1, 0), -90, -90)
+                        .setAnimation(0, "Root|jog", -1, 0f)
+                        .setAnimation(3, "Root|idle", -1, 0.5f), true);
+    }
+
+    private void setupPlanetSurfaceEnvironment(MovieScript movieScript, float planetSceneStart, float planetSceneLength) {
+        movieScript.addActorScript(new ActorScript(planetGroundId, planetSceneStart, planetSceneLength));
+        movieScript.addActorScript(new ActorScript(waterSurfaceId, planetSceneStart, planetSceneLength));
+        float cloudsHeight = 10f;
+        float cloudsDistance = 20f;
+        movieScript.addActorScript(
+                new ActorScript(cloudsId, planetSceneStart, planetSceneLength)
+                        .setScale(0, planetSceneLength, 0.001f, 0.001f)
+                        .setPosition(0, planetSceneLength, new Vector3(-20f - cloudsDistance, cloudsHeight, 20f - cloudsDistance), new Vector3(0f - cloudsDistance, cloudsHeight, -0f - cloudsDistance))
+                        .setRotation(0, planetSceneLength, new Vector3(0, 1, 0), 90, 90));
+        movieScript.addActorScript(
+                new ActorScript(cloudsId, planetSceneStart, planetSceneLength)
+                        .setScale(0, planetSceneLength, 0.001f, 0.001f)
+                        .setPosition(0, planetSceneLength, new Vector3(-0f - cloudsDistance, cloudsHeight, 0f - cloudsDistance), new Vector3(20f - cloudsDistance, cloudsHeight, -20f - cloudsDistance))
+                        .setRotation(0, planetSceneLength, new Vector3(0, 1, 0), 270, 270));
     }
 
     private void createHangarScene(MovieScript movieScript, float hangarSceneStart, float hangarSceneLength) {
@@ -315,6 +331,11 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         disposables.add(cloudsModel);
         cloudsId = models.registerModel(cloudsModel);
         models.addModelDefaultTag(cloudsId, "Default Lighted");
+
+        Model goldRobotModel = jsonModelLoader.loadModel(Gdx.files.internal("model/gold-robot/gold-robot.g3dj"));
+        disposables.add(goldRobotModel);
+        goldRobotId = models.registerModel(goldRobotModel);
+        models.addModelDefaultTag(goldRobotId, "Default Lighted");
 
         ModelBuilder modelBuilder = new ModelBuilder();
         createHangarFloor(models, modelBuilder);
