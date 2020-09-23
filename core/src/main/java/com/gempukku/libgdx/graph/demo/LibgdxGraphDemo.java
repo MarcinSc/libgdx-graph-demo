@@ -35,7 +35,6 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.UBJsonReader;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.gempukku.libgdx.graph.GraphLoader;
-import com.gempukku.libgdx.graph.demo.script.Action;
 import com.gempukku.libgdx.graph.demo.script.ActorScript;
 import com.gempukku.libgdx.graph.demo.script.MovieScript;
 import com.gempukku.libgdx.graph.pipeline.PipelineLoaderCallback;
@@ -77,6 +76,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     private boolean lastSpacePressed = false;
     private boolean paused = false;
     private String nativeId;
+    private String shadowId;
 
     @Override
     public void create() {
@@ -131,33 +131,18 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         movieScript.setSubtitleText(planetSceneStart + 1f, new Color(0.8f, 0.8f, 1f, 1f), "Planet's surface in a parallel world");
         movieScript.setSubtitleText(planetSceneStart + 4f, Color.WHITE, "");
         setupPlanetSurfaceEnvironment(movieScript, planetSceneStart, planetSceneLength);
+        float nativeScale = 0.016f;
+        Vector3 nativePosition = new Vector3(3.4f, 0, 4);
+        movieScript.addActorScript(
+                new ActorScript(nativeId, planetSceneStart, planetSceneLength)
+                        .setScale(0, planetSceneLength, nativeScale, nativeScale)
+                        .setPosition(0, planetSceneLength, nativePosition, nativePosition)
+                        .setRotation(0, 3f, new Vector3(0, 1, 0), 0, 0), false);
 
         float cameraZoomLength = 5f;
-        Vector3 cameraStartPosition = new Vector3(planetSceneCamera.position);
-        Vector3 cameraEndPosition = new Vector3(6, 1, 6);
-        movieScript.addAction(
-                new Action() {
-                    @Override
-                    public float getStart() {
-                        return planetSceneStart + 3f;
-                    }
-
-                    @Override
-                    public float getLength() {
-                        return cameraZoomLength;
-                    }
-
-                    @Override
-                    public void execute(float timeSinceStart) {
-                        float progress = timeSinceStart / cameraZoomLength;
-                        float value = Interpolation.smooth.apply(progress);
-                        planetSceneCamera.position.set(
-                                cameraStartPosition.x + value * (cameraEndPosition.x - cameraStartPosition.x),
-                                cameraStartPosition.y + value * (cameraEndPosition.y - cameraStartPosition.y),
-                                cameraStartPosition.z + value * (cameraEndPosition.z - cameraStartPosition.z));
-                        planetSceneCamera.update();
-                    }
-                });
+        movieScript.addCameraAction(planetSceneStart + 3f, cameraZoomLength, planetSceneCamera,
+                new Vector3(planetSceneCamera.position), new Vector3(4, 2, 4),
+                new Vector3(5.5f, 0.8f, 5.5f), new Vector3(4, 0.3f, 4), Interpolation.smooth);
         movieScript.setSubtitleText(planetSceneStart + 7f, Color.WHITE, "- Deploy scout robot.");
         float robotScale = 0.003f;
         float robotLifeLength = planetSceneLength - 8f;
@@ -168,13 +153,31 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
                         .setRotation(0, 3f, new Vector3(0, 1, 0), -90, -90)
                         .setAnimation(0, "Root|jog", -1, 0f)
                         .setAnimation(3, "Root|idle", -1, 0.5f), true);
-        float nativeScale = 0.016f;
-        Vector3 nativePosition = new Vector3(3.4f, 0, 4);
+        movieScript.setSubtitleText(planetSceneStart + 11f, Color.WHITE, "");
+        movieScript.setSubtitleText(planetSceneStart + 11.3f, Color.WHITE, "- Deploy holo-projector.");
+        Vector3 holoprojectorPosition = new Vector3(4, 0, 4);
         movieScript.addActorScript(
-                new ActorScript(nativeId, planetSceneStart, planetSceneLength)
-                        .setScale(0, planetSceneLength, nativeScale, nativeScale)
-                        .setPosition(0, planetSceneLength, nativePosition, nativePosition)
+                new ActorScript(scifiPedestalId, planetSceneStart + 12f, planetSceneLength - 12f)
+                        .setScale(0, planetSceneLength - 12f, 0.0001f, 0.0001f)
+                        .setPosition(0, planetSceneLength - 12f, holoprojectorPosition, holoprojectorPosition));
+        float shadowScale = 0.04f;
+        Vector3 shadowPosition = new Vector3(4f, 0.1f, 4);
+        movieScript.addActorScript(
+                new ActorScript(shadowId, planetSceneStart + 12.5f, planetSceneLength - 12.5f)
+                        .setScale(0, planetSceneLength, shadowScale, shadowScale)
+                        .setPosition(0, planetSceneLength, shadowPosition, shadowPosition)
                         .setRotation(0, 3f, new Vector3(0, 1, 0), 0, 0), false);
+        movieScript.setSubtitleText(planetSceneStart + 14f, Color.WHITE, "- Greetings native species.");
+        movieScript.setSubtitleText(planetSceneStart + 18f, Color.WHITE, "- You have been invaded by the great Shadow Nomads.");
+        movieScript.setSubtitleText(planetSceneStart + 23f, Color.WHITE, "- Prepare to be assimilated.");
+        movieScript.addCameraAction(planetSceneStart + 14f, 5f, planetSceneCamera,
+                new Vector3(5.5f, 0.8f, 5.5f), new Vector3(4, 0.3f, 4),
+                new Vector3(3.8f, 0.8f, 5f), new Vector3(4, 0.3f, 4), Interpolation.smooth);
+        movieScript.setSubtitleText(planetSceneStart + 26f, Color.WHITE, "");
+        movieScript.setSubtitleText(planetSceneStart + 26.3f, Color.WHITE, "- NO!");
+        movieScript.addCameraAction(planetSceneStart + 28f, 1f, planetSceneCamera,
+                new Vector3(3.8f, 0.8f, 5f), new Vector3(4, 0.3f, 4),
+                new Vector3(3.8f, 0.25f, 4.9f), new Vector3(4, 0.4f, 4), Interpolation.smooth);
     }
 
     private void setupPlanetSurfaceEnvironment(MovieScript movieScript, float planetSceneStart, float planetSceneLength) {
@@ -289,7 +292,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
 
         camera.position.set(8f, 3f, 8f);
         camera.up.set(0f, 1f, 0f);
-        camera.lookAt(0, 0.5f, 0f);
+        camera.lookAt(4f, 2f, 4f);
         camera.update();
 
         return camera;
@@ -349,6 +352,11 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         disposables.add(nativeModel);
         nativeId = models.registerModel(nativeModel);
         models.addModelDefaultTag(nativeId, "Default Lighted");
+
+        Model shadowModel = jsonModelLoader.loadModel(Gdx.files.internal("model/shadow/shadow.g3dj"));
+        disposables.add(shadowModel);
+        shadowId = models.registerModel(shadowModel);
+        models.addModelDefaultTag(shadowId, "Hologram");
 
         ModelBuilder modelBuilder = new ModelBuilder();
         createHangarFloor(models, modelBuilder);

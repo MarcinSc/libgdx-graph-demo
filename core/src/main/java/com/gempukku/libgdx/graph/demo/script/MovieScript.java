@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.gempukku.libgdx.graph.pipeline.PipelineRenderer;
 import com.gempukku.libgdx.graph.shader.environment.GraphShaderEnvironment;
@@ -182,5 +183,59 @@ public class MovieScript extends AbstractScript {
                         pipelineRenderer.setPipelineProperty(property, color);
                     }
                 });
+    }
+
+    public void addCameraAction(float time, float length, Camera camera,
+                                Vector3 cameraStartPosition, Vector3 cameraStartLookAt, Vector3 cameraEndPosition, Vector3 cameraEndLookAt) {
+        addCameraAction(time, length, camera, cameraStartPosition, cameraStartLookAt, cameraEndPosition, cameraEndLookAt, Interpolation.linear);
+    }
+
+    public void addCameraAction(float time, float length, Camera camera,
+                                Vector3 cameraStartPosition, Vector3 cameraStartLookAt, Vector3 cameraEndPosition, Vector3 cameraEndLookAt,
+                                Interpolation interpolation) {
+        addKeyframe(
+                new Keyframe() {
+                    @Override
+                    public float getTime() {
+                        return time + length;
+                    }
+
+                    @Override
+                    public void performKeyframe() {
+                        camera.position.set(cameraEndPosition);
+                        camera.lookAt(cameraEndLookAt);
+                        camera.up.set(0, 1, 0);
+                        camera.update();
+                    }
+                });
+        addAction(
+                new Action() {
+                    @Override
+                    public float getStart() {
+                        return time;
+                    }
+
+                    @Override
+                    public float getLength() {
+                        return length;
+                    }
+
+                    @Override
+                    public void execute(float timeSinceStart) {
+                        float progress = timeSinceStart / length;
+                        float value = interpolation.apply(progress);
+                        camera.position.set(
+                                cameraStartPosition.x + value * (cameraEndPosition.x - cameraStartPosition.x),
+                                cameraStartPosition.y + value * (cameraEndPosition.y - cameraStartPosition.y),
+                                cameraStartPosition.z + value * (cameraEndPosition.z - cameraStartPosition.z));
+                        camera.lookAt(
+                                cameraStartLookAt.x + value * (cameraEndLookAt.x - cameraStartLookAt.x),
+                                cameraStartLookAt.y + value * (cameraEndLookAt.y - cameraStartLookAt.y),
+                                cameraStartLookAt.z + value * (cameraEndLookAt.z - cameraStartLookAt.z));
+                        camera.up.set(0, 1, 0);
+                        camera.update();
+                    }
+                }
+        );
     }
 }

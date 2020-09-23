@@ -1315,6 +1315,591 @@
                   "properties": [],
                   "groups": []
                 }
+              },
+              {
+                "id": "ab405ef899b14e729b9fdd8e06d9854a",
+                "tag": "Hologram",
+                "shader": {
+                  "nodes": [
+                    {
+                      "data": {
+                        "v1": 0.0,
+                        "v2": 1.0
+                      },
+                      "x": 451.0,
+                      "y": 662.0,
+                      "id": "fd6398f2ebf247b29791f68fea693010",
+                      "type": "ValueVector2"
+                    },
+                    {
+                      "x": 446.0,
+                      "y": 889.0,
+                      "id": "a9ae5a3841fc4d65b3dc50275994f01f",
+                      "type": "SimplexNoise2D"
+                    },
+                    {
+                      "x": 418.0,
+                      "y": 50.0,
+                      "id": "0866129cbaa14a02af6ec7d56b89e57f",
+                      "type": "Split"
+                    },
+                    {
+                      "data": {
+                        "v1": 0.0
+                      },
+                      "x": 760.0,
+                      "y": 781.0,
+                      "id": "818f09070abe48ad8d7dc07ef3e0a3ed",
+                      "type": "ValueFloat"
+                    },
+                    {
+                      "data": {
+                        "name": "Distortion Amplitude",
+                        "type": "Float"
+                      },
+                      "x": 1232.0,
+                      "y": 776.0,
+                      "id": "4e79e309218245df825046e1b3909ace",
+                      "type": "Property"
+                    },
+                    {
+                      "x": 843.0,
+                      "y": 330.0,
+                      "id": "9afa3fb960a04291814a1c47247c1bf0",
+                      "type": "Intensity"
+                    },
+                    {
+                      "x": 1042.0,
+                      "y": 354.0,
+                      "id": "e8fad503d7cf49d2af6ba8593769aae0",
+                      "type": "Multiply"
+                    },
+                    {
+                      "x": 453.0,
+                      "y": 728.0,
+                      "id": "17446b3293504833989989a3eceb1935",
+                      "type": "Merge"
+                    },
+                    {
+                      "x": 690.0,
+                      "y": 857.0,
+                      "id": "4efb91f939d246299f1b576f948b2214",
+                      "type": "Remap"
+                    },
+                    {
+                      "data": {
+                        "name": "Distrortion Noise Scale",
+                        "type": "Float"
+                      },
+                      "x": 229.0,
+                      "y": 778.0,
+                      "id": "5006147ff7bd4bb28be30a81b873e98e",
+                      "type": "Property"
+                    },
+                    {
+                      "data": {
+                        "name": "Distrortion Frequency",
+                        "type": "Float"
+                      },
+                      "x": 237.0,
+                      "y": 718.0,
+                      "id": "ca51ed14acf5422dac93ddf313c3fa19",
+                      "type": "Property"
+                    },
+                    {
+                      "x": 1964.0,
+                      "y": 766.0,
+                      "id": "ae715692f20e4f80b6989f3a81ad5095",
+                      "type": "Add"
+                    },
+                    {
+                      "x": 1448.0,
+                      "y": 628.0,
+                      "id": "e6958b6765244c0bb5777870eabfb6c0",
+                      "type": "Split"
+                    },
+                    {
+                      "data": {
+                        "v1": -1.0,
+                        "v2": 1.0
+                      },
+                      "x": 861.0,
+                      "y": 156.0,
+                      "id": "4dfebdc632ad4a7d819b659d7ab93681",
+                      "type": "ValueVector2"
+                    },
+                    {
+                      "data": {
+                        "culling": "back",
+                        "transparency": "transparent",
+                        "blending": "alpha",
+                        "depthTest": "less"
+                      },
+                      "x": 2094.0,
+                      "y": 192.0,
+                      "id": "end",
+                      "type": "ShaderEnd"
+                    },
+                    {
+                      "data": {
+                        "coordinates": "world"
+                      },
+                      "x": 1234.0,
+                      "y": 511.0,
+                      "id": "623112325805463887866e2011bac5ca",
+                      "type": "AttributePosition"
+                    },
+                    {
+                      "x": 1061.0,
+                      "y": 138.0,
+                      "id": "06b7bcb23286497ea34c84de1e74f9bb",
+                      "type": "Remap"
+                    },
+                    {
+                      "data": {
+                        "name": "Color",
+                        "type": "Color"
+                      },
+                      "x": 838.0,
+                      "y": 396.0,
+                      "id": "7bd5c10d59ae457b905ef1d2ce239d0b",
+                      "type": "Property"
+                    },
+                    {
+                      "x": 1796.0,
+                      "y": 816.0,
+                      "id": "5a76e969524941f89754be8aba67c575",
+                      "type": "Merge"
+                    },
+                    {
+                      "x": 1435.0,
+                      "y": 851.0,
+                      "id": "9b756b90ed90448ca1bc4a1f2d8b191d",
+                      "type": "Multiply"
+                    },
+                    {
+                      "x": 860.0,
+                      "y": 221.0,
+                      "id": "2a91753cef234fadb05c9b4da1b8dc4c",
+                      "type": "Sin"
+                    },
+                    {
+                      "data": {
+                        "coordinates": "world"
+                      },
+                      "x": 189.0,
+                      "y": 96.0,
+                      "id": "b7f65777b55b47ca9a86473cbd4cf2e8",
+                      "type": "AttributePosition"
+                    },
+                    {
+                      "x": 244.0,
+                      "y": 843.0,
+                      "id": "5e65b948c4fb4bf996094d04b5e7fb5e",
+                      "type": "Merge"
+                    },
+                    {
+                      "x": 990.0,
+                      "y": 831.0,
+                      "id": "5eec0a0b2c814589980e2f27d2f406e1",
+                      "type": "Clamp"
+                    },
+                    {
+                      "data": {
+                        "v1": 0.1,
+                        "v2": 0.8
+                      },
+                      "x": 864.0,
+                      "y": 82.0,
+                      "id": "2e4daa7da037464cbb58ad0dc3a906af",
+                      "type": "ValueVector2"
+                    },
+                    {
+                      "data": {
+                        "channel": "UV0"
+                      },
+                      "x": 419.0,
+                      "y": 267.0,
+                      "id": "48539984813e4977bc7ce5bc806a4917",
+                      "type": "AttributeUV"
+                    },
+                    {
+                      "x": 630.0,
+                      "y": 273.0,
+                      "id": "3f8659f2ab0a43389d212402ddd7360b",
+                      "type": "Sampler2D"
+                    },
+                    {
+                      "data": {
+                        "v1": 0.7
+                      },
+                      "x": 244.0,
+                      "y": 658.0,
+                      "id": "4f3cffcc17c643f985485c7f0acd546a",
+                      "type": "ValueFloat"
+                    },
+                    {
+                      "x": 1238.0,
+                      "y": 855.0,
+                      "id": "1667b533a42d4c849567e8e785c06ec8",
+                      "type": "Multiply"
+                    },
+                    {
+                      "x": 1637.0,
+                      "y": 851.0,
+                      "id": "c75c5dd6d83b42cb931b3ecc66aac041",
+                      "type": "Multiply"
+                    },
+                    {
+                      "x": 50.0,
+                      "y": 844.0,
+                      "id": "9b11752c1b00491cae086f7ef7a49725",
+                      "type": "Time"
+                    },
+                    {
+                      "data": {
+                        "name": "Distrortion Speed",
+                        "type": "Float"
+                      },
+                      "x": 648.0,
+                      "y": 500.0,
+                      "id": "09325d8588e442e7b6a479c985ae1d0e",
+                      "type": "Property"
+                    },
+                    {
+                      "data": {
+                        "v1": 1.0
+                      },
+                      "x": 759.0,
+                      "y": 709.0,
+                      "id": "91a66567349e4377be320bea18cd2b2a",
+                      "type": "ValueFloat"
+                    },
+                    {
+                      "data": {
+                        "name": "Band Size",
+                        "type": "Float"
+                      },
+                      "x": 419.0,
+                      "y": 209.0,
+                      "id": "27af81b9237c4bb39c73d9880fc2cdbd",
+                      "type": "Property"
+                    },
+                    {
+                      "x": 1058.0,
+                      "y": 629.0,
+                      "id": "613e248083a649e5bf27e944da89041b",
+                      "type": "Sin"
+                    },
+                    {
+                      "x": 650.0,
+                      "y": 562.0,
+                      "id": "c1e932b455bc4cd28fcb173390164de8",
+                      "type": "Time"
+                    },
+                    {
+                      "x": 646.0,
+                      "y": 184.0,
+                      "id": "319ed018661f4cc2894d5111cf59ac42",
+                      "type": "Multiply"
+                    },
+                    {
+                      "data": {
+                        "previewPath": "D:\/dev\/libgdx-graph\/libgdx-graph-test\/resources\/image\/seamless_rock_face_texture_by_hhh316.jpg"
+                      },
+                      "x": 359.0,
+                      "y": 354.0,
+                      "id": "7dfdaee08345444eab7c61bf550b4078",
+                      "type": "DiffuseTexture"
+                    },
+                    {
+                      "x": 862.0,
+                      "y": 606.0,
+                      "id": "9703addde3b84d8ab8852a16be3d6bc6",
+                      "type": "Multiply"
+                    }
+                  ],
+                  "connections": [
+                    {
+                      "fromNode": "b7f65777b55b47ca9a86473cbd4cf2e8",
+                      "toField": "input",
+                      "fromField": "position",
+                      "toNode": "0866129cbaa14a02af6ec7d56b89e57f"
+                    },
+                    {
+                      "fromNode": "2a91753cef234fadb05c9b4da1b8dc4c",
+                      "toField": "input",
+                      "fromField": "output",
+                      "toNode": "06b7bcb23286497ea34c84de1e74f9bb"
+                    },
+                    {
+                      "fromNode": "4dfebdc632ad4a7d819b659d7ab93681",
+                      "toField": "from",
+                      "fromField": "value",
+                      "toNode": "06b7bcb23286497ea34c84de1e74f9bb"
+                    },
+                    {
+                      "fromNode": "2e4daa7da037464cbb58ad0dc3a906af",
+                      "toField": "to",
+                      "fromField": "value",
+                      "toNode": "06b7bcb23286497ea34c84de1e74f9bb"
+                    },
+                    {
+                      "fromNode": "06b7bcb23286497ea34c84de1e74f9bb",
+                      "toField": "alpha",
+                      "fromField": "output",
+                      "toNode": "end"
+                    },
+                    {
+                      "fromNode": "27af81b9237c4bb39c73d9880fc2cdbd",
+                      "toField": "a",
+                      "fromField": "value",
+                      "toNode": "319ed018661f4cc2894d5111cf59ac42"
+                    },
+                    {
+                      "fromNode": "0866129cbaa14a02af6ec7d56b89e57f",
+                      "toField": "b",
+                      "fromField": "y",
+                      "toNode": "319ed018661f4cc2894d5111cf59ac42"
+                    },
+                    {
+                      "fromNode": "319ed018661f4cc2894d5111cf59ac42",
+                      "toField": "input",
+                      "fromField": "output",
+                      "toNode": "2a91753cef234fadb05c9b4da1b8dc4c"
+                    },
+                    {
+                      "fromNode": "7dfdaee08345444eab7c61bf550b4078",
+                      "toField": "texture",
+                      "fromField": "texture",
+                      "toNode": "3f8659f2ab0a43389d212402ddd7360b"
+                    },
+                    {
+                      "fromNode": "48539984813e4977bc7ce5bc806a4917",
+                      "toField": "uv",
+                      "fromField": "uv",
+                      "toNode": "3f8659f2ab0a43389d212402ddd7360b"
+                    },
+                    {
+                      "fromNode": "3f8659f2ab0a43389d212402ddd7360b",
+                      "toField": "color",
+                      "fromField": "color",
+                      "toNode": "9afa3fb960a04291814a1c47247c1bf0"
+                    },
+                    {
+                      "fromNode": "7bd5c10d59ae457b905ef1d2ce239d0b",
+                      "toField": "a",
+                      "fromField": "value",
+                      "toNode": "e8fad503d7cf49d2af6ba8593769aae0"
+                    },
+                    {
+                      "fromNode": "9afa3fb960a04291814a1c47247c1bf0",
+                      "toField": "b",
+                      "fromField": "output",
+                      "toNode": "e8fad503d7cf49d2af6ba8593769aae0"
+                    },
+                    {
+                      "fromNode": "e8fad503d7cf49d2af6ba8593769aae0",
+                      "toField": "color",
+                      "fromField": "output",
+                      "toNode": "end"
+                    },
+                    {
+                      "fromNode": "9b11752c1b00491cae086f7ef7a49725",
+                      "toField": "x",
+                      "fromField": "time",
+                      "toNode": "5e65b948c4fb4bf996094d04b5e7fb5e"
+                    },
+                    {
+                      "fromNode": "5e65b948c4fb4bf996094d04b5e7fb5e",
+                      "toField": "uv",
+                      "fromField": "v2",
+                      "toNode": "a9ae5a3841fc4d65b3dc50275994f01f"
+                    },
+                    {
+                      "fromNode": "5006147ff7bd4bb28be30a81b873e98e",
+                      "toField": "scale",
+                      "fromField": "value",
+                      "toNode": "a9ae5a3841fc4d65b3dc50275994f01f"
+                    },
+                    {
+                      "fromNode": "a9ae5a3841fc4d65b3dc50275994f01f",
+                      "toField": "input",
+                      "fromField": "output",
+                      "toNode": "4efb91f939d246299f1b576f948b2214"
+                    },
+                    {
+                      "fromNode": "ca51ed14acf5422dac93ddf313c3fa19",
+                      "toField": "x",
+                      "fromField": "value",
+                      "toNode": "17446b3293504833989989a3eceb1935"
+                    },
+                    {
+                      "fromNode": "4f3cffcc17c643f985485c7f0acd546a",
+                      "toField": "y",
+                      "fromField": "value",
+                      "toNode": "17446b3293504833989989a3eceb1935"
+                    },
+                    {
+                      "fromNode": "17446b3293504833989989a3eceb1935",
+                      "toField": "from",
+                      "fromField": "v2",
+                      "toNode": "4efb91f939d246299f1b576f948b2214"
+                    },
+                    {
+                      "fromNode": "fd6398f2ebf247b29791f68fea693010",
+                      "toField": "to",
+                      "fromField": "value",
+                      "toNode": "4efb91f939d246299f1b576f948b2214"
+                    },
+                    {
+                      "fromNode": "4efb91f939d246299f1b576f948b2214",
+                      "toField": "input",
+                      "fromField": "output",
+                      "toNode": "5eec0a0b2c814589980e2f27d2f406e1"
+                    },
+                    {
+                      "fromNode": "818f09070abe48ad8d7dc07ef3e0a3ed",
+                      "toField": "min",
+                      "fromField": "value",
+                      "toNode": "5eec0a0b2c814589980e2f27d2f406e1"
+                    },
+                    {
+                      "fromNode": "91a66567349e4377be320bea18cd2b2a",
+                      "toField": "max",
+                      "fromField": "value",
+                      "toNode": "5eec0a0b2c814589980e2f27d2f406e1"
+                    },
+                    {
+                      "fromNode": "c1e932b455bc4cd28fcb173390164de8",
+                      "toField": "a",
+                      "fromField": "time",
+                      "toNode": "9703addde3b84d8ab8852a16be3d6bc6"
+                    },
+                    {
+                      "fromNode": "09325d8588e442e7b6a479c985ae1d0e",
+                      "toField": "b",
+                      "fromField": "value",
+                      "toNode": "9703addde3b84d8ab8852a16be3d6bc6"
+                    },
+                    {
+                      "fromNode": "9703addde3b84d8ab8852a16be3d6bc6",
+                      "toField": "input",
+                      "fromField": "output",
+                      "toNode": "613e248083a649e5bf27e944da89041b"
+                    },
+                    {
+                      "fromNode": "5eec0a0b2c814589980e2f27d2f406e1",
+                      "toField": "a",
+                      "fromField": "output",
+                      "toNode": "1667b533a42d4c849567e8e785c06ec8"
+                    },
+                    {
+                      "fromNode": "613e248083a649e5bf27e944da89041b",
+                      "toField": "b",
+                      "fromField": "output",
+                      "toNode": "1667b533a42d4c849567e8e785c06ec8"
+                    },
+                    {
+                      "fromNode": "1667b533a42d4c849567e8e785c06ec8",
+                      "toField": "a",
+                      "fromField": "output",
+                      "toNode": "9b756b90ed90448ca1bc4a1f2d8b191d"
+                    },
+                    {
+                      "fromNode": "4e79e309218245df825046e1b3909ace",
+                      "toField": "b",
+                      "fromField": "value",
+                      "toNode": "9b756b90ed90448ca1bc4a1f2d8b191d"
+                    },
+                    {
+                      "fromNode": "623112325805463887866e2011bac5ca",
+                      "toField": "input",
+                      "fromField": "position",
+                      "toNode": "e6958b6765244c0bb5777870eabfb6c0"
+                    },
+                    {
+                      "fromNode": "9b756b90ed90448ca1bc4a1f2d8b191d",
+                      "toField": "a",
+                      "fromField": "output",
+                      "toNode": "c75c5dd6d83b42cb931b3ecc66aac041"
+                    },
+                    {
+                      "fromNode": "e6958b6765244c0bb5777870eabfb6c0",
+                      "toField": "b",
+                      "fromField": "y",
+                      "toNode": "c75c5dd6d83b42cb931b3ecc66aac041"
+                    },
+                    {
+                      "fromNode": "623112325805463887866e2011bac5ca",
+                      "toField": "b",
+                      "fromField": "position",
+                      "toNode": "ae715692f20e4f80b6989f3a81ad5095"
+                    },
+                    {
+                      "fromNode": "c75c5dd6d83b42cb931b3ecc66aac041",
+                      "toField": "y",
+                      "fromField": "output",
+                      "toNode": "5a76e969524941f89754be8aba67c575"
+                    },
+                    {
+                      "fromNode": "5a76e969524941f89754be8aba67c575",
+                      "toField": "a",
+                      "fromField": "v3",
+                      "toNode": "ae715692f20e4f80b6989f3a81ad5095"
+                    },
+                    {
+                      "fromNode": "ae715692f20e4f80b6989f3a81ad5095",
+                      "toField": "position",
+                      "fromField": "output",
+                      "toNode": "end"
+                    }
+                  ],
+                  "properties": [
+                    {
+                      "data": {
+                        "x": 500.0
+                      },
+                      "name": "Band Size",
+                      "type": "Float"
+                    },
+                    {
+                      "data": {
+                        "color": "6d7cedff"
+                      },
+                      "name": "Color",
+                      "type": "Color"
+                    },
+                    {
+                      "data": {
+                        "x": 1.0
+                      },
+                      "name": "Distrortion Noise Scale",
+                      "type": "Float"
+                    },
+                    {
+                      "data": {
+                        "x": 0.65
+                      },
+                      "name": "Distrortion Frequency",
+                      "type": "Float"
+                    },
+                    {
+                      "data": {
+                        "x": 100.0
+                      },
+                      "name": "Distrortion Speed",
+                      "type": "Float"
+                    },
+                    {
+                      "data": {
+                        "x": 0.2
+                      },
+                      "name": "Distortion Amplitude",
+                      "type": "Float"
+                    }
+                  ]
+                }
               }
             ]
           },
@@ -2631,7 +3216,7 @@
                     {
                       "id": "45e7c45b59dd4658b7976c47a2b442dd",
                       "type": "ValueVector2",
-                      "x": 884.0000610351562,
+                      "x": 884.0,
                       "y": 941.0,
                       "data": {
                         "v1": 0.30000001192092896,
@@ -2656,7 +3241,7 @@
                     {
                       "id": "52a1e612ed1c4b72b119689209277037",
                       "type": "Subtract",
-                      "x": 883.0000610351562,
+                      "x": 883.0,
                       "y": 1012.0
                     },
                     {
@@ -2683,7 +3268,7 @@
                     {
                       "id": "30d73405a0a34f18b1e6298961509209",
                       "type": "ValueFloat",
-                      "x": 262.00006103515625,
+                      "x": 262.0,
                       "y": 770.0,
                       "data": {
                         "v1": 0.4000000059604645
@@ -2702,7 +3287,7 @@
                     {
                       "id": "f7a4d6555cf64798bd6a7cc4e366be5e",
                       "type": "SceneDepth",
-                      "x": 502.00006103515625,
+                      "x": 502.0,
                       "y": 271.0
                     },
                     {
@@ -2726,7 +3311,7 @@
                     {
                       "id": "f7d9cee1ecee4da88c6965f5b72f6988",
                       "type": "AttributePosition",
-                      "x": 279.00006103515625,
+                      "x": 279.0,
                       "y": 197.0,
                       "data": {
                         "coordinates": "world"
@@ -2753,7 +3338,7 @@
                     {
                       "id": "9fbf0b52ee9f4d2283029277880f84ae",
                       "type": "Multiply",
-                      "x": 930.0000610351562,
+                      "x": 930.0,
                       "y": 249.0
                     },
                     {
@@ -2774,10 +3359,10 @@
                     {
                       "id": "e5895d6db2134781b8cc3671ce68dbcb",
                       "type": "ValueFloat",
-                      "x": 713.0000610351562,
+                      "x": 713.0,
                       "y": 50.0,
                       "data": {
-                        "v1": 5.0
+                        "v1": 20.0
                       }
                     },
                     {
@@ -2802,13 +3387,13 @@
                     {
                       "id": "f8bce0c45c95458e94be7e8eed4c03be",
                       "type": "ScreenPosition",
-                      "x": 298.00006103515625,
+                      "x": 298.0,
                       "y": 295.0
                     },
                     {
                       "id": "971f8086f7564658908d9e10720c60ce",
                       "type": "ValueFloat",
-                      "x": 693.0000610351562,
+                      "x": 693.0,
                       "y": 1084.0,
                       "data": {
                         "v1": 1.0
@@ -2850,7 +3435,7 @@
                     {
                       "id": "57dbf94f4aa644c59dfe26dc3041770d",
                       "type": "CameraPosition",
-                      "x": 295.00006103515625,
+                      "x": 295.0,
                       "y": 134.0
                     },
                     {
@@ -2871,13 +3456,13 @@
                     {
                       "id": "ec3ec02e2ab34ece80f113bec59823bd",
                       "type": "Subtract",
-                      "x": 703.0000610351562,
+                      "x": 703.0,
                       "y": 248.0
                     },
                     {
                       "id": "504b016bc67d4df4881065b1e0f5a14c",
                       "type": "Multiply",
-                      "x": 483.00006103515625,
+                      "x": 483.0,
                       "y": 876.0
                     },
                     {
@@ -2889,13 +3474,13 @@
                     {
                       "id": "bba4ae5dc7f843fc8153057e07015d6d",
                       "type": "Distance",
-                      "x": 508.00006103515625,
+                      "x": 508.0,
                       "y": 178.0
                     },
                     {
                       "id": "0b9dc8475df84212a762c9c0728139f2",
                       "type": "Time",
-                      "x": 261.00006103515625,
+                      "x": 261.0,
                       "y": 834.0
                     }
                   ],
@@ -3149,34 +3734,34 @@
                       ]
                     },
                     {
-                      "name": "Wave foam color",
-                      "nodes": [
-                        "c8d436c7f35e48b8bb62c7e05227a47f"
-                      ]
-                    },
-                    {
-                      "name": "Wave scale",
-                      "nodes": [
-                        "6038e8adeb29418b8b47a424aeec541f"
-                      ]
-                    },
-                    {
                       "name": "Shore foam color",
                       "nodes": [
                         "868b34a0b0f045b6a4c7053a50e49c38"
                       ]
                     },
                     {
+                      "name": "Wave foam color",
+                      "nodes": [
+                        "c8d436c7f35e48b8bb62c7e05227a47f"
+                      ]
+                    },
+                    {
+                      "name": "Base water color",
+                      "nodes": [
+                        "95be615edac141c9b2745c829fc54936"
+                      ]
+                    },
+                    {
                       "name": "Water Y-displacement",
                       "nodes": [
+                        "30d73405a0a34f18b1e6298961509209",
                         "971f8086f7564658908d9e10720c60ce",
                         "45e7c45b59dd4658b7976c47a2b442dd",
+                        "25e210d5d034450b85679e7dcbbb635d",
                         "679e266a357e499ba8dd576d650e9af8",
+                        "504b016bc67d4df4881065b1e0f5a14c",
                         "ea560618379040698452dec6f8aededa",
                         "52a1e612ed1c4b72b119689209277037",
-                        "30d73405a0a34f18b1e6298961509209",
-                        "25e210d5d034450b85679e7dcbbb635d",
-                        "504b016bc67d4df4881065b1e0f5a14c",
                         "0f7e0189f9a94ff38625b6aa8177fd1b",
                         "0b9dc8475df84212a762c9c0728139f2",
                         "91fece8bcaf9460cbb436f6a1f95bf04",
@@ -3184,9 +3769,9 @@
                       ]
                     },
                     {
-                      "name": "Base water color",
+                      "name": "Wave scale",
                       "nodes": [
-                        "95be615edac141c9b2745c829fc54936"
+                        "6038e8adeb29418b8b47a424aeec541f"
                       ]
                     }
                   ]
