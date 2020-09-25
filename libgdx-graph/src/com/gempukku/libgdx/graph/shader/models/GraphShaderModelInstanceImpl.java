@@ -40,6 +40,11 @@ public class GraphShaderModelInstanceImpl implements GraphShaderModelInstance {
     }
 
     @Override
+    public void removeAllTags() {
+        tags.clear();
+    }
+
+    @Override
     public void setProperty(String name, Object value) {
         properties.put(name, value);
     }

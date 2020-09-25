@@ -32,7 +32,6 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.JsonReader;
-import com.badlogic.gdx.utils.UBJsonReader;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.gempukku.libgdx.graph.GraphLoader;
 import com.gempukku.libgdx.graph.demo.script.ActorScript;
@@ -89,8 +88,6 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         pipelineRenderer = loadPipelineRenderer(models, stage);
 
         script = createScript(subtitleLabel, models, pipelineRenderer);
-        // TODO: Temp - move to planet scene
-        //script.update(60f);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -99,12 +96,15 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         MovieScript movieScript = new MovieScript(subtitleLabel, models, pipelineRenderer);
         // Introduction
         movieScript.setPipelineCamera(0f, "Camera", createDefaultCamera());
-        movieScript.setSubtitleText(0f, Color.WHITE, "This is not a game.\nThis is a libGDX-Graph Demo.");
+        movieScript.setSubtitleText(0f, Color.WHITE,
+                "This is not a game.\n" +
+                        "This is a libGDX-Graph Demo.");
         movieScript.setSubtitleText(2.3f, Color.WHITE, "");
-        movieScript.setSubtitleText(2.6f, Color.WHITE, "No shaders were written during creation of this demo.\n" +
-                "All graphical assets were downloaded from cgtrader.com");
-        movieScript.setSubtitleText(6.2f, Color.WHITE, "");
-        movieScript.setSubtitleText(6.5f, Color.WHITE, "You may press SPACE to pause/unpause the movie.");
+        movieScript.setSubtitleText(2.6f, Color.WHITE,
+                "No shaders were written during creation of this demo.\n" +
+                        "All graphical assets were downloaded from cgtrader.com");
+        movieScript.setSubtitleText(6.8f, Color.WHITE, "");
+        movieScript.setSubtitleText(7f, Color.WHITE, "You may press SPACE to pause/unpause the movie.");
         movieScript.setSubtitleText(9.3f, Color.WHITE, "");
         movieScript.setSubtitleText(9.5f, new Color(0.8f, 0.8f, 1f, 1f), "A few centuries ago, in a far away galaxy...");
 
@@ -118,6 +118,8 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         createPlanetScene(movieScript, planetSceneStart, planetSceneLength);
 
         movieScript.setSubtitleText(78f, Color.WHITE, "Thanks for watching!");
+        movieScript.setSubtitleText(81f, Color.WHITE, "");
+        movieScript.setLength(81.3f);
 
         return movieScript;
     }
@@ -188,7 +190,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
                         .setPosition(0, 5f, lightBombPosition, lightBombPosition));
         movieScript.setPipelineFloatProperty("Bloom Radius", planetSceneStart + 28f, 5f,
                 1, 64f);
-        movieScript.setPipelineFloatProperty("Bloom Strength", planetSceneStart + 28f, 5f,
+        movieScript.setPipelineFloatProperty("Bloom Strength", planetSceneStart + 30f, 4f,
                 0f, 2f);
         movieScript.setPipelineFloatProperty("Blackout", planetSceneStart + 32f, 2f, 0, 1, Interpolation.pow3In);
         movieScript.setPipelineFloatProperty("Blur", planetSceneStart + 32f, 2f, 0, BLUR_VALUE);
@@ -331,8 +333,6 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
 
         JsonReader jsonReader = new JsonReader();
         G3dModelLoader jsonModelLoader = new G3dModelLoader(jsonReader);
-        UBJsonReader binaryReader = new UBJsonReader();
-        G3dModelLoader binaryModelLoader = new G3dModelLoader(binaryReader);
 
         Model luminarisModel = jsonModelLoader.loadModel(Gdx.files.internal("model/luminaris/luminaris.g3dj"));
         disposables.add(luminarisModel);
@@ -589,6 +589,9 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         }
 
         pipelineRenderer.render(delta, RenderOutputs.drawToScreen);
+
+        if (script.isFinished())
+            Gdx.app.exit();
     }
 
 

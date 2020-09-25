@@ -7,6 +7,16 @@ public class AbstractScript implements Script {
     private Array<Keyframe> keyframes = new Array<>();
     private Array<Action> actions = new Array<>();
     private float time = 0;
+    private float length;
+
+    public void setLength(float length) {
+        this.length = length;
+    }
+
+    @Override
+    public boolean isFinished() {
+        return time > length;
+    }
 
     protected void addKeyframe(Keyframe keyframe) {
         keyframes.add(keyframe);

@@ -9,6 +9,8 @@ public interface GraphShaderModelInstance {
 
     void removeTag(String tag);
 
+    void removeAllTags();
+
     void setProperty(String name, Object value);
 
     void unsetProperty(String name);
