@@ -3,7 +3,7 @@ package com.gempukku.libgdx.graph.pipeline;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.gempukku.libgdx.graph.data.FieldType;
 import com.gempukku.libgdx.graph.shader.environment.GraphShaderEnvironment;
-import com.gempukku.libgdx.graph.shader.models.GraphShaderModels;
+import com.gempukku.libgdx.graph.shader.models.impl.GraphShaderModelsImpl;
 
 public enum PipelineFieldType implements FieldType {
     Float, Vector2, Vector3, Color, Boolean,
@@ -30,7 +30,7 @@ public enum PipelineFieldType implements FieldType {
             case Models:
                 return value instanceof PipelineRendererModels;
             case GraphModels:
-                return value instanceof GraphShaderModels;
+                return value instanceof GraphShaderModelsImpl;
             case Lights:
                 return value instanceof Environment;
             case GraphLights:

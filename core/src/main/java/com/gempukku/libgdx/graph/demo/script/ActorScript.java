@@ -2,15 +2,19 @@ package com.gempukku.libgdx.graph.demo.script;
 
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
-import com.gempukku.libgdx.graph.shader.models.GraphShaderModelInstance;
+import com.gempukku.libgdx.graph.shader.models.GraphShaderModels;
+import com.gempukku.libgdx.graph.shader.models.TagOptimizationHint;
+import com.gempukku.libgdx.graph.shader.models.TransformUpdate;
 
 public class ActorScript extends AbstractScript {
+    private GraphShaderModels models;
     private String modelId;
     private float start;
     private float length;
 
-    private GraphShaderModelInstance graphShaderModelInstance;
+    private String modelInstanceId;
 
     private Vector3 position = new Vector3();
     private float scale = 1f;
@@ -18,7 +22,8 @@ public class ActorScript extends AbstractScript {
     private float rotateDegrees;
     private AnimationController animationController;
 
-    public ActorScript(String modelId, float start, float length) {
+    public ActorScript(GraphShaderModels models, String modelId, float start, float length) {
+        this.models = models;
         this.modelId = modelId;
         this.start = start;
         this.length = length;
@@ -36,8 +41,8 @@ public class ActorScript extends AbstractScript {
         return length;
     }
 
-    public void setGraphShaderModelInstance(GraphShaderModelInstance graphShaderModelInstance) {
-        this.graphShaderModelInstance = graphShaderModelInstance;
+    public void setModelInstanceId(String modelInstanceId) {
+        this.modelInstanceId = modelInstanceId;
     }
 
     public ActorScript setScale(float start, float length, float scaleStart, float scaleEnd) {
@@ -157,10 +162,16 @@ public class ActorScript extends AbstractScript {
     }
 
     private void updateTransform() {
-        graphShaderModelInstance.getTransformMatrix().idt()
-                .translate(position)
-                .scale(scale, scale, scale)
-                .rotate(rotateAxis.x, rotateAxis.y, rotateAxis.z, rotateDegrees);
+        models.updateTransform(modelInstanceId,
+                new TransformUpdate() {
+                    @Override
+                    public void updateTransform(Matrix4 transform) {
+                        transform.idt()
+                                .translate(position)
+                                .scale(scale, scale, scale)
+                                .rotate(rotateAxis.x, rotateAxis.y, rotateAxis.z, rotateDegrees);
+                    }
+                });
     }
 
     public ActorScript setFloatProperty(String property, float start, float length, float fromAmount, float toAmount) {
@@ -173,7 +184,7 @@ public class ActorScript extends AbstractScript {
 
                     @Override
                     public void performKeyframe() {
-                        graphShaderModelInstance.setProperty(property, toAmount);
+                        models.setProperty(modelInstanceId, property, toAmount);
                     }
                 });
         addAction(
@@ -191,7 +202,7 @@ public class ActorScript extends AbstractScript {
                     @Override
                     public void execute(float timeSinceStart) {
                         float value = fromAmount + (timeSinceStart / length) * (toAmount - fromAmount);
-                        graphShaderModelInstance.setProperty(property, value);
+                        models.setProperty(modelInstanceId, property, value);
                     }
                 });
         return this;
@@ -207,13 +218,13 @@ public class ActorScript extends AbstractScript {
 
                     @Override
                     public void performKeyframe() {
-                        graphShaderModelInstance.removeTag(tag);
+                        models.removeTag(modelInstanceId, tag);
                     }
                 });
         return this;
     }
 
-    public ActorScript addTag(float time, String tag) {
+    public ActorScript addTag(float time, String tag, TagOptimizationHint tagOptimizationHint) {
         addKeyframe(
                 new Keyframe() {
                     @Override
@@ -223,7 +234,7 @@ public class ActorScript extends AbstractScript {
 
                     @Override
                     public void performKeyframe() {
-                        graphShaderModelInstance.addTag(tag);
+                        models.addTag(modelInstanceId, tag, tagOptimizationHint);
                     }
                 });
         return this;

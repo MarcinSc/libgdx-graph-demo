@@ -21,10 +21,8 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.FlushablePool;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.IntArray;
-import com.gempukku.libgdx.graph.shader.models.GraphShaderModelInstanceImpl;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.gempukku.libgdx.graph.shader.models.impl.GraphShaderModelInstance;
 
 import static com.badlogic.gdx.graphics.GL20.GL_BACK;
 import static com.badlogic.gdx.graphics.GL20.GL_FRONT;
@@ -152,9 +150,9 @@ public abstract class BasicShader implements UniformRegistry, Disposable {
         }
     }
 
-    private final Map<String, Attribute> attributes = new HashMap<>();
-    private final Map<String, Uniform> uniforms = new HashMap<String, Uniform>();
-    private final Map<String, StructArrayUniform> structArrayUniforms = new HashMap<String, StructArrayUniform>();
+    private final ObjectMap<String, Attribute> attributes = new ObjectMap<>();
+    private final ObjectMap<String, Uniform> uniforms = new ObjectMap<String, Uniform>();
+    private final ObjectMap<String, StructArrayUniform> structArrayUniforms = new ObjectMap<String, StructArrayUniform>();
 
     private ShaderProgram program;
     private RenderContext context;
@@ -324,7 +322,7 @@ public abstract class BasicShader implements UniformRegistry, Disposable {
         context.setBlending(enabled, blending.getSourceFactor(), blending.getDestinationFactor());
     }
 
-    public void render(ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance) {
+    public void render(ShaderContext shaderContext, GraphShaderModelInstance graphShaderModelInstance) {
         graphShaderModelInstance.getRenderables(renderables, renderablesPool);
         for (Renderable renderable : renderables) {
             for (Uniform uniform : uniforms.values()) {

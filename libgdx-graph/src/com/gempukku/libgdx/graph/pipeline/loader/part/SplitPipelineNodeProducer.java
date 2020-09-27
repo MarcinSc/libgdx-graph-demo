@@ -4,13 +4,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gempukku.libgdx.graph.pipeline.config.part.SplitPipelineNodeConfiguration;
 import com.gempukku.libgdx.graph.pipeline.loader.PipelineRenderingContext;
 import com.gempukku.libgdx.graph.pipeline.loader.node.OncePerFrameJobPipelineNode;
 import com.gempukku.libgdx.graph.pipeline.loader.node.PipelineNode;
 import com.gempukku.libgdx.graph.pipeline.loader.node.PipelineNodeProducerImpl;
-
-import java.util.Map;
 
 public class SplitPipelineNodeProducer extends PipelineNodeProducerImpl {
     public SplitPipelineNodeProducer() {
@@ -18,10 +17,10 @@ public class SplitPipelineNodeProducer extends PipelineNodeProducerImpl {
     }
 
     @Override
-    public PipelineNode createNode(JsonValue data, final Map<String, PipelineNode.FieldOutput<?>> inputFields) {
+    public PipelineNode createNode(JsonValue data, final ObjectMap<String, PipelineNode.FieldOutput<?>> inputFields) {
         return new OncePerFrameJobPipelineNode(configuration, inputFields) {
             @Override
-            protected void executeJob(PipelineRenderingContext pipelineRenderingContext, Map<String, ? extends OutputValue> outputValues) {
+            protected void executeJob(PipelineRenderingContext pipelineRenderingContext, ObjectMap<String, ? extends OutputValue> outputValues) {
                 Object input = inputFields.get("input").getValue(pipelineRenderingContext);
                 float x = 0f;
                 float y = 0f;

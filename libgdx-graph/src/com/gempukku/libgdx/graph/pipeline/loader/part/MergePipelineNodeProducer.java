@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gempukku.libgdx.graph.pipeline.config.part.MergePipelineNodeConfiguration;
 import com.gempukku.libgdx.graph.pipeline.loader.FloatFieldOutput;
 import com.gempukku.libgdx.graph.pipeline.loader.PipelineRenderingContext;
@@ -11,15 +12,13 @@ import com.gempukku.libgdx.graph.pipeline.loader.node.OncePerFrameJobPipelineNod
 import com.gempukku.libgdx.graph.pipeline.loader.node.PipelineNode;
 import com.gempukku.libgdx.graph.pipeline.loader.node.PipelineNodeProducerImpl;
 
-import java.util.Map;
-
 public class MergePipelineNodeProducer extends PipelineNodeProducerImpl {
     public MergePipelineNodeProducer() {
         super(new MergePipelineNodeConfiguration());
     }
 
     @Override
-    public PipelineNode createNode(JsonValue data, Map<String, PipelineNode.FieldOutput<?>> inputFields) {
+    public PipelineNode createNode(JsonValue data, ObjectMap<String, PipelineNode.FieldOutput<?>> inputFields) {
         PipelineNode.FieldOutput<Float> x = (PipelineNode.FieldOutput<Float>) inputFields.get("x");
         PipelineNode.FieldOutput<Float> y = (PipelineNode.FieldOutput<Float>) inputFields.get("y");
         PipelineNode.FieldOutput<Float> z = (PipelineNode.FieldOutput<Float>) inputFields.get("z");
@@ -39,7 +38,7 @@ public class MergePipelineNodeProducer extends PipelineNodeProducerImpl {
 
         return new OncePerFrameJobPipelineNode(configuration, inputFields) {
             @Override
-            protected void executeJob(PipelineRenderingContext pipelineRenderingContext, Map<String, ? extends OutputValue> outputValues) {
+            protected void executeJob(PipelineRenderingContext pipelineRenderingContext, ObjectMap<String, ? extends OutputValue> outputValues) {
                 float xValue = finalX.getValue(pipelineRenderingContext);
                 float yValue = finalY.getValue(pipelineRenderingContext);
                 float zValue = finalZ.getValue(pipelineRenderingContext);

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gempukku.libgdx.graph.pipeline.PipelineRendererModels;
 import com.gempukku.libgdx.graph.pipeline.RenderPipeline;
 import com.gempukku.libgdx.graph.pipeline.config.rendering.DefaultRendererPipelineNodeConfiguration;
@@ -13,15 +14,13 @@ import com.gempukku.libgdx.graph.pipeline.loader.node.OncePerFrameJobPipelineNod
 import com.gempukku.libgdx.graph.pipeline.loader.node.PipelineNode;
 import com.gempukku.libgdx.graph.pipeline.loader.node.PipelineNodeProducerImpl;
 
-import java.util.Map;
-
 public class DefaultRendererPipelineNodeProducer extends PipelineNodeProducerImpl {
     public DefaultRendererPipelineNodeProducer() {
         super(new DefaultRendererPipelineNodeConfiguration());
     }
 
     @Override
-    public PipelineNode createNode(JsonValue data, Map<String, PipelineNode.FieldOutput<?>> inputFields) {
+    public PipelineNode createNode(JsonValue data, ObjectMap<String, PipelineNode.FieldOutput<?>> inputFields) {
         final PipelineNode.FieldOutput<PipelineRendererModels> modelsInput = (PipelineNode.FieldOutput<PipelineRendererModels>) inputFields.get("models");
         final PipelineNode.FieldOutput<Environment> lightsInput = (PipelineNode.FieldOutput<Environment>) inputFields.get("lights");
         final PipelineNode.FieldOutput<Camera> cameraInput = (PipelineNode.FieldOutput<Camera>) inputFields.get("camera");
@@ -31,7 +30,7 @@ public class DefaultRendererPipelineNodeProducer extends PipelineNodeProducerImp
             private ModelBatch modelBatch = new ModelBatch();
 
             @Override
-            protected void executeJob(PipelineRenderingContext pipelineRenderingContext, Map<String, ? extends OutputValue> outputValues) {
+            protected void executeJob(PipelineRenderingContext pipelineRenderingContext, ObjectMap<String, ? extends OutputValue> outputValues) {
                 RenderPipeline renderPipeline = renderPipelineInput.getValue(pipelineRenderingContext);
                 PipelineRendererModels models = modelsInput.getValue(pipelineRenderingContext);
                 Camera camera = cameraInput.getValue(pipelineRenderingContext);

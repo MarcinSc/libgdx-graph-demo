@@ -1,8 +1,7 @@
 package com.gempukku.libgdx.graph;
 
 import com.badlogic.gdx.utils.JsonValue;
-
-import java.util.Set;
+import com.badlogic.gdx.utils.ObjectSet;
 
 public interface GraphLoaderCallback<T> {
     void start();
@@ -13,7 +12,7 @@ public interface GraphLoaderCallback<T> {
 
     void addPipelineProperty(String type, String name, JsonValue data);
 
-    void addNodeGroup(String name, Set<String> nodeIds);
+    void addNodeGroup(String name, ObjectSet<String> nodeIds);
 
     T end();
 }

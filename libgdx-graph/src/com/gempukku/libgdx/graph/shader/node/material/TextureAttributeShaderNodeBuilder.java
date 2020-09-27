@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g3d.Attribute;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.ObjectSet;
+import com.gempukku.libgdx.graph.LibGDXCollections;
 import com.gempukku.libgdx.graph.WhitePixel;
 import com.gempukku.libgdx.graph.shader.BasicShader;
 import com.gempukku.libgdx.graph.shader.GraphShader;
@@ -15,13 +18,9 @@ import com.gempukku.libgdx.graph.shader.UniformRegistry;
 import com.gempukku.libgdx.graph.shader.UniformSetters;
 import com.gempukku.libgdx.graph.shader.builder.CommonShaderBuilder;
 import com.gempukku.libgdx.graph.shader.config.material.TextureAttributeShaderNodeConfiguration;
-import com.gempukku.libgdx.graph.shader.models.GraphShaderModelInstanceImpl;
+import com.gempukku.libgdx.graph.shader.models.impl.GraphShaderModelInstance;
 import com.gempukku.libgdx.graph.shader.node.ConfigurationCommonShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.DefaultFieldOutput;
-
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
 
 public class TextureAttributeShaderNodeBuilder extends ConfigurationCommonShaderNodeBuilder {
     private String alias;
@@ -32,8 +31,8 @@ public class TextureAttributeShaderNodeBuilder extends ConfigurationCommonShader
     }
 
     @Override
-    protected Map<String, ? extends FieldOutput> buildCommonNode(boolean designTime, String nodeId, JsonValue data, Map<String, FieldOutput> inputs, Set<String> producedOutputs,
-                                                                 CommonShaderBuilder commonShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
+    protected ObjectMap<String, ? extends FieldOutput> buildCommonNode(boolean designTime, String nodeId, JsonValue data, ObjectMap<String, FieldOutput> inputs, ObjectSet<String> producedOutputs,
+                                                                       CommonShaderBuilder commonShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
         String textureName = "u_" + alias;
         String transformName = "u_UV" + alias;
         if (designTime) {
@@ -57,14 +56,14 @@ public class TextureAttributeShaderNodeBuilder extends ConfigurationCommonShader
             commonShaderBuilder.addUniformVariable(textureName, "sampler2D", false,
                     new UniformRegistry.UniformSetter() {
                         @Override
-                        public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
+                        public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstance graphShaderModelInstance, Renderable renderable) {
                             shader.setUniform(location, finalTexture);
                         }
                     });
             commonShaderBuilder.addUniformVariable(transformName, "vec4", false,
                     new UniformRegistry.UniformSetter() {
                         @Override
-                        public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
+                        public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstance graphShaderModelInstance, Renderable renderable) {
                             shader.setUniform(location, 0f, 0f, 1f, 1f);
                         }
                     });
@@ -74,6 +73,6 @@ public class TextureAttributeShaderNodeBuilder extends ConfigurationCommonShader
             commonShaderBuilder.addUniformVariable(transformName, "vec4", false, new UniformSetters.MaterialTextureUV(attributeType));
         }
 
-        return Collections.singletonMap("texture", new DefaultFieldOutput(ShaderFieldType.TextureRegion, transformName, textureName));
+        return LibGDXCollections.singletonMap("texture", new DefaultFieldOutput(ShaderFieldType.TextureRegion, transformName, textureName));
     }
 }

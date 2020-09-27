@@ -41,6 +41,8 @@ import com.gempukku.libgdx.graph.pipeline.PipelineRenderer;
 import com.gempukku.libgdx.graph.pipeline.RenderOutputs;
 import com.gempukku.libgdx.graph.shader.environment.GraphShaderEnvironment;
 import com.gempukku.libgdx.graph.shader.models.GraphShaderModels;
+import com.gempukku.libgdx.graph.shader.models.Models;
+import com.gempukku.libgdx.graph.shader.models.TagOptimizationHint;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -77,6 +79,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
 
     private boolean lastSpacePressed = false;
     private boolean paused = false;
+    private GraphShaderModels models;
 
     @Override
     public void create() {
@@ -84,7 +87,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
 
         Label subtitleLabel = createStageSubtitleLabel();
 
-        GraphShaderModels models = createModels();
+        models = createModels();
         pipelineRenderer = loadPipelineRenderer(models, stage);
 
         script = createScript(subtitleLabel, models, pipelineRenderer);
@@ -139,7 +142,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         float nativeScale = 0.016f;
         Vector3 nativePosition = new Vector3(3.4f, 0, 4);
         movieScript.addActorScript(
-                new ActorScript(nativeId, planetSceneStart, planetSceneLength)
+                new ActorScript(models, nativeId, planetSceneStart, planetSceneLength)
                         .setScale(0, planetSceneLength, nativeScale, nativeScale)
                         .setPosition(0, planetSceneLength, nativePosition, nativePosition)
                         .setRotation(0, 3f, new Vector3(0, 1, 0), 0, 0), false);
@@ -152,7 +155,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         float robotScale = 0.003f;
         float robotLifeLength = planetSceneLength - 8f;
         movieScript.addActorScript(
-                new ActorScript(goldRobotId, planetSceneStart + 8f, robotLifeLength)
+                new ActorScript(models, goldRobotId, planetSceneStart + 8f, robotLifeLength)
                         .setScale(0, robotLifeLength, robotScale, robotScale)
                         .setPosition(0, 3f, new Vector3(8, 0, 4), new Vector3(4.6f, 0, 4))
                         .setRotation(0, 3f, new Vector3(0, 1, 0), -90, -90)
@@ -162,13 +165,13 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         movieScript.setSubtitleText(planetSceneStart + 11.3f, Color.WHITE, "- Deploy holo-projector.");
         Vector3 holoprojectorPosition = new Vector3(4, 0, 4);
         movieScript.addActorScript(
-                new ActorScript(scifiPedestalId, planetSceneStart + 12f, planetSceneLength - 12f)
+                new ActorScript(models, scifiPedestalId, planetSceneStart + 12f, planetSceneLength - 12f)
                         .setScale(0, planetSceneLength - 12f, 0.0001f, 0.0001f)
                         .setPosition(0, planetSceneLength - 12f, holoprojectorPosition, holoprojectorPosition));
         float shadowScale = 0.04f;
         Vector3 shadowPosition = new Vector3(4f, 0.1f, 4);
         movieScript.addActorScript(
-                new ActorScript(shadowId, planetSceneStart + 12.5f, planetSceneLength - 12.5f)
+                new ActorScript(models, shadowId, planetSceneStart + 12.5f, planetSceneLength - 12.5f)
                         .setScale(0, planetSceneLength, shadowScale, shadowScale)
                         .setPosition(0, planetSceneLength, shadowPosition, shadowPosition)
                         .setRotation(0, 3f, new Vector3(0, 1, 0), 0, 0), false);
@@ -185,7 +188,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
                 new Vector3(3.8f, 0.25f, 4.9f), new Vector3(4, 0.4f, 4), Interpolation.smooth);
         Vector3 lightBombPosition = new Vector3(4.6f, 1f, 4f);
         movieScript.addActorScript(
-                new ActorScript(lightBombId, planetSceneStart + 27f, planetSceneLength - 27f)
+                new ActorScript(models, lightBombId, planetSceneStart + 27f, planetSceneLength - 27f)
                         .setScale(0, 5f, 0.05f, 1.2f)
                         .setPosition(0, 5f, lightBombPosition, lightBombPosition));
         movieScript.setPipelineFloatProperty("Bloom Radius", planetSceneStart + 28f, 5f,
@@ -199,17 +202,17 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     }
 
     private void setupPlanetSurfaceEnvironment(MovieScript movieScript, float planetSceneStart, float planetSceneLength) {
-        movieScript.addActorScript(new ActorScript(planetGroundId, planetSceneStart, planetSceneLength));
-        movieScript.addActorScript(new ActorScript(waterSurfaceId, planetSceneStart, planetSceneLength));
+        movieScript.addActorScript(new ActorScript(models, planetGroundId, planetSceneStart, planetSceneLength));
+        movieScript.addActorScript(new ActorScript(models, waterSurfaceId, planetSceneStart, planetSceneLength));
         float cloudsHeight = 10f;
         float cloudsDistance = 20f;
         movieScript.addActorScript(
-                new ActorScript(cloudsId, planetSceneStart, planetSceneLength)
+                new ActorScript(models, cloudsId, planetSceneStart, planetSceneLength)
                         .setScale(0, planetSceneLength, 0.001f, 0.001f)
                         .setPosition(0, planetSceneLength, new Vector3(-20f - cloudsDistance, cloudsHeight, 20f - cloudsDistance), new Vector3(0f - cloudsDistance, cloudsHeight, -0f - cloudsDistance))
                         .setRotation(0, planetSceneLength, new Vector3(0, 1, 0), 90, 90));
         movieScript.addActorScript(
-                new ActorScript(cloudsId, planetSceneStart, planetSceneLength)
+                new ActorScript(models, cloudsId, planetSceneStart, planetSceneLength)
                         .setScale(0, planetSceneLength, 0.001f, 0.001f)
                         .setPosition(0, planetSceneLength, new Vector3(-0f - cloudsDistance, cloudsHeight, 0f - cloudsDistance), new Vector3(20f - cloudsDistance, cloudsHeight, -20f - cloudsDistance))
                         .setRotation(0, planetSceneLength, new Vector3(0, 1, 0), 270, 270));
@@ -228,20 +231,20 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         float luminarisStartingX = -50f;
         float luminarisY = 1.6f;
         float luminarisStartY = 4f;
-        ActorScript luminarisActor = new ActorScript(luminarisId, hangarSceneStart, hangarSceneLength)
+        ActorScript luminarisActor = new ActorScript(models, luminarisId, hangarSceneStart, hangarSceneLength)
                 .setScale(0, hangarSceneLength, luminarisScale, luminarisScale)
                 .setRotation(0, hangarSceneLength, new Vector3(0, 1, 0), 90, 90)
                 .setPosition(0, 8f, new Vector3(luminarisStartingX, luminarisY + luminarisStartY, 0), new Vector3(luminarisStartingX, luminarisY + luminarisStartY, 0))
                 .setPosition(8f, 5f, new Vector3(luminarisStartingX, luminarisY + luminarisStartY, 0), new Vector3(0f, luminarisY, 0f), Interpolation.smooth)
                 .removeTag(26f, "Default")
-                .addTag(26f, "Dissolve")
+                .addTag(26f, "Dissolve", TagOptimizationHint.Always)
                 .setFloatProperty("Dissolve Strength", 26f, 5f, -0.2f, 1f);
         movieScript.addActorScript(luminarisActor);
         movieScript.setSubtitleText(hangarSceneStart + 12f, Color.WHITE, "");
         movieScript.setSubtitleText(hangarSceneStart + 14, Color.WHITE, "- GDX-255, raise your shields and prepare for interdimensional transfer.");
         Vector3 shipShieldPosition = new Vector3(0f, 2f, 0);
         movieScript.addActorScript(
-                new ActorScript(shipShieldId, hangarSceneStart + 17f, 13.5f)
+                new ActorScript(models, shipShieldId, hangarSceneStart + 17f, 13.5f)
                         .setPosition(0, 0, shipShieldPosition, shipShieldPosition)
                         .setFloatProperty("Min Y", 0f, 5f, -1f, 8f));
         movieScript.setSubtitleText(hangarSceneStart + 19f, Color.WHITE, "");
@@ -254,28 +257,28 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     }
 
     private void setupHangarEnvironment(MovieScript movieScript, float hangarSceneStart, float hangarSceneLength) {
-        movieScript.addActorScript(new ActorScript(hangarFloorId, hangarSceneStart, hangarSceneLength));
-        movieScript.addActorScript(new ActorScript(hangarWallId, hangarSceneStart, hangarSceneLength));
-        movieScript.addActorScript(new ActorScript(hangarShieldId, hangarSceneStart, hangarSceneLength));
+        movieScript.addActorScript(new ActorScript(models, hangarFloorId, hangarSceneStart, hangarSceneLength));
+        movieScript.addActorScript(new ActorScript(models, hangarWallId, hangarSceneStart, hangarSceneLength));
+        movieScript.addActorScript(new ActorScript(models, hangarShieldId, hangarSceneStart, hangarSceneLength));
         movieScript.addActorScript(
-                new ActorScript(scifiPedestalId, hangarSceneStart, hangarSceneLength)
+                new ActorScript(models, scifiPedestalId, hangarSceneStart, hangarSceneLength)
                         .setScale(0, hangarSceneLength, 0.002f, 0.002f));
         for (int i = 0; i < 5; i++) {
             Vector3 createPosition1 = new Vector3(-3 + i, 0, -9);
             Vector3 createPosition2 = new Vector3(-3 + i, 0, -8);
             movieScript.addActorScript(
-                    new ActorScript(crateId, hangarSceneStart, hangarSceneLength)
+                    new ActorScript(models, crateId, hangarSceneStart, hangarSceneLength)
                             .setScale(0, hangarSceneLength, 0.8f, 0.8f)
                             .setPosition(0, hangarSceneLength, createPosition1, createPosition1));
             movieScript.addActorScript(
-                    new ActorScript(crateId, hangarSceneStart, hangarSceneLength)
+                    new ActorScript(models, crateId, hangarSceneStart, hangarSceneLength)
                             .setScale(0, hangarSceneLength, 0.8f, 0.8f)
                             .setPosition(0, hangarSceneLength, createPosition2, createPosition2));
         }
         for (int i = 0; i < 6; i++) {
             Vector3 cellPosition = new Vector3(3 + i * 0.4f, 0.4f, -9);
             movieScript.addActorScript(
-                    new ActorScript(cellId, hangarSceneStart, hangarSceneLength)
+                    new ActorScript(models, cellId, hangarSceneStart, hangarSceneLength)
                             .setScale(0, hangarSceneLength, 0.002f, 0.002f)
                             .setPosition(0, hangarSceneLength, cellPosition, cellPosition));
         }
@@ -328,7 +331,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     }
 
     private GraphShaderModels createModels() {
-        GraphShaderModels models = new GraphShaderModels();
+        GraphShaderModels models = Models.create();
         disposables.add(models);
 
         JsonReader jsonReader = new JsonReader();
@@ -337,42 +340,42 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         Model luminarisModel = jsonModelLoader.loadModel(Gdx.files.internal("model/luminaris/luminaris.g3dj"));
         disposables.add(luminarisModel);
         luminarisId = models.registerModel(luminarisModel);
-        models.addModelDefaultTag(luminarisId, "Default");
+        models.addModelDefaultTag(luminarisId, "Default", TagOptimizationHint.Always);
 
         Model scifiPedestalModel = jsonModelLoader.loadModel(Gdx.files.internal("model/scifi-pedestal/tech_pedestal.g3dj"));
         disposables.add(scifiPedestalModel);
         scifiPedestalId = models.registerModel(scifiPedestalModel);
-        models.addModelDefaultTag(scifiPedestalId, "Default");
+        models.addModelDefaultTag(scifiPedestalId, "Default", TagOptimizationHint.Always);
 
         Model crateModel = jsonModelLoader.loadModel(Gdx.files.internal("model/crate/crate.g3dj"));
         disposables.add(crateModel);
         crateId = models.registerModel(crateModel);
-        models.addModelDefaultTag(crateId, "Default");
+        models.addModelDefaultTag(crateId, "Default", TagOptimizationHint.Always);
 
         Model cellModel = jsonModelLoader.loadModel(Gdx.files.internal("model/cell/cell.g3dj"));
         disposables.add(cellModel);
         cellId = models.registerModel(cellModel);
-        models.addModelDefaultTag(cellId, "Default");
+        models.addModelDefaultTag(cellId, "Default", TagOptimizationHint.Always);
 
         Model cloudsModel = jsonModelLoader.loadModel(Gdx.files.internal("model/cloud/cloud.g3dj"));
         disposables.add(cloudsModel);
         cloudsId = models.registerModel(cloudsModel);
-        models.addModelDefaultTag(cloudsId, "Default Lighted");
+        models.addModelDefaultTag(cloudsId, "Default Lighted", TagOptimizationHint.Always);
 
         Model goldRobotModel = jsonModelLoader.loadModel(Gdx.files.internal("model/gold-robot/gold-robot.g3dj"));
         disposables.add(goldRobotModel);
         goldRobotId = models.registerModel(goldRobotModel);
-        models.addModelDefaultTag(goldRobotId, "Default Lighted");
+        models.addModelDefaultTag(goldRobotId, "Default Lighted", TagOptimizationHint.Always);
 
         Model nativeModel = jsonModelLoader.loadModel(Gdx.files.internal("model/reptilian-worker/reptilian-worker.g3dj"));
         disposables.add(nativeModel);
         nativeId = models.registerModel(nativeModel);
-        models.addModelDefaultTag(nativeId, "Default Lighted");
+        models.addModelDefaultTag(nativeId, "Default Lighted", TagOptimizationHint.Always);
 
         Model shadowModel = jsonModelLoader.loadModel(Gdx.files.internal("model/shadow/shadow.g3dj"));
         disposables.add(shadowModel);
         shadowId = models.registerModel(shadowModel);
-        models.addModelDefaultTag(shadowId, "Hologram");
+        models.addModelDefaultTag(shadowId, "Hologram", TagOptimizationHint.Always);
 
         ModelBuilder modelBuilder = new ModelBuilder();
         createHangarFloor(models, modelBuilder);
@@ -399,7 +402,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         Model water = modelBuilder.end();
         disposables.add(water);
         waterSurfaceId = models.registerModel(water);
-        models.addModelDefaultTag(waterSurfaceId, "Water Surface");
+        models.addModelDefaultTag(waterSurfaceId, "Water Surface", TagOptimizationHint.Always);
     }
 
     private void createPlanetGround(GraphShaderModels models, ModelBuilder modelBuilder) {
@@ -424,7 +427,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         Model planetGround = modelBuilder.end();
         disposables.add(planetGround);
         planetGroundId = models.registerModel(planetGround);
-        models.addModelDefaultTag(planetGroundId, "Planet Ground");
+        models.addModelDefaultTag(planetGroundId, "Planet Ground", TagOptimizationHint.Always);
     }
 
     private void createXZPlane(MeshPartBuilder meshPartBuilder, Vector2 start, Vector2 end, int xSubdivisions, int zSubdivisions, BiFunction<Float, Float, Float> heightFunction) {
@@ -484,7 +487,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
                 VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
         disposables.add(shipShield);
         shipShieldId = models.registerModel(shipShield);
-        models.addModelDefaultTag(shipShieldId, "Ship Shield");
+        models.addModelDefaultTag(shipShieldId, "Ship Shield", TagOptimizationHint.Always);
     }
 
     private void createLightBomb(GraphShaderModels models, ModelBuilder modelBuilder) {
@@ -492,7 +495,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
                 VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
         disposables.add(lightBomb);
         lightBombId = models.registerModel(lightBomb);
-        models.addModelDefaultTag(lightBombId, "Default");
+        models.addModelDefaultTag(lightBombId, "Default", TagOptimizationHint.Always);
     }
 
     private void createHangarShield(GraphShaderModels models, ModelBuilder modelBuilder) {
@@ -505,7 +508,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
                 new Material(), VertexAttributes.Usage.Position);
         disposables.add(hangarShield);
         hangarShieldId = models.registerModel(hangarShield);
-        models.addModelDefaultTag(hangarShieldId, "Hangar Shield");
+        models.addModelDefaultTag(hangarShieldId, "Hangar Shield", TagOptimizationHint.Always);
     }
 
     private void createHangarWall(GraphShaderModels models, ModelBuilder modelBuilder) {
@@ -518,7 +521,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
                 new Material(), VertexAttributes.Usage.Position);
         disposables.add(hangarWall);
         hangarWallId = models.registerModel(hangarWall);
-        models.addModelDefaultTag(hangarWallId, "Hangar Wall");
+        models.addModelDefaultTag(hangarWallId, "Hangar Wall", TagOptimizationHint.Always);
     }
 
     private void createHangarFloor(GraphShaderModels models, ModelBuilder modelBuilder) {
@@ -531,7 +534,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
                 new Material(), VertexAttributes.Usage.Position);
         disposables.add(hangarFloor);
         hangarFloorId = models.registerModel(hangarFloor);
-        models.addModelDefaultTag(hangarFloorId, "Hangar Floor");
+        models.addModelDefaultTag(hangarFloorId, "Hangar Floor", TagOptimizationHint.Always);
     }
 
     private Label createStageSubtitleLabel() {

@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.ObjectSet;
+import com.gempukku.libgdx.graph.LibGDXCollections;
 import com.gempukku.libgdx.graph.PropertyNodeConfiguration;
 import com.gempukku.libgdx.graph.data.NodeConfiguration;
 import com.gempukku.libgdx.graph.shader.BasicShader;
@@ -17,11 +20,7 @@ import com.gempukku.libgdx.graph.shader.UniformRegistry;
 import com.gempukku.libgdx.graph.shader.builder.CommonShaderBuilder;
 import com.gempukku.libgdx.graph.shader.builder.FragmentShaderBuilder;
 import com.gempukku.libgdx.graph.shader.builder.VertexShaderBuilder;
-import com.gempukku.libgdx.graph.shader.models.GraphShaderModelInstanceImpl;
-
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
+import com.gempukku.libgdx.graph.shader.models.impl.GraphShaderModelInstance;
 
 public class PropertyShaderNodeBuilder implements GraphShaderNodeBuilder {
     @Override
@@ -38,18 +37,18 @@ public class PropertyShaderNodeBuilder implements GraphShaderNodeBuilder {
     }
 
     @Override
-    public Map<String, ? extends FieldOutput> buildVertexNode(boolean designTime, String nodeId, JsonValue data, Map<String, FieldOutput> inputs, Set<String> producedOutputs, VertexShaderBuilder vertexShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
+    public ObjectMap<String, ? extends FieldOutput> buildVertexNode(boolean designTime, String nodeId, JsonValue data, ObjectMap<String, FieldOutput> inputs, ObjectSet<String> producedOutputs, VertexShaderBuilder vertexShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
         return buildCommonNode(designTime, nodeId, data, inputs, producedOutputs, vertexShaderBuilder, graphShaderContext, graphShader);
     }
 
     @Override
-    public Map<String, ? extends FieldOutput> buildFragmentNode(boolean designTime, String nodeId, JsonValue data, Map<String, FieldOutput> inputs, Set<String> producedOutputs,
-                                                                VertexShaderBuilder vertexShaderBuilder, FragmentShaderBuilder fragmentShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
+    public ObjectMap<String, ? extends FieldOutput> buildFragmentNode(boolean designTime, String nodeId, JsonValue data, ObjectMap<String, FieldOutput> inputs, ObjectSet<String> producedOutputs,
+                                                                      VertexShaderBuilder vertexShaderBuilder, FragmentShaderBuilder fragmentShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
         return buildCommonNode(designTime, nodeId, data, inputs, producedOutputs, fragmentShaderBuilder, graphShaderContext, graphShader);
     }
 
-    private Map<String, ? extends FieldOutput> buildCommonNode(boolean designTime, String nodeId, JsonValue data, Map<String, FieldOutput> inputs, Set<String> producedOutputs,
-                                                               CommonShaderBuilder commonShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
+    private ObjectMap<String, ? extends FieldOutput> buildCommonNode(boolean designTime, String nodeId, JsonValue data, ObjectMap<String, FieldOutput> inputs, ObjectSet<String> producedOutputs,
+                                                                     CommonShaderBuilder commonShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
         final String name = data.getString("name");
         final ShaderFieldType propertyType = ShaderFieldType.valueOf(data.getString("type"));
 
@@ -70,13 +69,13 @@ public class PropertyShaderNodeBuilder implements GraphShaderNodeBuilder {
     }
 
 
-    private Map<String, DefaultFieldOutput> buildColorPropertyNode(String nodeId, final String name, final GraphShaderContext graphShaderContext,
-                                                                   CommonShaderBuilder commonShaderBuilder) {
+    private ObjectMap<String, DefaultFieldOutput> buildColorPropertyNode(String nodeId, final String name, final GraphShaderContext graphShaderContext,
+                                                                         CommonShaderBuilder commonShaderBuilder) {
         String variableName = "u_property_" + nodeId;
         commonShaderBuilder.addUniformVariable(variableName, "vec4", false,
                 new UniformRegistry.UniformSetter() {
                     @Override
-                    public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
+                    public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstance graphShaderModelInstance, Renderable renderable) {
                         Object value = graphShaderModelInstance.getProperty(name);
                         if (!(value instanceof Color))
                             value = graphShaderContext.getPropertySource(name).getDefaultValue();
@@ -84,16 +83,16 @@ public class PropertyShaderNodeBuilder implements GraphShaderNodeBuilder {
                     }
                 }, "Property - " + name);
 
-        return Collections.singletonMap("value", new DefaultFieldOutput(ShaderFieldType.Color, variableName));
+        return LibGDXCollections.singletonMap("value", new DefaultFieldOutput(ShaderFieldType.Color, variableName));
     }
 
-    private Map<String, DefaultFieldOutput> buildFloatPropertyNode(String nodeId, final String name, final GraphShaderContext graphShaderContext,
-                                                                   CommonShaderBuilder commonShaderBuilder) {
+    private ObjectMap<String, DefaultFieldOutput> buildFloatPropertyNode(String nodeId, final String name, final GraphShaderContext graphShaderContext,
+                                                                         CommonShaderBuilder commonShaderBuilder) {
         String variableName = "u_property_" + nodeId;
         commonShaderBuilder.addUniformVariable(variableName, "float", false,
                 new UniformRegistry.UniformSetter() {
                     @Override
-                    public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
+                    public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstance graphShaderModelInstance, Renderable renderable) {
                         Object value = graphShaderModelInstance.getProperty(name);
                         if (!(value instanceof Number))
                             value = graphShaderContext.getPropertySource(name).getDefaultValue();
@@ -101,16 +100,16 @@ public class PropertyShaderNodeBuilder implements GraphShaderNodeBuilder {
                     }
                 }, "Property - " + name);
 
-        return Collections.singletonMap("value", new DefaultFieldOutput(ShaderFieldType.Float, variableName));
+        return LibGDXCollections.singletonMap("value", new DefaultFieldOutput(ShaderFieldType.Float, variableName));
     }
 
-    private Map<String, DefaultFieldOutput> buildVector2PropertyNode(String nodeId, final String name, final GraphShaderContext graphShaderContext,
-                                                                     CommonShaderBuilder commonShaderBuilder) {
+    private ObjectMap<String, DefaultFieldOutput> buildVector2PropertyNode(String nodeId, final String name, final GraphShaderContext graphShaderContext,
+                                                                           CommonShaderBuilder commonShaderBuilder) {
         String variableName = "u_property_" + nodeId;
         commonShaderBuilder.addUniformVariable(variableName, "vec2", false,
                 new UniformRegistry.UniformSetter() {
                     @Override
-                    public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
+                    public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstance graphShaderModelInstance, Renderable renderable) {
                         Object value = graphShaderModelInstance.getProperty(name);
                         if (!(value instanceof Vector2))
                             value = graphShaderContext.getPropertySource(name).getDefaultValue();
@@ -118,16 +117,16 @@ public class PropertyShaderNodeBuilder implements GraphShaderNodeBuilder {
                     }
                 }, "Property - " + name);
 
-        return Collections.singletonMap("value", new DefaultFieldOutput(ShaderFieldType.Vector2, variableName));
+        return LibGDXCollections.singletonMap("value", new DefaultFieldOutput(ShaderFieldType.Vector2, variableName));
     }
 
-    private Map<String, DefaultFieldOutput> buildVector3PropertyNode(String nodeId, final String name, final GraphShaderContext graphShaderContext,
-                                                                     CommonShaderBuilder commonShaderBuilder) {
+    private ObjectMap<String, DefaultFieldOutput> buildVector3PropertyNode(String nodeId, final String name, final GraphShaderContext graphShaderContext,
+                                                                           CommonShaderBuilder commonShaderBuilder) {
         String variableName = "u_property_" + nodeId;
         commonShaderBuilder.addUniformVariable(variableName, "vec3", false,
                 new UniformRegistry.UniformSetter() {
                     @Override
-                    public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
+                    public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstance graphShaderModelInstance, Renderable renderable) {
                         Object value = graphShaderModelInstance.getProperty(name);
                         if (!(value instanceof Vector3))
                             value = graphShaderContext.getPropertySource(name).getDefaultValue();
@@ -135,17 +134,17 @@ public class PropertyShaderNodeBuilder implements GraphShaderNodeBuilder {
                     }
                 }, "Property - " + name);
 
-        return Collections.singletonMap("value", new DefaultFieldOutput(ShaderFieldType.Vector3, variableName));
+        return LibGDXCollections.singletonMap("value", new DefaultFieldOutput(ShaderFieldType.Vector3, variableName));
     }
 
-    private Map<String, DefaultFieldOutput> buildTexturePropertyNode(String nodeId, final String name, final GraphShaderContext graphShaderContext,
-                                                                     CommonShaderBuilder commonShaderBuilder) {
+    private ObjectMap<String, DefaultFieldOutput> buildTexturePropertyNode(String nodeId, final String name, final GraphShaderContext graphShaderContext,
+                                                                           CommonShaderBuilder commonShaderBuilder) {
         String textureVariableName = "u_property_" + nodeId;
         String uvTransformVariableName = "u_uvTransform_" + nodeId;
         commonShaderBuilder.addUniformVariable(textureVariableName, "sampler2D", false,
                 new UniformRegistry.UniformSetter() {
                     @Override
-                    public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
+                    public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstance graphShaderModelInstance, Renderable renderable) {
                         Object value = graphShaderModelInstance.getProperty(name);
                         if (!(value instanceof TextureRegion))
                             value = graphShaderContext.getPropertySource(name).getDefaultValue();
@@ -155,7 +154,7 @@ public class PropertyShaderNodeBuilder implements GraphShaderNodeBuilder {
         commonShaderBuilder.addUniformVariable(uvTransformVariableName, "vec4", false,
                 new UniformRegistry.UniformSetter() {
                     @Override
-                    public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
+                    public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstance graphShaderModelInstance, Renderable renderable) {
                         Object value = graphShaderModelInstance.getProperty(name);
                         if (!(value instanceof TextureRegion))
                             value = graphShaderContext.getPropertySource(name).getDefaultValue();
@@ -167,6 +166,6 @@ public class PropertyShaderNodeBuilder implements GraphShaderNodeBuilder {
                     }
                 }, "Texture UV property - " + name);
 
-        return Collections.singletonMap("value", new DefaultFieldOutput(ShaderFieldType.TextureRegion, uvTransformVariableName, textureVariableName));
+        return LibGDXCollections.singletonMap("value", new DefaultFieldOutput(ShaderFieldType.TextureRegion, uvTransformVariableName, textureVariableName));
     }
 }

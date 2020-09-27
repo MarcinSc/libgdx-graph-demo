@@ -1,14 +1,13 @@
 package com.gempukku.libgdx.graph.pipeline.loader.property;
 
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gempukku.libgdx.graph.PropertyNodeConfiguration;
 import com.gempukku.libgdx.graph.data.NodeConfiguration;
 import com.gempukku.libgdx.graph.pipeline.PipelineFieldType;
 import com.gempukku.libgdx.graph.pipeline.loader.PipelineRenderingContext;
 import com.gempukku.libgdx.graph.pipeline.loader.node.PipelineNode;
 import com.gempukku.libgdx.graph.pipeline.loader.node.PipelineNodeProducer;
-
-import java.util.Map;
 
 public class PropertyPipelineNodeProducer implements PipelineNodeProducer {
     @Override
@@ -24,7 +23,7 @@ public class PropertyPipelineNodeProducer implements PipelineNodeProducer {
     }
 
     @Override
-    public PipelineNode createNode(JsonValue data, Map<String, PipelineNode.FieldOutput<?>> inputFields) {
+    public PipelineNode createNode(JsonValue data, ObjectMap<String, PipelineNode.FieldOutput<?>> inputFields) {
         final String propertyName = data.getString("name");
         final PipelineFieldType fieldType = PipelineFieldType.valueOf(data.getString("type"));
 

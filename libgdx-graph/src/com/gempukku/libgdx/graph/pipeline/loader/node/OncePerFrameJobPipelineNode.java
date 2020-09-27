@@ -1,19 +1,17 @@
 package com.gempukku.libgdx.graph.pipeline.loader.node;
 
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gempukku.libgdx.graph.data.NodeConfiguration;
 import com.gempukku.libgdx.graph.pipeline.PipelineFieldType;
 import com.gempukku.libgdx.graph.pipeline.loader.PipelineRenderingContext;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public abstract class OncePerFrameJobPipelineNode implements PipelineNode {
     private boolean executedInFrame;
     private NodeConfiguration<PipelineFieldType> configuration;
-    private Map<String, FieldOutput<?>> inputFields;
-    private Map<String, WorkerFieldOutput<Object>> workerFieldOutputs = new HashMap<>();
+    private ObjectMap<String, FieldOutput<?>> inputFields;
+    private ObjectMap<String, WorkerFieldOutput<Object>> workerFieldOutputs = new ObjectMap<>();
 
-    public OncePerFrameJobPipelineNode(NodeConfiguration<PipelineFieldType> configuration, Map<String, FieldOutput<?>> inputFields) {
+    public OncePerFrameJobPipelineNode(NodeConfiguration<PipelineFieldType> configuration, ObjectMap<String, FieldOutput<?>> inputFields) {
         this.configuration = configuration;
         this.inputFields = inputFields;
     }
@@ -30,16 +28,16 @@ public abstract class OncePerFrameJobPipelineNode implements PipelineNode {
         return fieldOutput;
     }
 
-    private PipelineFieldType determineOutputType(String name, Map<String, FieldOutput<?>> inputFields) {
-        Map<String, PipelineFieldType> inputs = new HashMap<>();
-        for (Map.Entry<String, FieldOutput<?>> stringFieldOutputEntry : inputFields.entrySet()) {
-            inputs.put(stringFieldOutputEntry.getKey(), stringFieldOutputEntry.getValue().getPropertyType());
+    private PipelineFieldType determineOutputType(String name, ObjectMap<String, FieldOutput<?>> inputFields) {
+        ObjectMap<String, PipelineFieldType> inputs = new ObjectMap<>();
+        for (ObjectMap.Entry<String, FieldOutput<?>> stringFieldOutputEntry : inputFields.entries()) {
+            inputs.put(stringFieldOutputEntry.key, stringFieldOutputEntry.value.getPropertyType());
         }
 
         return configuration.getNodeOutputs().get(name).determineFieldType(inputs);
     }
 
-    protected abstract void executeJob(PipelineRenderingContext pipelineRenderingContext, Map<String, ? extends OutputValue> outputValues);
+    protected abstract void executeJob(PipelineRenderingContext pipelineRenderingContext, ObjectMap<String, ? extends OutputValue> outputValues);
 
     @Override
     public void startFrame(float delta) {

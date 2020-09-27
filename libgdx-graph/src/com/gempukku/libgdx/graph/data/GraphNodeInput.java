@@ -1,6 +1,6 @@
 package com.gempukku.libgdx.graph.data;
 
-import java.util.List;
+import com.badlogic.gdx.utils.Array;
 
 public interface GraphNodeInput<T extends FieldType> {
     boolean isRequired();
@@ -11,5 +11,5 @@ public interface GraphNodeInput<T extends FieldType> {
 
     String getFieldId();
 
-    List<? extends T> getAcceptedPropertyTypes();
+    Array<T> getAcceptedPropertyTypes();
 }

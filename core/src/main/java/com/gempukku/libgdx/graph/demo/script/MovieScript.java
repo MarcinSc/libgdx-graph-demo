@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.gempukku.libgdx.graph.pipeline.PipelineRenderer;
 import com.gempukku.libgdx.graph.shader.environment.GraphShaderEnvironment;
-import com.gempukku.libgdx.graph.shader.models.GraphShaderModelInstance;
 import com.gempukku.libgdx.graph.shader.models.GraphShaderModels;
 
 public class MovieScript extends AbstractScript {
@@ -39,11 +38,11 @@ public class MovieScript extends AbstractScript {
 
                     @Override
                     public void performKeyframe() {
-                        GraphShaderModelInstance modelInstance = models.createModelInstance(modelId);
-                        actorScript.setGraphShaderModelInstance(modelInstance);
+                        String modelInstanceId = models.createModelInstance(modelId);
+                        actorScript.setModelInstanceId(modelInstanceId);
                         AnimationController animationController = null;
                         if (animate) {
-                            animationController = models.createAnimationController(modelInstance.getId());
+                            animationController = models.createAnimationController(modelInstanceId);
                             actorScript.setAnimationController(animationController);
                         }
                         AnimationController finalAnimationController = animationController;
@@ -78,7 +77,7 @@ public class MovieScript extends AbstractScript {
 
                                     @Override
                                     public void performKeyframe() {
-                                        models.destroyModelInstance(modelInstance.getId());
+                                        models.destroyModelInstance(modelInstanceId);
                                     }
                                 }
                         );

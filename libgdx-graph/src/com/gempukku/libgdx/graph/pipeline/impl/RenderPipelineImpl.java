@@ -5,19 +5,18 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.GLFrameBuffer;
+import com.badlogic.gdx.utils.Array;
 import com.gempukku.libgdx.graph.pipeline.RenderPipeline;
 
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 public class RenderPipelineImpl implements RenderPipeline {
     private FrameBuffer depthBuffer;
     private BufferCopyHelper bufferCopyHelper = new BufferCopyHelper();
     private FrameBuffer mainBuffer;
 
-    private List<FrameBuffer> oldFrameBuffers = new LinkedList<FrameBuffer>();
-    private List<FrameBuffer> newFrameBuffers = new LinkedList<FrameBuffer>();
+    private Array<FrameBuffer> oldFrameBuffers = new Array<FrameBuffer>();
+    private Array<FrameBuffer> newFrameBuffers = new Array<FrameBuffer>();
     private boolean needsDepthBuffer;
 
     public RenderPipelineImpl(boolean needsDepthBuffer) {
@@ -93,7 +92,7 @@ public class RenderPipelineImpl implements RenderPipeline {
         return bufferCopyHelper;
     }
 
-    private FrameBuffer extractFrameBuffer(int width, int height, List<FrameBuffer> frameBuffers) {
+    private FrameBuffer extractFrameBuffer(int width, int height, Array<FrameBuffer> frameBuffers) {
         Iterator<FrameBuffer> iterator = frameBuffers.iterator();
         while (iterator.hasNext()) {
             FrameBuffer buffer = iterator.next();

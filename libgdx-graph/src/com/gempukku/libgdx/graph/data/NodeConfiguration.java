@@ -1,6 +1,6 @@
 package com.gempukku.libgdx.graph.data;
 
-import java.util.Map;
+import com.badlogic.gdx.utils.ObjectMap;
 
 public interface NodeConfiguration<T extends FieldType> {
     String getType();
@@ -9,9 +9,9 @@ public interface NodeConfiguration<T extends FieldType> {
 
     String getMenuLocation();
 
-    Map<String, GraphNodeInput<T>> getNodeInputs();
+    ObjectMap<String, GraphNodeInput<T>> getNodeInputs();
 
-    Map<String, GraphNodeOutput<T>> getNodeOutputs();
+    ObjectMap<String, GraphNodeOutput<T>> getNodeOutputs();
 
-    boolean isValid(Map<String, T> inputTypes, Iterable<? extends GraphProperty<T>> properties);
+    boolean isValid(ObjectMap<String, T> inputTypes, Iterable<? extends GraphProperty<T>> properties);
 }

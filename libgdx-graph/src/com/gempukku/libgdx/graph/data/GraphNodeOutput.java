@@ -1,7 +1,7 @@
 package com.gempukku.libgdx.graph.data;
 
-import java.util.Collection;
-import java.util.Map;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 
 public interface GraphNodeOutput<T extends FieldType> {
     boolean isMainConnection();
@@ -10,9 +10,9 @@ public interface GraphNodeOutput<T extends FieldType> {
 
     String getFieldId();
 
-    Collection<? extends T> getProducableFieldTypes();
+    Array<T> getProducableFieldTypes();
 
-    T determineFieldType(Map<String, T> inputs);
+    T determineFieldType(ObjectMap<String, T> inputs);
 
     boolean supportsMultiple();
 }

@@ -2,6 +2,9 @@ package com.gempukku.libgdx.graph.shader.node.material;
 
 import com.badlogic.gdx.graphics.g3d.Attribute;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.ObjectSet;
+import com.gempukku.libgdx.graph.LibGDXCollections;
 import com.gempukku.libgdx.graph.shader.GraphShader;
 import com.gempukku.libgdx.graph.shader.GraphShaderContext;
 import com.gempukku.libgdx.graph.shader.ShaderFieldType;
@@ -10,10 +13,6 @@ import com.gempukku.libgdx.graph.shader.builder.CommonShaderBuilder;
 import com.gempukku.libgdx.graph.shader.config.material.FloatAttributeShaderNodeConfiguration;
 import com.gempukku.libgdx.graph.shader.node.ConfigurationCommonShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.DefaultFieldOutput;
-
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
 
 public class FloatAttributeShaderNodeBuilder extends ConfigurationCommonShaderNodeBuilder {
     private String alias;
@@ -24,8 +23,8 @@ public class FloatAttributeShaderNodeBuilder extends ConfigurationCommonShaderNo
     }
 
     @Override
-    protected Map<String, ? extends FieldOutput> buildCommonNode(boolean designTime, String nodeId, JsonValue data, Map<String, FieldOutput> inputs, Set<String> producedOutputs,
-                                                                 CommonShaderBuilder commonShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
+    protected ObjectMap<String, ? extends FieldOutput> buildCommonNode(boolean designTime, String nodeId, JsonValue data, ObjectMap<String, FieldOutput> inputs, ObjectSet<String> producedOutputs,
+                                                                       CommonShaderBuilder commonShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
         String name = "u_" + alias;
 
         float defaultValue = data.getFloat("default");
@@ -33,6 +32,6 @@ public class FloatAttributeShaderNodeBuilder extends ConfigurationCommonShaderNo
         long attributeType = Attribute.getAttributeType(alias);
         commonShaderBuilder.addUniformVariable(name, "float", false, new UniformSetters.MaterialFloat(attributeType, defaultValue));
 
-        return Collections.singletonMap("value", new DefaultFieldOutput(ShaderFieldType.Float, name));
+        return LibGDXCollections.singletonMap("value", new DefaultFieldOutput(ShaderFieldType.Float, name));
     }
 }

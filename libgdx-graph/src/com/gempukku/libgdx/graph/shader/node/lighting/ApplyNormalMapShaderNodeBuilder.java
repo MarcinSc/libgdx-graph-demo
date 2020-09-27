@@ -1,6 +1,9 @@
 package com.gempukku.libgdx.graph.shader.node.lighting;
 
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.ObjectSet;
+import com.gempukku.libgdx.graph.LibGDXCollections;
 import com.gempukku.libgdx.graph.shader.GraphShader;
 import com.gempukku.libgdx.graph.shader.GraphShaderContext;
 import com.gempukku.libgdx.graph.shader.ShaderFieldType;
@@ -10,17 +13,13 @@ import com.gempukku.libgdx.graph.shader.config.lighting.ApplyNormalMapShaderNode
 import com.gempukku.libgdx.graph.shader.node.ConfigurationCommonShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.DefaultFieldOutput;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
-
 public class ApplyNormalMapShaderNodeBuilder extends ConfigurationCommonShaderNodeBuilder {
     public ApplyNormalMapShaderNodeBuilder() {
         super(new ApplyNormalMapShaderNodeConfiguration());
     }
 
     @Override
-    protected Map<String, ? extends FieldOutput> buildCommonNode(boolean designTime, String nodeId, JsonValue data, Map<String, FieldOutput> inputs, Set<String> producedOutputs, CommonShaderBuilder commonShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
+    protected ObjectMap<String, ? extends FieldOutput> buildCommonNode(boolean designTime, String nodeId, JsonValue data, ObjectMap<String, FieldOutput> inputs, ObjectSet<String> producedOutputs, CommonShaderBuilder commonShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
         commonShaderBuilder.addMainLine("// Apply normal map");
         if (!commonShaderBuilder.containsFunction("applyNormalMap")) {
             commonShaderBuilder.addFunction("applyNormalMap", GLSLFragmentReader.getFragment("applyNormalMap"));
@@ -35,6 +34,6 @@ public class ApplyNormalMapShaderNodeBuilder extends ConfigurationCommonShaderNo
         String name = "result_" + nodeId;
 
         commonShaderBuilder.addMainLine(ShaderFieldType.Vector3.getShaderType() + " " + name + " = applyNormalMap(" + tangent.getRepresentation() + ", " + normal.getRepresentation() + ", " + normalMap.getRepresentation() + ".xyz, " + strengthValue + ");");
-        return Collections.singletonMap("output", new DefaultFieldOutput(ShaderFieldType.Vector3, name));
+        return LibGDXCollections.singletonMap("output", new DefaultFieldOutput(ShaderFieldType.Vector3, name));
     }
 }

@@ -3,6 +3,8 @@ package com.gempukku.libgdx.graph.shader;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.FloatAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gempukku.libgdx.graph.shader.node.EndGraphShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.GraphShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.PropertyShaderNodeBuilder;
@@ -85,14 +87,9 @@ import com.gempukku.libgdx.graph.shader.property.TextureShaderPropertyProducer;
 import com.gempukku.libgdx.graph.shader.property.Vector2ShaderPropertyProducer;
 import com.gempukku.libgdx.graph.shader.property.Vector3ShaderPropertyProducer;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
 public class GraphShaderConfiguration {
-    public static Map<String, GraphShaderNodeBuilder> graphShaderNodeBuilders = new HashMap<>();
-    public static List<GraphShaderPropertyProducer> graphShaderPropertyProducers = new LinkedList<>();
+    public static ObjectMap<String, GraphShaderNodeBuilder> graphShaderNodeBuilders = new ObjectMap<>();
+    public static Array<GraphShaderPropertyProducer> graphShaderPropertyProducers = new Array<>();
 
     static {
         // End

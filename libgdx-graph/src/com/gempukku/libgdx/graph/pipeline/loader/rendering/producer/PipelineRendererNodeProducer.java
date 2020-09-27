@@ -3,6 +3,7 @@ package com.gempukku.libgdx.graph.pipeline.loader.rendering.producer;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gempukku.libgdx.graph.pipeline.RenderPipeline;
 import com.gempukku.libgdx.graph.pipeline.config.rendering.PipelineRendererNodeConfiguration;
 import com.gempukku.libgdx.graph.pipeline.loader.PipelineRenderingContext;
@@ -10,15 +11,13 @@ import com.gempukku.libgdx.graph.pipeline.loader.node.OncePerFrameJobPipelineNod
 import com.gempukku.libgdx.graph.pipeline.loader.node.PipelineNode;
 import com.gempukku.libgdx.graph.pipeline.loader.node.PipelineNodeProducerImpl;
 
-import java.util.Map;
-
 public class PipelineRendererNodeProducer extends PipelineNodeProducerImpl {
     public PipelineRendererNodeProducer() {
         super(new PipelineRendererNodeConfiguration());
     }
 
     @Override
-    public PipelineNode createNode(JsonValue data, Map<String, PipelineNode.FieldOutput<?>> inputFields) {
+    public PipelineNode createNode(JsonValue data, ObjectMap<String, PipelineNode.FieldOutput<?>> inputFields) {
         final PipelineNode.FieldOutput<RenderPipeline> renderPipelineInput = (PipelineNode.FieldOutput<RenderPipeline>) inputFields.get("input");
         final PipelineNode.FieldOutput<RenderPipeline> otherPipelineInput = (PipelineNode.FieldOutput<RenderPipeline>) inputFields.get("pipeline");
         final PipelineNode.FieldOutput<Vector2> positionInput = (PipelineNode.FieldOutput<Vector2>) inputFields.get("position");
@@ -26,7 +25,7 @@ public class PipelineRendererNodeProducer extends PipelineNodeProducerImpl {
 
         return new OncePerFrameJobPipelineNode(configuration, inputFields) {
             @Override
-            protected void executeJob(PipelineRenderingContext pipelineRenderingContext, Map<String, ? extends OutputValue> outputValues) {
+            protected void executeJob(PipelineRenderingContext pipelineRenderingContext, ObjectMap<String, ? extends OutputValue> outputValues) {
                 RenderPipeline canvasPipeline = renderPipelineInput.getValue(pipelineRenderingContext);
                 RenderPipeline paintPipeline = otherPipelineInput.getValue(pipelineRenderingContext);
 

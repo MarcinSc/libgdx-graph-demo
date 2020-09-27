@@ -1,70 +1,61 @@
-package com.gempukku.libgdx.graph.shader.models;
+package com.gempukku.libgdx.graph.shader.models.impl;
 
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Pool;
+import com.gempukku.libgdx.graph.shader.models.ModelInstanceOptimizationHints;
+import com.gempukku.libgdx.graph.shader.models.TagOptimizationHint;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
-public class GraphShaderModelInstanceImpl implements GraphShaderModelInstance {
+public class GraphShaderModelInstance {
     private String id;
     private GraphShaderModel model;
     private ModelInstance modelInstance;
-    private Set<String> tags = new HashSet<>();
-    private Map<String, Object> properties = new HashMap<>();
+    private ModelInstanceOptimizationHints modelInstanceOptimizationHints;
+    private ObjectMap<String, TagOptimizationHint> tags = new ObjectMap<>();
+    private ObjectMap<String, Object> properties = new ObjectMap<>();
 
-    public GraphShaderModelInstanceImpl(String id, GraphShaderModel model, ModelInstance modelInstance) {
+    public GraphShaderModelInstance(String id, GraphShaderModel model, ModelInstance modelInstance, ModelInstanceOptimizationHints modelInstanceOptimizationHints) {
         this.id = id;
         this.model = model;
         this.modelInstance = modelInstance;
+        this.modelInstanceOptimizationHints = modelInstanceOptimizationHints;
     }
 
-    @Override
     public String getId() {
         return id;
     }
 
-    @Override
-    public void addTag(String tag) {
-        tags.add(tag);
+    public void addTag(String tag, TagOptimizationHint tagOptimizationHint) {
+        tags.put(tag, tagOptimizationHint);
     }
 
-    @Override
     public void removeTag(String tag) {
         tags.remove(tag);
     }
 
-    @Override
     public void removeAllTags() {
         tags.clear();
     }
 
-    @Override
     public void setProperty(String name, Object value) {
         properties.put(name, value);
     }
 
-    @Override
     public void unsetProperty(String name) {
         properties.remove(name);
     }
 
-    @Override
     public boolean hasTag(String tag) {
-        return tags.contains(tag);
+        return tags.containsKey(tag);
     }
 
-    @Override
     public Object getProperty(String name) {
         return properties.get(name);
     }
 
-    @Override
     public Matrix4 getTransformMatrix() {
         return modelInstance.transform;
     }

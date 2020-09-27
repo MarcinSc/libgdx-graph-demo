@@ -1,43 +1,42 @@
 package com.gempukku.libgdx.graph.pipeline.loader.node;
 
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gempukku.libgdx.graph.data.FieldType;
 import com.gempukku.libgdx.graph.data.GraphNodeOutput;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 
 public class GraphNodeOutputImpl<T extends FieldType> implements GraphNodeOutput<T> {
     private String id;
     private String name;
     private boolean mainConnection;
-    private Function<Map<String, T>, T> outputTypeFunction;
-    private List<? extends T> propertyTypes;
+    private Function<ObjectMap<String, T>, T> outputTypeFunction;
+    private Array<T> propertyTypes;
 
     public GraphNodeOutputImpl(String id, String name, final T producedType) {
         this(id, name, false, producedType);
     }
 
     public GraphNodeOutputImpl(String id, String name, boolean mainConnection, final T producedType) {
-        this(id, name, mainConnection, new Function<Map<String, T>, T>() {
+        this(id, name, mainConnection, new Function<ObjectMap<String, T>, T>() {
             @Override
-            public T apply(Map<String, T> stringTMap) {
+            public T apply(ObjectMap<String, T> stringTMap) {
                 return producedType;
             }
         }, producedType);
     }
 
-    public GraphNodeOutputImpl(String id, String name, Function<Map<String, T>, T> outputTypeFunction, T... producedType) {
+    public GraphNodeOutputImpl(String id, String name, Function<ObjectMap<String, T>, T> outputTypeFunction, T... producedType) {
         this(id, name, false, outputTypeFunction, producedType);
     }
 
-    public GraphNodeOutputImpl(String id, String name, boolean mainConnection, Function<Map<String, T>, T> outputTypeFunction, T... producedType) {
+    public GraphNodeOutputImpl(String id, String name, boolean mainConnection, Function<ObjectMap<String, T>, T> outputTypeFunction, T... producedType) {
         this.id = id;
         this.name = name;
         this.mainConnection = mainConnection;
         this.outputTypeFunction = outputTypeFunction;
-        this.propertyTypes = Arrays.asList(producedType);
+        this.propertyTypes = new Array<>(producedType);
     }
 
     @Override
@@ -56,7 +55,7 @@ public class GraphNodeOutputImpl<T extends FieldType> implements GraphNodeOutput
     }
 
     @Override
-    public List<? extends T> getProducableFieldTypes() {
+    public Array<T> getProducableFieldTypes() {
         return propertyTypes;
     }
 
@@ -66,7 +65,7 @@ public class GraphNodeOutputImpl<T extends FieldType> implements GraphNodeOutput
     }
 
     @Override
-    public T determineFieldType(Map<String, T> inputs) {
+    public T determineFieldType(ObjectMap<String, T> inputs) {
         return outputTypeFunction.apply(inputs);
     }
 }

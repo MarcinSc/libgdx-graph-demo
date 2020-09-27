@@ -2,13 +2,12 @@ package com.gempukku.libgdx.graph.pipeline.loader.provided;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gempukku.libgdx.graph.pipeline.config.provided.TimePipelineNodeConfiguration;
 import com.gempukku.libgdx.graph.pipeline.loader.PipelineRenderingContext;
 import com.gempukku.libgdx.graph.pipeline.loader.node.OncePerFrameJobPipelineNode;
 import com.gempukku.libgdx.graph.pipeline.loader.node.PipelineNode;
 import com.gempukku.libgdx.graph.pipeline.loader.node.PipelineNodeProducerImpl;
-
-import java.util.Map;
 
 public class TimePipelineNodeProducer extends PipelineNodeProducerImpl {
     public TimePipelineNodeProducer() {
@@ -16,10 +15,10 @@ public class TimePipelineNodeProducer extends PipelineNodeProducerImpl {
     }
 
     @Override
-    public PipelineNode createNode(JsonValue data, Map<String, PipelineNode.FieldOutput<?>> inputFields) {
+    public PipelineNode createNode(JsonValue data, ObjectMap<String, PipelineNode.FieldOutput<?>> inputFields) {
         return new OncePerFrameJobPipelineNode(configuration, inputFields) {
             @Override
-            protected void executeJob(PipelineRenderingContext pipelineRenderingContext, Map<String, ? extends OutputValue> outputValues) {
+            protected void executeJob(PipelineRenderingContext pipelineRenderingContext, ObjectMap<String, ? extends OutputValue> outputValues) {
                 float timeValue = pipelineRenderingContext.getTimeProvider().getTime();
                 OutputValue<Float> time = outputValues.get("time");
                 if (time != null)

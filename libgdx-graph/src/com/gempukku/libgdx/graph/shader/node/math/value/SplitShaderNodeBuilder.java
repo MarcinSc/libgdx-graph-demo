@@ -1,6 +1,8 @@
 package com.gempukku.libgdx.graph.shader.node.math.value;
 
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.ObjectSet;
 import com.gempukku.libgdx.graph.shader.GraphShader;
 import com.gempukku.libgdx.graph.shader.GraphShaderContext;
 import com.gempukku.libgdx.graph.shader.ShaderFieldType;
@@ -9,18 +11,14 @@ import com.gempukku.libgdx.graph.shader.config.math.value.SplitShaderNodeConfigu
 import com.gempukku.libgdx.graph.shader.node.ConfigurationCommonShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.DefaultFieldOutput;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 public class SplitShaderNodeBuilder extends ConfigurationCommonShaderNodeBuilder {
     public SplitShaderNodeBuilder() {
         super(new SplitShaderNodeConfiguration());
     }
 
     @Override
-    protected Map<String, ? extends FieldOutput> buildCommonNode(boolean designTime, String nodeId, JsonValue data, Map<String, FieldOutput> inputs, Set<String> producedOutputs,
-                                                                 CommonShaderBuilder commonShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
+    protected ObjectMap<String, ? extends FieldOutput> buildCommonNode(boolean designTime, String nodeId, JsonValue data, ObjectMap<String, FieldOutput> inputs, ObjectSet<String> producedOutputs,
+                                                                       CommonShaderBuilder commonShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
         FieldOutput inputValue = inputs.get("input");
         ShaderFieldType fieldType = inputValue.getFieldType();
 
@@ -44,7 +42,7 @@ public class SplitShaderNodeBuilder extends ConfigurationCommonShaderNodeBuilder
             throw new UnsupportedOperationException();
         }
 
-        Map<String, DefaultFieldOutput> result = new HashMap<>();
+        ObjectMap<String, DefaultFieldOutput> result = new ObjectMap<>();
         if (producedOutputs.contains("x")) {
             result.put("x", new DefaultFieldOutput(ShaderFieldType.Float, x));
         }

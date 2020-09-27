@@ -2,17 +2,16 @@ package com.gempukku.libgdx.graph.libgdx;
 
 import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.RenderableProvider;
+import com.badlogic.gdx.utils.ObjectSet;
 import com.gempukku.libgdx.graph.pipeline.PipelineRendererModels;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.WeakHashMap;
 
 public class LibGDXModels implements PipelineRendererModels {
-    private Set<RenderableProvider> models = new HashSet<>();
+    private ObjectSet<RenderableProvider> models = new ObjectSet<>();
 
-    private Map<Material, Set<String>> tags = new WeakHashMap<>();
+    private Map<Material, ObjectSet<String>> tags = new WeakHashMap<>();
 
     public void addRenderableProvider(RenderableProvider renderableProvider) {
         models.add(renderableProvider);
@@ -23,23 +22,23 @@ public class LibGDXModels implements PipelineRendererModels {
     }
 
     public void addShaderTag(Material material, String tag) {
-        Set<String> tagSet = tags.get(material);
+        ObjectSet<String> tagSet = tags.get(material);
         if (tagSet == null) {
-            tagSet = new HashSet<>();
+            tagSet = new ObjectSet<>();
             tags.put(material, tagSet);
         }
         tagSet.add(tag);
     }
 
     public void removeShaderTag(Material material, String tag) {
-        Set<String> tagSet = tags.get(material);
+        ObjectSet<String> tagSet = tags.get(material);
         if (tagSet != null) {
             tagSet.remove(tag);
         }
     }
 
     @Override
-    public Set<RenderableProvider> getModels() {
+    public ObjectSet<RenderableProvider> getModels() {
         return models;
     }
 }

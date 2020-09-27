@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.glutils.IndexBufferObject;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.VertexBufferObject;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gempukku.libgdx.graph.pipeline.RenderPipeline;
 import com.gempukku.libgdx.graph.pipeline.config.postprocessor.GammaCorrectionPipelineNodeConfiguration;
 import com.gempukku.libgdx.graph.pipeline.loader.FloatFieldOutput;
@@ -16,15 +17,13 @@ import com.gempukku.libgdx.graph.pipeline.loader.node.OncePerFrameJobPipelineNod
 import com.gempukku.libgdx.graph.pipeline.loader.node.PipelineNode;
 import com.gempukku.libgdx.graph.pipeline.loader.node.PipelineNodeProducerImpl;
 
-import java.util.Map;
-
 public class GammaCorrectionPipelineNodeProducer extends PipelineNodeProducerImpl {
     public GammaCorrectionPipelineNodeProducer() {
         super(new GammaCorrectionPipelineNodeConfiguration());
     }
 
     @Override
-    public PipelineNode createNode(JsonValue data, Map<String, PipelineNode.FieldOutput<?>> inputFields) {
+    public PipelineNode createNode(JsonValue data, ObjectMap<String, PipelineNode.FieldOutput<?>> inputFields) {
         final ShaderProgram shaderProgram = new ShaderProgram(
                 Gdx.files.internal("shader/viewToScreenCoords.vert"),
                 Gdx.files.internal("shader/gamma.frag"));
@@ -51,7 +50,7 @@ public class GammaCorrectionPipelineNodeProducer extends PipelineNodeProducerImp
         final PipelineNode.FieldOutput<Float> finalGamma = gamma;
         return new OncePerFrameJobPipelineNode(configuration, inputFields) {
             @Override
-            protected void executeJob(PipelineRenderingContext pipelineRenderingContext, Map<String, ? extends OutputValue> outputValues) {
+            protected void executeJob(PipelineRenderingContext pipelineRenderingContext, ObjectMap<String, ? extends OutputValue> outputValues) {
                 RenderPipeline renderPipeline = renderPipelineInput.getValue(pipelineRenderingContext);
 
                 float gamma = finalGamma.getValue(pipelineRenderingContext);

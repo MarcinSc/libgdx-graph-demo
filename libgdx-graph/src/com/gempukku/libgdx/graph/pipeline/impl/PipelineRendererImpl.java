@@ -1,5 +1,6 @@
 package com.gempukku.libgdx.graph.pipeline.impl;
 
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gempukku.libgdx.graph.DefaultTimeKeeper;
 import com.gempukku.libgdx.graph.TimeKeeper;
 import com.gempukku.libgdx.graph.TimeProvider;
@@ -13,16 +14,14 @@ import com.gempukku.libgdx.graph.pipeline.loader.PipelineRenderingContext;
 import com.gempukku.libgdx.graph.pipeline.loader.node.PipelineNode;
 import com.gempukku.libgdx.graph.pipeline.loader.rendering.node.EndPipelineNode;
 
-import java.util.Map;
-
 public class PipelineRendererImpl implements PipelineRenderer {
     private Iterable<PipelineNode> nodes;
-    private Map<String, WritablePipelineProperty> pipelinePropertyMap;
+    private ObjectMap<String, WritablePipelineProperty> pipelinePropertyMap;
     private EndPipelineNode endNode;
     private TimeKeeper timeKeeper;
     private PipelineRenderingContextImpl pipelineRenderingContext;
 
-    public PipelineRendererImpl(Iterable<PipelineNode> nodes, Map<String, WritablePipelineProperty> pipelinePropertyMap, EndPipelineNode endNode) {
+    public PipelineRendererImpl(Iterable<PipelineNode> nodes, ObjectMap<String, WritablePipelineProperty> pipelinePropertyMap, EndPipelineNode endNode) {
         this.nodes = nodes;
         this.pipelinePropertyMap = pipelinePropertyMap;
         this.endNode = endNode;

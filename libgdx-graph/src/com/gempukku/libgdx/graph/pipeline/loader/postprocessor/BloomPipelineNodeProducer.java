@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.VertexBufferObject;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gempukku.libgdx.graph.pipeline.RenderPipeline;
 import com.gempukku.libgdx.graph.pipeline.config.postprocessor.BloomPipelineNodeConfiguration;
 import com.gempukku.libgdx.graph.pipeline.loader.FloatFieldOutput;
@@ -17,15 +18,13 @@ import com.gempukku.libgdx.graph.pipeline.loader.node.OncePerFrameJobPipelineNod
 import com.gempukku.libgdx.graph.pipeline.loader.node.PipelineNode;
 import com.gempukku.libgdx.graph.pipeline.loader.node.PipelineNodeProducerImpl;
 
-import java.util.Map;
-
 public class BloomPipelineNodeProducer extends PipelineNodeProducerImpl {
     public BloomPipelineNodeProducer() {
         super(new BloomPipelineNodeConfiguration());
     }
 
     @Override
-    public PipelineNode createNode(JsonValue data, Map<String, PipelineNode.FieldOutput<?>> inputFields) {
+    public PipelineNode createNode(JsonValue data, ObjectMap<String, PipelineNode.FieldOutput<?>> inputFields) {
         final ShaderProgram brightnessFilterPassProgram = new ShaderProgram(
                 Gdx.files.internal("shader/viewToScreenCoords.vert"),
                 Gdx.files.internal("shader/brightnessFilter.frag"));
@@ -70,7 +69,7 @@ public class BloomPipelineNodeProducer extends PipelineNodeProducerImpl {
         final PipelineNode.FieldOutput<Float> finalMinimalBrightness = minimalBrightness;
         return new OncePerFrameJobPipelineNode(configuration, inputFields) {
             @Override
-            protected void executeJob(PipelineRenderingContext pipelineRenderingContext, Map<String, ? extends OutputValue> outputValues) {
+            protected void executeJob(PipelineRenderingContext pipelineRenderingContext, ObjectMap<String, ? extends OutputValue> outputValues) {
                 RenderPipeline renderPipeline = renderPipelineInput.getValue(pipelineRenderingContext);
 
                 float bloomStrengthValue = finalBloomStrength.getValue(pipelineRenderingContext);

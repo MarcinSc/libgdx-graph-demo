@@ -3,12 +3,11 @@ package com.gempukku.libgdx.graph;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectSet;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashSet;
-import java.util.Set;
 
 public class GraphLoader {
     private static final int VERSION_MAJOR = 0;
@@ -62,7 +61,7 @@ public class GraphLoader {
             for (JsonValue group : groups) {
                 String name = group.getString("name");
                 JsonValue nodes = group.get("nodes");
-                Set<String> nodeIds = new HashSet<>();
+                ObjectSet<String> nodeIds = new ObjectSet<>();
                 for (JsonValue node : nodes) {
                     nodeIds.add(node.asString());
                 }

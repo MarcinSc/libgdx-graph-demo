@@ -1,6 +1,9 @@
 package com.gempukku.libgdx.graph.shader.node.effect;
 
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.ObjectSet;
+import com.gempukku.libgdx.graph.LibGDXCollections;
 import com.gempukku.libgdx.graph.shader.GraphShader;
 import com.gempukku.libgdx.graph.shader.GraphShaderContext;
 import com.gempukku.libgdx.graph.shader.ShaderFieldType;
@@ -9,17 +12,13 @@ import com.gempukku.libgdx.graph.shader.config.effect.FresnelEffectShaderNodeCon
 import com.gempukku.libgdx.graph.shader.node.ConfigurationCommonShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.DefaultFieldOutput;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
-
 public class FresnelEffectShaderNodeBuilder extends ConfigurationCommonShaderNodeBuilder {
     public FresnelEffectShaderNodeBuilder() {
         super(new FresnelEffectShaderNodeConfiguration());
     }
 
     @Override
-    protected Map<String, ? extends FieldOutput> buildCommonNode(boolean designTime, String nodeId, JsonValue data, Map<String, FieldOutput> inputs, Set<String> producedOutputs, CommonShaderBuilder commonShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
+    protected ObjectMap<String, ? extends FieldOutput> buildCommonNode(boolean designTime, String nodeId, JsonValue data, ObjectMap<String, FieldOutput> inputs, ObjectSet<String> producedOutputs, CommonShaderBuilder commonShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
         FieldOutput normalValue = inputs.get("normal");
         FieldOutput viewDirValue = inputs.get("viewDir");
         FieldOutput powerValue = inputs.get("power");
@@ -29,6 +28,6 @@ public class FresnelEffectShaderNodeBuilder extends ConfigurationCommonShaderNod
         ShaderFieldType resultType = ShaderFieldType.Float;
         commonShaderBuilder.addMainLine(resultType.getShaderType() + " " + name + " = pow((1.0 - clamp(dot(normalize(" + normalValue.getRepresentation() + "), normalize(" + viewDirValue.getRepresentation() + ")), 0.0, 1.0)), " + powerValue.getRepresentation() + ");");
 
-        return Collections.singletonMap("output", new DefaultFieldOutput(resultType, name));
+        return LibGDXCollections.singletonMap("output", new DefaultFieldOutput(resultType, name));
     }
 }

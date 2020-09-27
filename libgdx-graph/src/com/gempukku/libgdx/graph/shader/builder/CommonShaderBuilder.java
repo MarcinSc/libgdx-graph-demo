@@ -1,22 +1,20 @@
 package com.gempukku.libgdx.graph.shader.builder;
 
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.OrderedMap;
 import com.gempukku.libgdx.graph.shader.UniformRegistry;
-
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 
 public abstract class CommonShaderBuilder {
     protected UniformRegistry uniformRegistry;
 
-    private Map<String, UniformVariable> uniformVariables = new LinkedHashMap<String, UniformVariable>();
-    private Map<String, String> varyingVariables = new LinkedHashMap<String, String>();
-    private Map<String, String> variables = new LinkedHashMap<String, String>();
-    private Map<String, String> functions = new LinkedHashMap<String, String>();
-    private Map<String, String> structures = new LinkedHashMap<String, String>();
-    private List<String> mainLines = new LinkedList<>();
-    private List<String> initialLines = new LinkedList<>();
+    private OrderedMap<String, UniformVariable> uniformVariables = new OrderedMap<String, UniformVariable>();
+    private OrderedMap<String, String> varyingVariables = new OrderedMap<String, String>();
+    private OrderedMap<String, String> variables = new OrderedMap<String, String>();
+    private OrderedMap<String, String> functions = new OrderedMap<String, String>();
+    private OrderedMap<String, String> structures = new OrderedMap<String, String>();
+    private Array<String> mainLines = new Array<>();
+    private Array<String> initialLines = new Array<>();
 
     public CommonShaderBuilder(UniformRegistry uniformRegistry) {
         this.uniformRegistry = uniformRegistry;
@@ -104,9 +102,9 @@ public abstract class CommonShaderBuilder {
     }
 
     protected void appendUniformVariables(StringBuilder stringBuilder) {
-        for (Map.Entry<String, UniformVariable> uniformDefinition : uniformVariables.entrySet()) {
-            UniformVariable uniformVariable = uniformDefinition.getValue();
-            String name = uniformDefinition.getKey();
+        for (ObjectMap.Entry<String, UniformVariable> uniformDefinition : uniformVariables.entries()) {
+            UniformVariable uniformVariable = uniformDefinition.value;
+            String name = uniformDefinition.key;
             if (uniformVariable.size > -1)
                 name += "[" + uniformVariable.size + "]";
             if (uniformVariable.comment != null)
@@ -118,16 +116,16 @@ public abstract class CommonShaderBuilder {
     }
 
     protected void appendVaryingVariables(StringBuilder stringBuilder) {
-        for (Map.Entry<String, String> varyingDefinition : varyingVariables.entrySet()) {
-            stringBuilder.append("varying " + varyingDefinition.getValue() + " " + varyingDefinition.getKey() + ";\n");
+        for (ObjectMap.Entry<String, String> varyingDefinition : varyingVariables.entries()) {
+            stringBuilder.append("varying " + varyingDefinition.value + " " + varyingDefinition.key + ";\n");
         }
         if (!varyingVariables.isEmpty())
             stringBuilder.append('\n');
     }
 
     protected void appendVariables(StringBuilder stringBuilder) {
-        for (Map.Entry<String, String> variable : variables.entrySet()) {
-            stringBuilder.append(variable.getValue() + " " + variable.getKey() + ";\n");
+        for (ObjectMap.Entry<String, String> variable : variables.entries()) {
+            stringBuilder.append(variable.value + " " + variable.key + ";\n");
         }
         if (!variables.isEmpty())
             stringBuilder.append('\n');
@@ -141,9 +139,9 @@ public abstract class CommonShaderBuilder {
     }
 
     protected void appendStructures(StringBuilder stringBuilder) {
-        for (Map.Entry<String, String> structureEntry : structures.entrySet()) {
-            stringBuilder.append("struct " + structureEntry.getKey() + " {\n")
-                    .append(structureEntry.getValue()).append("};\n\n");
+        for (ObjectMap.Entry<String, String> structureEntry : structures.entries()) {
+            stringBuilder.append("struct " + structureEntry.key + " {\n")
+                    .append(structureEntry.value).append("};\n\n");
         }
         if (!structures.isEmpty())
             stringBuilder.append('\n');

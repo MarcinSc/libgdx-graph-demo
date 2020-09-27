@@ -1,6 +1,9 @@
 package com.gempukku.libgdx.graph;
 
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.ObjectSet;
 import com.gempukku.libgdx.graph.data.FieldType;
 import com.gempukku.libgdx.graph.data.Graph;
 import com.gempukku.libgdx.graph.data.GraphConnection;
@@ -8,16 +11,10 @@ import com.gempukku.libgdx.graph.data.GraphNode;
 import com.gempukku.libgdx.graph.data.GraphProperty;
 import com.gempukku.libgdx.graph.data.NodeConfiguration;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 public abstract class GraphDataLoaderCallback<T, U extends FieldType> implements GraphLoaderCallback<T>, Graph<GraphNode<U>, GraphConnection, GraphProperty<U>, U> {
-    private Map<String, GraphNodeData<U>> graphNodes = new HashMap<>();
-    private List<GraphConnectionData> graphConnections = new LinkedList<>();
-    private Map<String, GraphPropertyData<U>> graphProperties = new HashMap<>();
+    private ObjectMap<String, GraphNodeData<U>> graphNodes = new ObjectMap<>();
+    private Array<GraphConnectionData> graphConnections = new Array<>();
+    private ObjectMap<String, GraphPropertyData<U>> graphProperties = new ObjectMap<>();
 
     @Override
     public void addPipelineNode(String id, String type, float x, float y, JsonValue data) {
@@ -35,7 +32,7 @@ public abstract class GraphDataLoaderCallback<T, U extends FieldType> implements
     }
 
     @Override
-    public void addNodeGroup(String name, Set<String> nodeIds) {
+    public void addNodeGroup(String name, ObjectSet<String> nodeIds) {
         // Ignore - used only in UI
     }
 

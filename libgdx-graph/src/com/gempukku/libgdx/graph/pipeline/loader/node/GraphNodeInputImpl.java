@@ -1,15 +1,13 @@
 package com.gempukku.libgdx.graph.pipeline.loader.node;
 
+import com.badlogic.gdx.utils.Array;
 import com.gempukku.libgdx.graph.data.FieldType;
 import com.gempukku.libgdx.graph.data.GraphNodeInput;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class GraphNodeInputImpl<T extends FieldType> implements GraphNodeInput<T> {
     private String id;
     private String name;
-    private List<? extends T> acceptedTypes;
+    private Array<T> acceptedTypes;
     private boolean required;
     private boolean mainConnection;
 
@@ -26,7 +24,7 @@ public class GraphNodeInputImpl<T extends FieldType> implements GraphNodeInput<T
         this.name = name;
         this.required = required;
         this.mainConnection = mainConnection;
-        this.acceptedTypes = Arrays.asList(acceptedType);
+        this.acceptedTypes = new Array<>(acceptedType);
     }
 
     @Override
@@ -50,7 +48,7 @@ public class GraphNodeInputImpl<T extends FieldType> implements GraphNodeInput<T
     }
 
     @Override
-    public List<? extends T> getAcceptedPropertyTypes() {
+    public Array<T> getAcceptedPropertyTypes() {
         return acceptedTypes;
     }
 }

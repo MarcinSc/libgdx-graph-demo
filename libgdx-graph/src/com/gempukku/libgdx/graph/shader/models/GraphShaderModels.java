@@ -1,159 +1,155 @@
 package com.gempukku.libgdx.graph.shader.models;
 
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.utils.AnimationController;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
-import com.gempukku.libgdx.graph.IdGenerator;
-import com.gempukku.libgdx.graph.RandomIdGenerator;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+/**
+ * Main interface that is used to operate on models rendered by GraphShaders. Any operation done on the models should
+ * be done via use of this interface.
+ */
+public interface GraphShaderModels extends Disposable {
+    /**
+     * Registers the specified model with Graph Shaders.
+     *
+     * @param model Model to register
+     * @return Returns modelId that is used further on, when referring to the model.
+     */
+    String registerModel(Model model);
 
-public class GraphShaderModels implements Disposable {
-    private enum Order {
-        Front_To_Back, Back_To_Front;
+    /**
+     * Removes the specified model from Graph Shaders, freeing up the memory.
+     * This method also removes all model instances created from that model.
+     *
+     * @param modelId modelId that was returned from the registerModel call.
+     */
+    void removeModel(String modelId);
 
-        public int result(float dst) {
-            if (this == Front_To_Back)
-                return dst > 0 ? 1 : (dst < 0 ? -1 : 0);
-            else
-                return dst < 0 ? 1 : (dst > 0 ? -1 : 0);
-        }
-    }
+    /**
+     * Adds tag that will be added to every model instance that is subsequently created from the model.
+     * Note, that adding the same tag multiple times with different TagPerformanceHint will result in using only the
+     * last setting.
+     *
+     * @param modelId             ModelId that was returned from the registerModel call.
+     * @param tag                 Tag that should be added to each subsequently created model instance.
+     * @param tagOptimizationHint Specifies, how this tag will be used with model instances subsequently created.
+     */
+    void addModelDefaultTag(String modelId, String tag, TagOptimizationHint tagOptimizationHint);
 
-    private Vector3 cameraPosition = new Vector3();
-    private Order order;
-    private DistanceRenderableSorter sorter = new DistanceRenderableSorter();
+    /**
+     * Removes tag from list of tags that would be added to every model instance that is subsequently created from
+     * the model. Please note - this DOES NOT remove the tag from model instances already created.
+     *
+     * @param modelId ModelId that was returned from the registerModel call.
+     * @param tag     Tag that should be removed.
+     */
+    void removeModelDefaultTag(String modelId, String tag);
 
-    private Map<String, GraphShaderModel> graphShaderModels = new HashMap<>();
-    private Array<GraphShaderModelInstanceImpl> models = new Array<>();
+    /**
+     * Creates model instance based on the specified model. This model instance will not be optimized by the engine.
+     *
+     * @param modelId ModelId that was returned from the registerModel call.
+     * @return Returns modelInstanceId that is used further on, when referring to the model instance.
+     */
+    String createModelInstance(String modelId);
 
-    private IdGenerator idGenerator = new RandomIdGenerator(16);
+    /**
+     * Creates model instance based on the specified model. Provides hints to the engine, on how this model will
+     * be used, so that engine can optimize the rendering having those in mind.
+     *
+     * @param modelId                        ModelId that was returned from the registerModel call.
+     * @param modelInstanceOptimizationHints Provides the engine some hints on how this model will be utilized.
+     * @return Returns modelInstanceId that is used further on, when referring to the model instance.
+     */
+    String createModelInstance(String modelId, ModelInstanceOptimizationHints modelInstanceOptimizationHints);
 
-    public String registerModel(Model model) {
-        String id = idGenerator.generateId();
-        GraphShaderModel graphShaderModel = new GraphShaderModel(idGenerator, model);
-        graphShaderModels.put(id, graphShaderModel);
-        return id;
-    }
+    /**
+     * Destroys and frees up any resources used by the specified model instance.
+     *
+     * @param modelInstanceId ModelInstanceId that was returned from the createModelInstance call.
+     */
+    void destroyModelInstance(String modelInstanceId);
 
-    public void removeModel(String modelId) {
-        GraphShaderModel model = graphShaderModels.remove(modelId);
-        Array.ArrayIterator<GraphShaderModelInstanceImpl> iterator = models.iterator();
-        for (GraphShaderModelInstanceImpl graphShaderModelInstance : iterator) {
-            if (graphShaderModelInstance.getModel() == model) {
-                iterator.remove();
-            }
-        }
-        model.dispose();
-    }
+    /**
+     * Updates transform of the given model instance.
+     *
+     * @param modelInstanceId ModelInstanceId that was returned from the createModelInstance call.
+     * @param transformUpdate An update operation that is performed on the transform of the model instance. Please note
+     *                        - that the Matrix4 passed is NOT the actual instance of Matrix4 used by the model
+     *                        internally.
+     */
+    void updateTransform(String modelInstanceId, TransformUpdate transformUpdate);
 
-    public void addModelDefaultTag(String modelId, String tag) {
-        graphShaderModels.get(modelId).addDefaultTag(tag);
-    }
+    /**
+     * Creates animation controller for the specified model instance.
+     *
+     * @param modelInstanceId ModelInstanceId that was returned from the createModelInstance call.
+     * @return AnimationController used to animate the model instance.
+     */
+    AnimationController createAnimationController(String modelInstanceId);
 
-    public void removeModelDefaultTag(String modelId, String tag) {
-        graphShaderModels.get(modelId).removeDefaultTag(tag);
-    }
+    /**
+     * Adds tag to the model instance. These tags are used to specify, which shaders should render this model instance.
+     * Note, that adding the same tag multiple times with different TagPerformanceHint will result in using only the
+     * last setting, and adding a tag with different hint than is currently in use by the model instance, effectively
+     * means that the "cost" of removal of the tag has to be "paid", based on the previous setting.
+     *
+     * @param modelInstanceId     ModelInstanceId that was returned from the createModelInstance call.
+     * @param tag                 Tag to add.
+     * @param tagOptimizationHint
+     */
+    void addTag(String modelInstanceId, String tag, TagOptimizationHint tagOptimizationHint);
 
-    public GraphShaderModelInstance createModelInstance(String modelId) {
-        GraphShaderModelInstanceImpl graphShaderModelInstance = graphShaderModels.get(modelId).createInstance();
-        models.add(graphShaderModelInstance);
-        return graphShaderModelInstance;
-    }
+    /**
+     * Removes tag from the model instance.
+     *
+     * @param modelInstanceId ModelInstanceId that was returned from the createModelInstance call.
+     * @param tag             Tag to remove.
+     */
+    void removeTag(String modelInstanceId, String tag);
 
-    public void destroyModelInstance(String modelInstanceId) {
-        Array.ArrayIterator<GraphShaderModelInstanceImpl> iterator = models.iterator();
-        for (GraphShaderModelInstanceImpl graphShaderModelInstance : iterator) {
-            if (graphShaderModelInstance.getId().equals(modelInstanceId)) {
-                iterator.remove();
-            }
-        }
-    }
+    /**
+     * Removes all tags from the model instance.
+     *
+     * @param modelInstanceId ModelInstanceId that was returned from the createModelInstance call.
+     */
+    void removeAllTags(String modelInstanceId);
 
-    public AnimationController createAnimationController(String modelInstanceId) {
-        for (GraphShaderModelInstanceImpl model : models) {
-            if (model.getId().equals(modelInstanceId))
-                return new AnimationController(model.getModelInstance());
-        }
-        return null;
-    }
+    /**
+     * Checks whether the model instance has the specified tag.
+     *
+     * @param modelInstanceId ModelInstanceId that was returned from the createModelInstance call.
+     * @param tag             Tag to check the model instance for.
+     * @return If the model instance has the tag.
+     */
+    boolean hasTag(String modelInstanceId, String tag);
 
-    public void prepareForRendering(Camera camera) {
-        cameraPosition.set(camera.position);
-        order = null;
-    }
+    /**
+     * Sets property on the given model instance.
+     *
+     * @param modelInstanceId ModelInstanceId that was returned from the createModelInstance call.
+     * @param name            Name of the property.
+     * @param value           Value of the property.
+     */
+    void setProperty(String modelInstanceId, String name, Object value);
 
-    public void orderFrontToBack() {
-        if (order == Order.Back_To_Front)
-            models.reverse();
-        if (order == null)
-            sorter.sort(cameraPosition, models, Order.Front_To_Back);
-        order = Order.Front_To_Back;
-    }
+    /**
+     * Un-sets the property from the given model instance. If the property is un-set, the default value for that
+     * property will be used (specified in the Graph editor).
+     *
+     * @param modelInstanceId ModelInstanceId that was returned from the createModelInstance call.
+     * @param name            Name of the property.
+     */
+    void unsetProperty(String modelInstanceId, String name);
 
-    public void orderBackToFront() {
-        if (order == Order.Front_To_Back)
-            models.reverse();
-        if (order == null)
-            sorter.sort(cameraPosition, models, Order.Back_To_Front);
-        order = Order.Back_To_Front;
-    }
-
-    public Iterable<? extends GraphShaderModelInstanceImpl> getModels() {
-        return models;
-    }
-
-    public Iterable<? extends GraphShaderModelInstanceImpl> getModelsWithTag(final String tag) {
-        return StreamSupport.stream(models.spliterator(), false)
-                .filter(new Predicate<GraphShaderModelInstanceImpl>() {
-                    @Override
-                    public boolean test(GraphShaderModelInstanceImpl graphShaderModelInstance) {
-                        return graphShaderModelInstance.hasTag(tag);
-                    }
-                }).collect(Collectors.<GraphShaderModelInstanceImpl>toList());
-    }
-
-    @Override
-    public void dispose() {
-        for (GraphShaderModel model : graphShaderModels.values()) {
-            model.dispose();
-        }
-        graphShaderModels.clear();
-        models.clear();
-    }
-
-    private static class DistanceRenderableSorter implements Comparator<GraphShaderModelInstanceImpl> {
-        private Vector3 cameraPosition;
-        private Order order;
-        private final Vector3 tmpV1 = new Vector3();
-        private final Vector3 tmpV2 = new Vector3();
-
-        public void sort(Vector3 cameraPosition, Array<GraphShaderModelInstanceImpl> renderables, Order order) {
-            this.cameraPosition = cameraPosition;
-            this.order = order;
-            renderables.sort(this);
-        }
-
-        private Vector3 getTranslation(Matrix4 worldTransform, Vector3 output) {
-            worldTransform.getTranslation(output);
-            return output;
-        }
-
-        @Override
-        public int compare(GraphShaderModelInstanceImpl o1, GraphShaderModelInstanceImpl o2) {
-            getTranslation(o1.getTransformMatrix(), tmpV1);
-            getTranslation(o2.getTransformMatrix(), tmpV2);
-            final float dst = (int) (1000f * cameraPosition.dst2(tmpV1)) - (int) (1000f * cameraPosition.dst2(tmpV2));
-            return order.result(dst);
-        }
-    }
+    /**
+     * Returns the value of a property from the given model instance.
+     * Please note - that if the property is not set on the model instance, a null is returned and NOT the default
+     * value (from Graph editor).
+     *
+     * @param modelInstanceId ModelInstanceId that was returned from the createModelInstance call.
+     * @param name            Name of the property.
+     * @return Value of the property.
+     */
+    Object getProperty(String modelInstanceId, String name);
 }

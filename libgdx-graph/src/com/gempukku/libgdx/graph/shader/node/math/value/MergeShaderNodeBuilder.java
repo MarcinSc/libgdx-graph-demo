@@ -1,6 +1,8 @@
 package com.gempukku.libgdx.graph.shader.node.math.value;
 
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.ObjectSet;
 import com.gempukku.libgdx.graph.shader.GraphShader;
 import com.gempukku.libgdx.graph.shader.GraphShaderContext;
 import com.gempukku.libgdx.graph.shader.ShaderFieldType;
@@ -9,18 +11,14 @@ import com.gempukku.libgdx.graph.shader.config.math.value.MergeShaderNodeConfigu
 import com.gempukku.libgdx.graph.shader.node.ConfigurationCommonShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.DefaultFieldOutput;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 public class MergeShaderNodeBuilder extends ConfigurationCommonShaderNodeBuilder {
     public MergeShaderNodeBuilder() {
         super(new MergeShaderNodeConfiguration());
     }
 
     @Override
-    protected Map<String, ? extends FieldOutput> buildCommonNode(boolean designTime, String nodeId, JsonValue data, Map<String, FieldOutput> inputs, Set<String> producedOutputs,
-                                                                 CommonShaderBuilder commonShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
+    protected ObjectMap<String, ? extends FieldOutput> buildCommonNode(boolean designTime, String nodeId, JsonValue data, ObjectMap<String, FieldOutput> inputs, ObjectSet<String> producedOutputs,
+                                                                       CommonShaderBuilder commonShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
         FieldOutput xValue = inputs.get("x");
         FieldOutput yValue = inputs.get("y");
         FieldOutput zValue = inputs.get("z");
@@ -33,7 +31,7 @@ public class MergeShaderNodeBuilder extends ConfigurationCommonShaderNodeBuilder
 
         commonShaderBuilder.addMainLine("// Merge Node");
 
-        Map<String, DefaultFieldOutput> result = new HashMap<>();
+        ObjectMap<String, DefaultFieldOutput> result = new ObjectMap<>();
         if (producedOutputs.contains("v2")) {
             String name = "v2_" + nodeId;
             commonShaderBuilder.addMainLine("vec2 " + name + " = vec2(" + x + ", " + y + ");");

@@ -1,5 +1,7 @@
 package com.gempukku.libgdx.graph.pipeline;
 
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gempukku.libgdx.graph.pipeline.loader.math.AddPipelineNodeProducer;
 import com.gempukku.libgdx.graph.pipeline.loader.math.MultiplyPipelineNodeProducer;
 import com.gempukku.libgdx.graph.pipeline.loader.math.SubtractPipelineNodeProducer;
@@ -36,14 +38,9 @@ import com.gempukku.libgdx.graph.pipeline.property.StagePipelinePropertyProducer
 import com.gempukku.libgdx.graph.pipeline.property.Vector2PipelinePropertyProducer;
 import com.gempukku.libgdx.graph.pipeline.property.Vector3PipelinePropertyProducer;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
 public class RendererPipelineConfiguration {
-    public static Map<String, PipelineNodeProducer> pipelineNodeProducers = new HashMap<>();
-    public static List<PipelinePropertyProducer> pipelinePropertyProducers = new LinkedList<>();
+    public static ObjectMap<String, PipelineNodeProducer> pipelineNodeProducers = new ObjectMap<>();
+    public static Array<PipelinePropertyProducer> pipelinePropertyProducers = new Array<>();
 
     static {
         addNodeProducer(new StartPipelineNodeProducer());

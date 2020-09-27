@@ -8,12 +8,10 @@ import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.badlogic.gdx.utils.ObjectMap;
 
 public abstract class UniformCachingShader extends BasicShader {
-    private Map<Integer, Object> uniformCache = new HashMap<Integer, Object>();
+    private ObjectMap<Integer, Object> uniformCache = new ObjectMap<Integer, Object>();
 
     public UniformCachingShader(Texture defaultTexture) {
         super(defaultTexture);

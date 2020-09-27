@@ -2,26 +2,25 @@ package com.gempukku.libgdx.graph.shader.builder;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.gempukku.libgdx.graph.LibGDXCollections;
 
 import java.nio.charset.Charset;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 public class GLSLFragmentReader {
-    private static Map<String, String> map = new HashMap<String, String>();
+    private static ObjectMap<String, String> map = new ObjectMap<String, String>();
 
     private GLSLFragmentReader() {
     }
 
     public static String getFragment(String fragmentName) {
-        return getFragment(fragmentName, Collections.<String, String>emptyMap());
+        return getFragment(fragmentName, LibGDXCollections.<String, String>emptyMap());
     }
 
-    public static String getFragment(String fragmentName, Map<String, String> replacements) {
+    public static String getFragment(String fragmentName, ObjectMap<String, String> replacements) {
         String fragment = readFragment(fragmentName);
-        for (Map.Entry<String, String> replacement : replacements.entrySet())
-            fragment = fragment.replace(replacement.getKey(), replacement.getValue());
+        for (ObjectMap.Entry<String, String> replacement : replacements.entries())
+            fragment = fragment.replace(replacement.key, replacement.value);
 
         return fragment;
     }

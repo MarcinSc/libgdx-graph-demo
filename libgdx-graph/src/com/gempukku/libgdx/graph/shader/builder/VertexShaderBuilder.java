@@ -1,12 +1,11 @@
 package com.gempukku.libgdx.graph.shader.builder;
 
+import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.OrderedMap;
 import com.gempukku.libgdx.graph.shader.UniformRegistry;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 public class VertexShaderBuilder extends CommonShaderBuilder {
-    private Map<String, String> attributeVariables = new LinkedHashMap<String, String>();
+    private ObjectMap<String, String> attributeVariables = new OrderedMap<>();
 
     public VertexShaderBuilder(UniformRegistry uniformRegistry) {
         super(uniformRegistry);
@@ -23,8 +22,8 @@ public class VertexShaderBuilder extends CommonShaderBuilder {
     }
 
     private void appendAttributeVariables(StringBuilder stringBuilder) {
-        for (Map.Entry<String, String> uniformDefinition : attributeVariables.entrySet()) {
-            stringBuilder.append("attribute " + uniformDefinition.getValue() + " " + uniformDefinition.getKey() + ";\n");
+        for (ObjectMap.Entry<String, String> uniformDefinition : attributeVariables.entries()) {
+            stringBuilder.append("attribute " + uniformDefinition.value + " " + uniformDefinition.key + ";\n");
         }
         if (!attributeVariables.isEmpty())
             stringBuilder.append("\n");

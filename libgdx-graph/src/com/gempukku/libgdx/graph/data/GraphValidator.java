@@ -1,12 +1,8 @@
 package com.gempukku.libgdx.graph.data;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.ObjectSet;
 
 public class GraphValidator<T extends GraphNode<W>, U extends GraphConnection, V extends GraphProperty<W>, W extends FieldType> {
     public ValidationResult<T, U, V, W> validateGraph(Graph<T, U, V, W> graph, String nodeEnd) {
@@ -17,7 +13,7 @@ public class GraphValidator<T extends GraphNode<W>, U extends GraphConnection, V
             return result;
 
         // Check duplicate property names
-        Map<String, V> propertyNames = new HashMap<>();
+        ObjectMap<String, V> propertyNames = new ObjectMap<>();
         for (V property : graph.getProperties()) {
             String propertyName = property.getName();
             if (propertyNames.containsKey(propertyName)) {
@@ -30,21 +26,21 @@ public class GraphValidator<T extends GraphNode<W>, U extends GraphConnection, V
         boolean cyclic = isCyclic(result, graph, nodeEnd);
         if (!cyclic) {
             // Do other Validation
-            validateNode(result, graph, nodeEnd, new HashMap<String, NodeOutputs<W>>());
+            validateNode(result, graph, nodeEnd, new ObjectMap<String, NodeOutputs<W>>());
         }
         return result;
     }
 
     private NodeOutputs<W> validateNode(ValidationResult<T, U, V, W> result, Graph<T, U, V, W> graph, String nodeId,
-                                        Map<String, NodeOutputs<W>> nodeOutputs) {
+                                        ObjectMap<String, NodeOutputs<W>> nodeOutputs) {
         // Check if already validated
         NodeOutputs<W> outputs = nodeOutputs.get(nodeId);
         if (outputs != null)
             return outputs;
 
         T thisNode = graph.getNodeById(nodeId);
-        Set<String> validatedFields = new HashSet<>();
-        Map<String, W> inputsTypes = new HashMap<>();
+        ObjectSet<String> validatedFields = new ObjectSet<>();
+        ObjectMap<String, W> inputsTypes = new ObjectMap<>();
         for (U incomingConnection : getIncomingConnections(graph, nodeId)) {
             String fieldTo = incomingConnection.getFieldTo();
             GraphNodeInput<W> input = thisNode.getConfiguration().getNodeInputs().get(fieldTo);
@@ -52,7 +48,7 @@ public class GraphValidator<T extends GraphNode<W>, U extends GraphConnection, V
             GraphNodeOutput<W> output = remoteNode.getConfiguration().getNodeOutputs().get(incomingConnection.getFieldFrom());
 
             // Validate the actual output is accepted by the input
-            List<? extends W> acceptedPropertyTypes = input.getAcceptedPropertyTypes();
+            Array<W> acceptedPropertyTypes = input.getAcceptedPropertyTypes();
             if (!outputAcceptsPropertyType(output, acceptedPropertyTypes)) {
                 result.addErrorConnection(incomingConnection);
             }
@@ -72,7 +68,7 @@ public class GraphValidator<T extends GraphNode<W>, U extends GraphConnection, V
         if (!valid)
             result.addErrorNode(thisNode);
 
-        Map<String, W> nodeOutputMap = new HashMap<>();
+        ObjectMap<String, W> nodeOutputMap = new ObjectMap<>();
         for (GraphNodeOutput<W> value : thisNode.getConfiguration().getNodeOutputs().values()) {
             nodeOutputMap.put(value.getFieldId(), value.determineFieldType(inputsTypes));
         }
@@ -83,7 +79,7 @@ public class GraphValidator<T extends GraphNode<W>, U extends GraphConnection, V
     }
 
     private Iterable<U> getIncomingConnections(Graph<T, U, V, W> graph, String nodeId) {
-        List<U> result = new LinkedList<>();
+        Array<U> result = new Array<>();
         for (U connection : graph.getConnections()) {
             if (connection.getNodeTo().equals(nodeId))
                 result.add(connection);
@@ -91,10 +87,10 @@ public class GraphValidator<T extends GraphNode<W>, U extends GraphConnection, V
         return result;
     }
 
-    private boolean outputAcceptsPropertyType(GraphNodeOutput<? extends FieldType> output, List<? extends FieldType> acceptedPropertyTypes) {
-        Collection<? extends FieldType> producablePropertyTypes = output.getProducableFieldTypes();
-        for (FieldType acceptedFieldType : acceptedPropertyTypes) {
-            if (producablePropertyTypes.contains(acceptedFieldType))
+    private <W extends FieldType> boolean outputAcceptsPropertyType(GraphNodeOutput<W> output, Array<W> acceptedPropertyTypes) {
+        Array<W> producablePropertyTypes = output.getProducableFieldTypes();
+        for (W acceptedFieldType : acceptedPropertyTypes) {
+            if (producablePropertyTypes.contains(acceptedFieldType, true))
                 return true;
         }
         return false;
@@ -102,8 +98,8 @@ public class GraphValidator<T extends GraphNode<W>, U extends GraphConnection, V
 
     // This function is a variation of DFSUtil() in
     // https://www.geeksforgeeks.org/archives/18212
-    private boolean isCyclicUtil(ValidationResult<T, U, V, W> validationResult, Graph<T, U, V, W> graph, String nodeId, Set<String> visited,
-                                 Set<String> recStack) {
+    private boolean isCyclicUtil(ValidationResult<T, U, V, W> validationResult, Graph<T, U, V, W> graph, String nodeId, ObjectSet<String> visited,
+                                 ObjectSet<String> recStack) {
         // Mark the current node as visited and
         // part of recursion stack
         if (recStack.contains(nodeId)) {
@@ -117,7 +113,7 @@ public class GraphValidator<T extends GraphNode<W>, U extends GraphConnection, V
         visited.add(nodeId);
         recStack.add(nodeId);
 
-        Set<String> connectedNodes = new HashSet<>();
+        ObjectSet<String> connectedNodes = new ObjectSet<>();
         for (U incomingConnection : getIncomingConnections(graph, nodeId)) {
             connectedNodes.add(incomingConnection.getNodeFrom());
         }
@@ -133,8 +129,8 @@ public class GraphValidator<T extends GraphNode<W>, U extends GraphConnection, V
     }
 
     private boolean isCyclic(ValidationResult<T, U, V, W> validationResult, Graph<T, U, V, W> graph, String start) {
-        Set<String> visited = new HashSet<>();
-        Set<String> recStack = new HashSet<>();
+        ObjectSet<String> visited = new ObjectSet<>();
+        ObjectSet<String> recStack = new ObjectSet<>();
 
         // Call the recursive helper function to
         // detect cycle in different DFS trees
@@ -152,19 +148,19 @@ public class GraphValidator<T extends GraphNode<W>, U extends GraphConnection, V
     }
 
     private static class NodeOutputs<W> {
-        private Map<String, W> outputs;
+        private ObjectMap<String, W> outputs;
 
-        public NodeOutputs(Map<String, W> outputs) {
+        public NodeOutputs(ObjectMap<String, W> outputs) {
             this.outputs = outputs;
         }
     }
 
     public static class ValidationResult<T extends GraphNode<W>, U extends GraphConnection, V extends GraphProperty<W>, W extends FieldType> {
-        private final Set<T> errorNodes = new HashSet<>();
-        private final Set<T> warningNodes = new HashSet<>();
-        private final Set<U> errorConnections = new HashSet<>();
-        private final Set<NodeConnector> errorConnectors = new HashSet<>();
-        private final Set<V> errorProperties = new HashSet<>();
+        private final ObjectSet<T> errorNodes = new ObjectSet<>();
+        private final ObjectSet<T> warningNodes = new ObjectSet<>();
+        private final ObjectSet<U> errorConnections = new ObjectSet<>();
+        private final ObjectSet<NodeConnector> errorConnectors = new ObjectSet<>();
+        private final ObjectSet<V> errorProperties = new ObjectSet<>();
 
         public void addErrorNode(T node) {
             errorNodes.add(node);
@@ -186,23 +182,23 @@ public class GraphValidator<T extends GraphNode<W>, U extends GraphConnection, V
             errorProperties.add(property);
         }
 
-        public Set<T> getErrorNodes() {
+        public ObjectSet<T> getErrorNodes() {
             return errorNodes;
         }
 
-        public Set<T> getWarningNodes() {
+        public ObjectSet<T> getWarningNodes() {
             return warningNodes;
         }
 
-        public Set<U> getErrorConnections() {
+        public ObjectSet<U> getErrorConnections() {
             return errorConnections;
         }
 
-        public Set<NodeConnector> getErrorConnectors() {
+        public ObjectSet<NodeConnector> getErrorConnectors() {
             return errorConnectors;
         }
 
-        public Set<V> getErrorProperties() {
+        public ObjectSet<V> getErrorProperties() {
             return errorProperties;
         }
 

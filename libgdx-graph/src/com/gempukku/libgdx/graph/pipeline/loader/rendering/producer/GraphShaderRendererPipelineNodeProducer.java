@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gempukku.libgdx.graph.GraphLoader;
 import com.gempukku.libgdx.graph.WhitePixel;
 import com.gempukku.libgdx.graph.pipeline.RenderPipeline;
@@ -21,12 +22,8 @@ import com.gempukku.libgdx.graph.shader.GraphShader;
 import com.gempukku.libgdx.graph.shader.ShaderContext;
 import com.gempukku.libgdx.graph.shader.ShaderLoaderCallback;
 import com.gempukku.libgdx.graph.shader.environment.GraphShaderEnvironment;
-import com.gempukku.libgdx.graph.shader.models.GraphShaderModelInstanceImpl;
-import com.gempukku.libgdx.graph.shader.models.GraphShaderModels;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import com.gempukku.libgdx.graph.shader.models.impl.GraphShaderModelInstance;
+import com.gempukku.libgdx.graph.shader.models.impl.GraphShaderModelsImpl;
 
 public class GraphShaderRendererPipelineNodeProducer extends PipelineNodeProducerImpl {
     public GraphShaderRendererPipelineNodeProducer() {
@@ -34,19 +31,19 @@ public class GraphShaderRendererPipelineNodeProducer extends PipelineNodeProduce
     }
 
     @Override
-    public PipelineNode createNode(JsonValue data, Map<String, PipelineNode.FieldOutput<?>> inputFields) {
+    public PipelineNode createNode(JsonValue data, ObjectMap<String, PipelineNode.FieldOutput<?>> inputFields) {
         final WhitePixel whitePixel = new WhitePixel();
 
         final ShaderContextImpl shaderContext = new ShaderContextImpl();
 
         JsonValue renderPassDefinitions = data.get("renderPasses");
 
-        final List<RenderPass> renderPasses = new LinkedList<>();
+        final Array<RenderPass> renderPasses = new Array<>();
         for (JsonValue renderPassDefinition : renderPassDefinitions) {
             renderPasses.add(new RenderPass(renderPassDefinition, whitePixel));
         }
 
-        final PipelineNode.FieldOutput<GraphShaderModels> modelsInput = (PipelineNode.FieldOutput<GraphShaderModels>) inputFields.get("models");
+        final PipelineNode.FieldOutput<GraphShaderModelsImpl> modelsInput = (PipelineNode.FieldOutput<GraphShaderModelsImpl>) inputFields.get("models");
         final PipelineNode.FieldOutput<GraphShaderEnvironment> lightsInput = (PipelineNode.FieldOutput<GraphShaderEnvironment>) inputFields.get("lights");
         final PipelineNode.FieldOutput<Camera> cameraInput = (PipelineNode.FieldOutput<Camera>) inputFields.get("camera");
         final PipelineNode.FieldOutput<RenderPipeline> renderPipelineInput = (PipelineNode.FieldOutput<RenderPipeline>) inputFields.get("input");
@@ -55,9 +52,9 @@ public class GraphShaderRendererPipelineNodeProducer extends PipelineNodeProduce
             private final RenderContext renderContext = new RenderContext(new DefaultTextureBinder(DefaultTextureBinder.LRU, 1));
 
             @Override
-            protected void executeJob(PipelineRenderingContext pipelineRenderingContext, Map<String, ? extends OutputValue> outputValues) {
+            protected void executeJob(PipelineRenderingContext pipelineRenderingContext, ObjectMap<String, ? extends OutputValue> outputValues) {
                 RenderPipeline renderPipeline = renderPipelineInput.getValue(pipelineRenderingContext);
-                GraphShaderModels models = modelsInput.getValue(pipelineRenderingContext);
+                GraphShaderModelsImpl models = modelsInput.getValue(pipelineRenderingContext);
                 Camera camera = cameraInput.getValue(pipelineRenderingContext);
                 FrameBuffer currentBuffer = renderPipeline.getCurrentBuffer();
                 int width = currentBuffer.getWidth();
@@ -111,7 +108,7 @@ public class GraphShaderRendererPipelineNodeProducer extends PipelineNodeProduce
                     if (!transparentShaders.isEmpty()) {
                         models.orderBackToFront();
                         GraphShader lastShader = null;
-                        for (GraphShaderModelInstanceImpl graphShaderModelInstance : models.getModels()) {
+                        for (GraphShaderModelInstance graphShaderModelInstance : models.getModels()) {
                             for (GraphShader shader : transparentShaders) {
                                 String tag = shader.getTag();
                                 if (graphShaderModelInstance.hasTag(tag)) {
@@ -153,9 +150,9 @@ public class GraphShaderRendererPipelineNodeProducer extends PipelineNodeProduce
                     output.setValue(renderPipeline);
             }
 
-            private void renderWithShaderOpaquePass(String tag, GraphShader shader, GraphShaderModels models, ShaderContext shaderContext) {
+            private void renderWithShaderOpaquePass(String tag, GraphShader shader, GraphShaderModelsImpl models, ShaderContext shaderContext) {
                 boolean begun = false;
-                for (GraphShaderModelInstanceImpl graphShaderModelInstance : models.getModelsWithTag(tag)) {
+                for (GraphShaderModelInstance graphShaderModelInstance : models.getModelsWithTag(tag)) {
                     if (!begun) {
                         shader.begin(shaderContext, renderContext);
                         begun = true;

@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.environment.SpotLight;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.ObjectSet;
+import com.gempukku.libgdx.graph.LibGDXCollections;
 import com.gempukku.libgdx.graph.shader.BasicShader;
 import com.gempukku.libgdx.graph.shader.GraphShader;
 import com.gempukku.libgdx.graph.shader.GraphShaderConfig;
@@ -19,14 +22,9 @@ import com.gempukku.libgdx.graph.shader.builder.GLSLFragmentReader;
 import com.gempukku.libgdx.graph.shader.builder.VertexShaderBuilder;
 import com.gempukku.libgdx.graph.shader.config.lighting.CalculateLightingShaderNodeConfiguration;
 import com.gempukku.libgdx.graph.shader.environment.GraphShaderEnvironment;
-import com.gempukku.libgdx.graph.shader.models.GraphShaderModelInstanceImpl;
+import com.gempukku.libgdx.graph.shader.models.impl.GraphShaderModelInstance;
 import com.gempukku.libgdx.graph.shader.node.ConfigurationShaderNodeBuilder;
 import com.gempukku.libgdx.graph.shader.node.DefaultFieldOutput;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 public class CalculateLightingShaderNodeBuilder extends ConfigurationShaderNodeBuilder {
     public CalculateLightingShaderNodeBuilder() {
@@ -34,12 +32,12 @@ public class CalculateLightingShaderNodeBuilder extends ConfigurationShaderNodeB
     }
 
     @Override
-    public Map<String, ? extends FieldOutput> buildVertexNode(boolean designTime, String nodeId, JsonValue data, Map<String, FieldOutput> inputs, Set<String> producedOutputs, VertexShaderBuilder vertexShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
+    public ObjectMap<String, ? extends FieldOutput> buildVertexNode(boolean designTime, String nodeId, JsonValue data, ObjectMap<String, FieldOutput> inputs, ObjectSet<String> producedOutputs, VertexShaderBuilder vertexShaderBuilder, GraphShaderContext graphShaderContext, GraphShader graphShader) {
         throw new UnsupportedOperationException("At the moment light calculation is not available in vertex shader");
     }
 
     @Override
-    public Map<String, ? extends FieldOutput> buildFragmentNode(boolean designTime, String nodeId, JsonValue data, Map<String, FieldOutput> inputs, Set<String> producedOutputs, VertexShaderBuilder vertexShaderBuilder, FragmentShaderBuilder fragmentShaderBuilder, final GraphShaderContext graphShaderContext, GraphShader graphShader) {
+    public ObjectMap<String, ? extends FieldOutput> buildFragmentNode(boolean designTime, String nodeId, JsonValue data, ObjectMap<String, FieldOutput> inputs, ObjectSet<String> producedOutputs, VertexShaderBuilder vertexShaderBuilder, FragmentShaderBuilder fragmentShaderBuilder, final GraphShaderContext graphShaderContext, GraphShader graphShader) {
         fragmentShaderBuilder.addStructure("Lighting",
                 "  vec3 diffuse;\n" +
                         "  vec3 specular;\n");
@@ -78,7 +76,7 @@ public class CalculateLightingShaderNodeBuilder extends ConfigurationShaderNodeB
             fragmentShaderBuilder.addMainLine(lightingVariable + " = getSpotLightContribution(" + position + ", " + normal + ", " + shininess + ", " + lightingVariable + ");");
 
         ShaderFieldType resultType = ShaderFieldType.Vector3;
-        Map<String, DefaultFieldOutput> result = new HashMap<>();
+        ObjectMap<String, DefaultFieldOutput> result = new ObjectMap<>();
         if (producedOutputs.contains("output")) {
             String name = "color_" + nodeId;
             fragmentShaderBuilder.addMainLine(resultType.getShaderType() + " " + name + " = " + emission + ".rgb + u_ambientLight * " + albedo + ".rgb;");
@@ -101,7 +99,7 @@ public class CalculateLightingShaderNodeBuilder extends ConfigurationShaderNodeB
             fragmentShaderBuilder.addUniformVariable("u_spotLightCount", "int", true,
                     new UniformRegistry.UniformSetter() {
                         @Override
-                        public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
+                        public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstance graphShaderModelInstance, Renderable renderable) {
                             GraphShaderEnvironment environment = shaderContext.getGraphShaderEnvironment();
                             if (environment != null) {
                                 shader.setUniform(location, environment.getSpotLights().size);
@@ -119,7 +117,7 @@ public class CalculateLightingShaderNodeBuilder extends ConfigurationShaderNodeB
             fragmentShaderBuilder.addStructArrayUniformVariable("u_spotLights", new String[]{"color", "position", "direction", "cutoffAngle", "exponent"}, numSpotLights, "SpotLight", true,
                     new UniformRegistry.StructArrayUniformSetter() {
                         @Override
-                        public void set(BasicShader shader, int startingLocation, int[] fieldOffsets, int structSize, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
+                        public void set(BasicShader shader, int startingLocation, int[] fieldOffsets, int structSize, ShaderContext shaderContext, GraphShaderModelInstance graphShaderModelInstance, Renderable renderable) {
                             Array<SpotLight> spots = null;
                             GraphShaderEnvironment environment = shaderContext.getGraphShaderEnvironment();
                             if (environment != null) {
@@ -152,7 +150,7 @@ public class CalculateLightingShaderNodeBuilder extends ConfigurationShaderNodeB
             if (!fragmentShaderBuilder.containsFunction("getSpotLightContribution")) {
                 fragmentShaderBuilder.addFunction("getSpotLightContribution",
                         GLSLFragmentReader.getFragment("spotLightContribution",
-                                Collections.singletonMap("NUM_SPOT_LIGHTS", String.valueOf(numSpotLights))));
+                                LibGDXCollections.singletonMap("NUM_SPOT_LIGHTS", String.valueOf(numSpotLights))));
             }
         } else {
             if (!fragmentShaderBuilder.containsFunction("getSpotLightContribution")) {
@@ -170,7 +168,7 @@ public class CalculateLightingShaderNodeBuilder extends ConfigurationShaderNodeB
             fragmentShaderBuilder.addUniformVariable("u_pointLightCount", "int", true,
                     new UniformRegistry.UniformSetter() {
                         @Override
-                        public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
+                        public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstance graphShaderModelInstance, Renderable renderable) {
                             GraphShaderEnvironment environment = shaderContext.getGraphShaderEnvironment();
                             if (environment != null) {
                                 shader.setUniform(location, environment.getPointLights().size);
@@ -185,7 +183,7 @@ public class CalculateLightingShaderNodeBuilder extends ConfigurationShaderNodeB
             fragmentShaderBuilder.addStructArrayUniformVariable("u_pointLights", new String[]{"color", "position"}, numPointLights, "PointLight", true,
                     new UniformRegistry.StructArrayUniformSetter() {
                         @Override
-                        public void set(BasicShader shader, int startingLocation, int[] fieldOffsets, int structSize, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
+                        public void set(BasicShader shader, int startingLocation, int[] fieldOffsets, int structSize, ShaderContext shaderContext, GraphShaderModelInstance graphShaderModelInstance, Renderable renderable) {
                             Array<PointLight> points = null;
                             GraphShaderEnvironment environment = shaderContext.getGraphShaderEnvironment();
                             if (environment != null) {
@@ -211,7 +209,7 @@ public class CalculateLightingShaderNodeBuilder extends ConfigurationShaderNodeB
             if (!fragmentShaderBuilder.containsFunction("getPointLightContribution")) {
                 fragmentShaderBuilder.addFunction("getPointLightContribution",
                         GLSLFragmentReader.getFragment("pointLightContribution",
-                                Collections.singletonMap("NUM_POINT_LIGHTS", String.valueOf(numPointLights))));
+                                LibGDXCollections.singletonMap("NUM_POINT_LIGHTS", String.valueOf(numPointLights))));
             }
         } else {
             if (!fragmentShaderBuilder.containsFunction("getPointLightContribution")) {
@@ -229,7 +227,7 @@ public class CalculateLightingShaderNodeBuilder extends ConfigurationShaderNodeB
             fragmentShaderBuilder.addUniformVariable("u_directionalLightCount", "int", true,
                     new UniformRegistry.UniformSetter() {
                         @Override
-                        public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
+                        public void set(BasicShader shader, int location, ShaderContext shaderContext, GraphShaderModelInstance graphShaderModelInstance, Renderable renderable) {
                             GraphShaderEnvironment environment = shaderContext.getGraphShaderEnvironment();
                             if (environment != null) {
                                 shader.setUniform(location, environment.getDirectionalLights().size);
@@ -244,7 +242,7 @@ public class CalculateLightingShaderNodeBuilder extends ConfigurationShaderNodeB
             fragmentShaderBuilder.addStructArrayUniformVariable("u_dirLights", new String[]{"color", "direction"}, numDirectionalLights, "DirectionalLight", true,
                     new UniformRegistry.StructArrayUniformSetter() {
                         @Override
-                        public void set(BasicShader shader, int startingLocation, int[] fieldOffsets, int structSize, ShaderContext shaderContext, GraphShaderModelInstanceImpl graphShaderModelInstance, Renderable renderable) {
+                        public void set(BasicShader shader, int startingLocation, int[] fieldOffsets, int structSize, ShaderContext shaderContext, GraphShaderModelInstance graphShaderModelInstance, Renderable renderable) {
                             Array<DirectionalLight> dirs = null;
                             GraphShaderEnvironment environment = shaderContext.getGraphShaderEnvironment();
                             if (environment != null) {
@@ -270,7 +268,7 @@ public class CalculateLightingShaderNodeBuilder extends ConfigurationShaderNodeB
             if (!fragmentShaderBuilder.containsFunction("getDirectionalLightContribution")) {
                 fragmentShaderBuilder.addFunction("getDirectionalLightContribution",
                         GLSLFragmentReader.getFragment("directionalLightContribution",
-                                Collections.singletonMap("NUM_DIRECTIONAL_LIGHTS", String.valueOf(numDirectionalLights))));
+                                LibGDXCollections.singletonMap("NUM_DIRECTIONAL_LIGHTS", String.valueOf(numDirectionalLights))));
             }
         } else {
             if (!fragmentShaderBuilder.containsFunction("getDirectionalLightContribution")) {

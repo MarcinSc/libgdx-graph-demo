@@ -1,6 +1,7 @@
 package com.gempukku.libgdx.graph.pipeline;
 
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gempukku.libgdx.graph.GraphDataLoaderCallback;
 import com.gempukku.libgdx.graph.data.GraphConnection;
 import com.gempukku.libgdx.graph.data.GraphNode;
@@ -15,9 +16,6 @@ import com.gempukku.libgdx.graph.pipeline.loader.node.PipelineNodeProducer;
 import com.gempukku.libgdx.graph.pipeline.loader.rendering.node.EndPipelineNode;
 import com.gempukku.libgdx.graph.pipeline.property.PipelinePropertyProducer;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class PipelineLoaderCallback extends GraphDataLoaderCallback<PipelineRenderer, PipelineFieldType> {
     @Override
     public void start() {
@@ -31,16 +29,16 @@ public class PipelineLoaderCallback extends GraphDataLoaderCallback<PipelineRend
         if (result.hasErrors())
             throw new IllegalStateException("The graph contains errors, open it in the graph designer and correct them");
 
-        Map<String, PipelineNode> pipelineNodeMap = new HashMap<>();
+        ObjectMap<String, PipelineNode> pipelineNodeMap = new ObjectMap<>();
         PipelineNode pipelineNode = populatePipelineNodes("end", pipelineNodeMap);
 
-        Map<String, WritablePipelineProperty> propertyMap = new HashMap<>();
+        ObjectMap<String, WritablePipelineProperty> propertyMap = new ObjectMap<>();
         for (GraphProperty<PipelineFieldType> property : getProperties()) {
             propertyMap.put(property.getName(), findPropertyProducerByType(property.getType()).createProperty(property.getData()));
         }
 
         return new PipelineRendererImpl(
-                pipelineNodeMap.values(), propertyMap, (EndPipelineNode) pipelineNode);
+                pipelineNodeMap.values().toArray(), propertyMap, (EndPipelineNode) pipelineNode);
     }
 
     @Override
@@ -61,7 +59,7 @@ public class PipelineLoaderCallback extends GraphDataLoaderCallback<PipelineRend
         return null;
     }
 
-    private PipelineNode populatePipelineNodes(String nodeId, Map<String, PipelineNode> pipelineNodeMap) {
+    private PipelineNode populatePipelineNodes(String nodeId, ObjectMap<String, PipelineNode> pipelineNodeMap) {
         PipelineNode pipelineNode = pipelineNodeMap.get(nodeId);
         if (pipelineNode != null)
             return pipelineNode;
@@ -71,8 +69,8 @@ public class PipelineLoaderCallback extends GraphDataLoaderCallback<PipelineRend
         PipelineNodeProducer nodeProducer = RendererPipelineConfiguration.pipelineNodeProducers.get(nodeInfoType);
         if (nodeProducer == null)
             throw new IllegalStateException("Unable to find node producer for type: " + nodeInfoType);
-        Map<String, PipelineNode.FieldOutput<?>> inputFields = new HashMap<>();
-        for (GraphNodeInput<PipelineFieldType> nodeInput : nodeProducer.getConfiguration(nodeInfo.getData()).getNodeInputs().values()) {
+        ObjectMap<String, PipelineNode.FieldOutput<?>> inputFields = new ObjectMap<>();
+        for (GraphNodeInput<PipelineFieldType> nodeInput : new ObjectMap.Values<>(nodeProducer.getConfiguration(nodeInfo.getData()).getNodeInputs())) {
             String inputName = nodeInput.getFieldId();
             GraphConnection vertexInfo = findInputProducer(nodeId, inputName);
             if (vertexInfo == null && nodeInput.isRequired())
@@ -81,7 +79,7 @@ public class PipelineLoaderCallback extends GraphDataLoaderCallback<PipelineRend
                 PipelineNode vertexNode = populatePipelineNodes(vertexInfo.getNodeFrom(), pipelineNodeMap);
                 PipelineNode.FieldOutput<?> fieldOutput = vertexNode.getFieldOutput(vertexInfo.getFieldFrom());
                 PipelineFieldType fieldType = fieldOutput.getPropertyType();
-                if (!nodeInput.getAcceptedPropertyTypes().contains(fieldType))
+                if (!nodeInput.getAcceptedPropertyTypes().contains(fieldType, true))
                     throw new IllegalStateException("Producer produces a field of value not compatible with consumer");
                 inputFields.put(inputName, fieldOutput);
             }

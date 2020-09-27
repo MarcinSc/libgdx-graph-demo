@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gempukku.libgdx.graph.data.NodeConfiguration;
 import com.gempukku.libgdx.graph.pipeline.PipelineFieldType;
 import com.gempukku.libgdx.graph.pipeline.RenderPipeline;
@@ -14,15 +15,13 @@ import com.gempukku.libgdx.graph.pipeline.impl.RenderPipelineImpl;
 import com.gempukku.libgdx.graph.pipeline.loader.PipelineRenderingContext;
 import com.gempukku.libgdx.graph.pipeline.loader.node.OncePerFrameJobPipelineNode;
 
-import java.util.Map;
-
 public class StartPipelineNode extends OncePerFrameJobPipelineNode {
     private FieldOutput<Color> color;
     private FieldOutput<Vector2> size;
 
     private RenderPipelineImpl renderPipeline;
 
-    public StartPipelineNode(NodeConfiguration configuration, Map<String, FieldOutput<?>> inputFields) {
+    public StartPipelineNode(NodeConfiguration configuration, ObjectMap<String, FieldOutput<?>> inputFields) {
         super(configuration, inputFields);
         color = (FieldOutput<Color>) inputFields.get("background");
         size = (FieldOutput<Vector2>) inputFields.get("size");
@@ -58,7 +57,7 @@ public class StartPipelineNode extends OncePerFrameJobPipelineNode {
     }
 
     @Override
-    protected void executeJob(PipelineRenderingContext pipelineRenderingContext, Map<String, ? extends OutputValue> outputValues) {
+    protected void executeJob(PipelineRenderingContext pipelineRenderingContext, ObjectMap<String, ? extends OutputValue> outputValues) {
         Vector2 bufferSize = size.getValue(pipelineRenderingContext);
         Color backgroundColor = color.getValue(pipelineRenderingContext);
 

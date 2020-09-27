@@ -1,4 +1,4 @@
-package com.gempukku.libgdx.graph.shader.models;
+package com.gempukku.libgdx.graph.shader.models.impl;
 
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.VertexAttribute;
@@ -9,16 +9,16 @@ import com.badlogic.gdx.graphics.g3d.model.Animation;
 import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.model.NodePart;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gempukku.libgdx.graph.IdGenerator;
 import com.gempukku.libgdx.graph.shader.GraphShaderConfig;
-
-import java.util.HashSet;
-import java.util.Set;
+import com.gempukku.libgdx.graph.shader.models.ModelInstanceOptimizationHints;
+import com.gempukku.libgdx.graph.shader.models.TagOptimizationHint;
 
 public class GraphShaderModel implements Disposable {
     private static VertexAttributes attributes;
     private Model internalModel;
-    private Set<String> defaultTags = new HashSet<>();
+    private ObjectMap<String, TagOptimizationHint> defaultTags = new ObjectMap<>();
     private IdGenerator idGenerator;
 
     public GraphShaderModel(IdGenerator idGenerator, Model model) {
@@ -26,8 +26,8 @@ public class GraphShaderModel implements Disposable {
         init(model);
     }
 
-    public void addDefaultTag(String tag) {
-        defaultTags.add(tag);
+    public void addDefaultTag(String tag, TagOptimizationHint tagOptimizationHint) {
+        defaultTags.put(tag, tagOptimizationHint);
     }
 
     public void removeDefaultTag(String tag) {
@@ -138,11 +138,11 @@ public class GraphShaderModel implements Disposable {
         return node.copy();
     }
 
-    public GraphShaderModelInstanceImpl createInstance() {
+    public GraphShaderModelInstance createInstance(ModelInstanceOptimizationHints modelInstanceOptimizationHints) {
         String id = idGenerator.generateId();
-        GraphShaderModelInstanceImpl graphShaderModelInstance = new GraphShaderModelInstanceImpl(id, this, new ModelInstance(internalModel));
-        for (String defaultTag : defaultTags)
-            graphShaderModelInstance.addTag(defaultTag);
+        GraphShaderModelInstance graphShaderModelInstance = new GraphShaderModelInstance(id, this, new ModelInstance(internalModel), modelInstanceOptimizationHints);
+        for (ObjectMap.Entry<String, TagOptimizationHint> defaultTag : defaultTags.entries())
+            graphShaderModelInstance.addTag(defaultTag.key, defaultTag.value);
         return graphShaderModelInstance;
     }
 

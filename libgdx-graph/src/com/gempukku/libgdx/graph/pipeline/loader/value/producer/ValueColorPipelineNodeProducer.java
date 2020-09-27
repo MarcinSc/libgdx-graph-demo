@@ -2,12 +2,11 @@ package com.gempukku.libgdx.graph.pipeline.loader.value.producer;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gempukku.libgdx.graph.pipeline.config.value.ValueColorPipelineNodeConfiguration;
 import com.gempukku.libgdx.graph.pipeline.loader.node.PipelineNode;
 import com.gempukku.libgdx.graph.pipeline.loader.node.PipelineNodeProducerImpl;
 import com.gempukku.libgdx.graph.pipeline.loader.value.node.ValuePipelineNode;
-
-import java.util.Map;
 
 public class ValueColorPipelineNodeProducer extends PipelineNodeProducerImpl {
     public ValueColorPipelineNodeProducer() {
@@ -15,7 +14,7 @@ public class ValueColorPipelineNodeProducer extends PipelineNodeProducerImpl {
     }
 
     @Override
-    public PipelineNode createNode(JsonValue data, Map<String, PipelineNode.FieldOutput<?>> inputFields) {
+    public PipelineNode createNode(JsonValue data, ObjectMap<String, PipelineNode.FieldOutput<?>> inputFields) {
         return new ValuePipelineNode(configuration, "value", Color.valueOf(data.getString("color")));
     }
 }

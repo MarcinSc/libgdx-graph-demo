@@ -1,11 +1,11 @@
 package com.gempukku.libgdx.graph;
 
+import com.badlogic.gdx.utils.ObjectMap;
 import com.gempukku.libgdx.graph.data.FieldType;
 
-import java.util.Map;
 import java.util.function.Function;
 
-public class SameTypeOutputTypeFunction<T extends FieldType> implements Function<Map<String, T>, T> {
+public class SameTypeOutputTypeFunction<T extends FieldType> implements Function<ObjectMap<String, T>, T> {
     private String[] inputs;
 
     public SameTypeOutputTypeFunction(String... input) {
@@ -13,7 +13,7 @@ public class SameTypeOutputTypeFunction<T extends FieldType> implements Function
     }
 
     @Override
-    public T apply(Map<String, T> map) {
+    public T apply(ObjectMap<String, T> map) {
         T resolvedType = null;
         for (String input : inputs) {
             T type = map.get(input);
