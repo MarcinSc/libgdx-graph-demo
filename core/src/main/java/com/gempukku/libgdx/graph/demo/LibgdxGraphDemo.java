@@ -576,6 +576,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     @Override
     public void render() {
         float delta = Gdx.graphics.getDeltaTime();
+        delta = Math.min(delta, 0.033f);
         stage.act(delta);
 
         boolean spacePressed = Gdx.input.isKeyPressed(Input.Keys.SPACE);
