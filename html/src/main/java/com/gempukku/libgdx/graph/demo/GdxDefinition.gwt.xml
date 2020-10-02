@@ -4,7 +4,7 @@
 <module rename-to="html">
     <source path=""/>
     <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt"/>
-    <inherits name='com.gempukku.libgdx.libgdx-graph'/>
+    <inherits name='com.gempukku.libgdx.graph'/>
     <inherits name="com.gempukku.libgdx.graph.demo.LibgdxGraphDemo"/>
     <entry-point class="com.gempukku.libgdx.graph.demo.gwt.GwtLauncher"/>
     <set-configuration-property name="gdx.assetpath" value="../assets"/>
