@@ -16952,7 +16952,7 @@
       "textures": [
         {
           "id": "Map #0",
-          "filename": "MinerTex.bmp",
+          "filename": "MinerTex.png",
           "type": "DIFFUSE"
         }
       ]

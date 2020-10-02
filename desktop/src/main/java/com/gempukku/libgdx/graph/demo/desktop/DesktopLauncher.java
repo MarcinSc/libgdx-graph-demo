@@ -22,6 +22,7 @@ public class DesktopLauncher {
         configuration.title = "libGDX Graph demo";
         configuration.width = 1440;
         configuration.height = 810;
+        configuration.useHDPI = true;
         //// This prevents a confusing error that would appear after exiting normally.
         configuration.forceExit = false;
 

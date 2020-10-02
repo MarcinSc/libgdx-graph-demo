@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Cubemap;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -81,14 +82,18 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     private boolean paused = false;
     private GraphShaderModels models;
 
+    private FPSLogger fpsLogger = new FPSLogger();
+
     @Override
     public void create() {
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
         Label subtitleLabel = createStageSubtitleLabel();
 
-        models = createModels();
+        models = Models.create();
+        disposables.add(models);
         pipelineRenderer = loadPipelineRenderer(models, stage);
+        loadModels(models);
 
         script = createScript(subtitleLabel, models, pipelineRenderer);
 
@@ -330,9 +335,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         return environment;
     }
 
-    private GraphShaderModels createModels() {
-        GraphShaderModels models = Models.create();
-        disposables.add(models);
+    private void loadModels(GraphShaderModels models) {
 
         JsonReader jsonReader = new JsonReader();
         G3dModelLoader jsonModelLoader = new G3dModelLoader(jsonReader);
@@ -385,8 +388,6 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         createPlanetGround(models, modelBuilder);
         createWaterSurface(models, modelBuilder);
         createLightBomb(models, modelBuilder);
-
-        return models;
     }
 
     private void createWaterSurface(GraphShaderModels models, ModelBuilder modelBuilder) {
@@ -538,7 +539,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     }
 
     private Label createStageSubtitleLabel() {
-        Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+        Skin skin = new Skin(Gdx.files.internal("skin/default/uiskin.json"));
         disposables.add(skin);
 
         stage = new Stage(new ScreenViewport());
@@ -575,6 +576,8 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
 
     @Override
     public void render() {
+        fpsLogger.log();
+
         float delta = Gdx.graphics.getDeltaTime();
         delta = Math.min(delta, 0.033f);
         stage.act(delta);

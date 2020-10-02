@@ -127835,17 +127835,17 @@
       "textures": [
         {
           "id": "Map #1",
-          "filename": "Luminaris Diffuse.tga",
+          "filename": "LuminarisDiffuse.png",
           "type": "DIFFUSE"
         },
         {
           "id": "Map #2",
-          "filename": "Luminaris Emissive.tga",
+          "filename": "LuminarisEmissive.png",
           "type": "EMISSIVE"
         },
         {
           "id": "Map #5",
-          "filename": "Luminaris Normal.tga",
+          "filename": "LuminarisNormal.png",
           "type": "BUMP"
         }
       ]
