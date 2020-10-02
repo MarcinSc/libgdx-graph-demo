@@ -54,16 +54,6 @@
       "y": 327.0
     },
     {
-      "id": "1995a8bfe5054beeab0fb8d051c80506",
-      "type": "Property",
-      "x": 50.0,
-      "y": 799.0,
-      "data": {
-        "name": "Models",
-        "type": "GraphModels"
-      }
-    },
-    {
       "id": "ff6f63af3181472da525343236652acd",
       "type": "GraphShaderRenderer",
       "x": 307.0,
@@ -3872,12 +3862,6 @@
       "toField": "stage"
     },
     {
-      "fromNode": "1995a8bfe5054beeab0fb8d051c80506",
-      "fromField": "value",
-      "toNode": "ff6f63af3181472da525343236652acd",
-      "toField": "models"
-    },
-    {
       "fromNode": "ff6f63af3181472da525343236652acd",
       "fromField": "output",
       "toNode": "a179464e0afc45e182771a77e7db8ebc",
@@ -3952,10 +3936,6 @@
     {
       "name": "Stage",
       "type": "Stage"
-    },
-    {
-      "name": "Models",
-      "type": "GraphModels"
     },
     {
       "name": "Blur",

@@ -41,7 +41,6 @@ import com.gempukku.libgdx.graph.pipeline.PipelineRenderer;
 import com.gempukku.libgdx.graph.pipeline.RenderOutputs;
 import com.gempukku.libgdx.graph.shader.environment.GraphShaderEnvironment;
 import com.gempukku.libgdx.graph.shader.models.GraphShaderModels;
-import com.gempukku.libgdx.graph.shader.models.Models;
 import com.gempukku.libgdx.graph.shader.models.TagOptimizationHint;
 
 import java.io.IOException;
@@ -79,7 +78,6 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
 
     private boolean lastSpacePressed = false;
     private boolean paused = false;
-    private GraphShaderModels models;
 
     private FPSLogger fpsLogger = new FPSLogger();
 
@@ -87,12 +85,10 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     public void create() {
         Label subtitleLabel = createStageSubtitleLabel();
 
-        models = Models.create();
-        disposables.add(models);
-        pipelineRenderer = loadPipelineRenderer(models, stage);
-        loadModels(models);
+        pipelineRenderer = loadPipelineRenderer(stage);
+        loadModels(pipelineRenderer.getGraphShaderModels());
 
-        script = createScript(subtitleLabel, models, pipelineRenderer);
+        script = createScript(subtitleLabel, pipelineRenderer.getGraphShaderModels(), pipelineRenderer);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -144,7 +140,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         float nativeScale = 0.016f;
         Vector3 nativePosition = new Vector3(3.4f, 0, 4);
         movieScript.addActorScript(
-                new ActorScript(models, nativeId, planetSceneStart, planetSceneLength)
+                new ActorScript(pipelineRenderer.getGraphShaderModels(), nativeId, planetSceneStart, planetSceneLength)
                         .setScale(0, planetSceneLength, nativeScale, nativeScale)
                         .setPosition(0, planetSceneLength, nativePosition, nativePosition)
                         .setRotation(0, 3f, new Vector3(0, 1, 0), 0, 0), false);
@@ -157,7 +153,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         float robotScale = 0.003f;
         float robotLifeLength = planetSceneLength - 8f;
         movieScript.addActorScript(
-                new ActorScript(models, goldRobotId, planetSceneStart + 8f, robotLifeLength)
+                new ActorScript(pipelineRenderer.getGraphShaderModels(), goldRobotId, planetSceneStart + 8f, robotLifeLength)
                         .setScale(0, robotLifeLength, robotScale, robotScale)
                         .setPosition(0, 3f, new Vector3(8, 0, 4), new Vector3(4.6f, 0, 4))
                         .setRotation(0, 3f, new Vector3(0, 1, 0), -90, -90)
@@ -167,13 +163,13 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         movieScript.setSubtitleText(planetSceneStart + 11.3f, Color.WHITE, "- Deploy holo-projector.");
         Vector3 holoprojectorPosition = new Vector3(4, 0, 4);
         movieScript.addActorScript(
-                new ActorScript(models, scifiPedestalId, planetSceneStart + 12f, planetSceneLength - 12f)
+                new ActorScript(pipelineRenderer.getGraphShaderModels(), scifiPedestalId, planetSceneStart + 12f, planetSceneLength - 12f)
                         .setScale(0, planetSceneLength - 12f, 0.0001f, 0.0001f)
                         .setPosition(0, planetSceneLength - 12f, holoprojectorPosition, holoprojectorPosition));
         float shadowScale = 0.04f;
         Vector3 shadowPosition = new Vector3(4f, 0.1f, 4);
         movieScript.addActorScript(
-                new ActorScript(models, shadowId, planetSceneStart + 12.5f, planetSceneLength - 12.5f)
+                new ActorScript(pipelineRenderer.getGraphShaderModels(), shadowId, planetSceneStart + 12.5f, planetSceneLength - 12.5f)
                         .setScale(0, planetSceneLength, shadowScale, shadowScale)
                         .setPosition(0, planetSceneLength, shadowPosition, shadowPosition)
                         .setRotation(0, 3f, new Vector3(0, 1, 0), 0, 0), false);
@@ -190,7 +186,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
                 new Vector3(3.8f, 0.25f, 4.9f), new Vector3(4, 0.4f, 4), Interpolation.smooth);
         Vector3 lightBombPosition = new Vector3(4.6f, 1f, 4f);
         movieScript.addActorScript(
-                new ActorScript(models, lightBombId, planetSceneStart + 27f, planetSceneLength - 27f)
+                new ActorScript(pipelineRenderer.getGraphShaderModels(), lightBombId, planetSceneStart + 27f, planetSceneLength - 27f)
                         .setScale(0, 5f, 0.05f, 1.2f)
                         .setPosition(0, 5f, lightBombPosition, lightBombPosition));
         movieScript.setPipelineFloatProperty("Bloom Radius", planetSceneStart + 28f, 5f,
@@ -204,17 +200,17 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     }
 
     private void setupPlanetSurfaceEnvironment(MovieScript movieScript, float planetSceneStart, float planetSceneLength) {
-        movieScript.addActorScript(new ActorScript(models, planetGroundId, planetSceneStart, planetSceneLength));
-        movieScript.addActorScript(new ActorScript(models, waterSurfaceId, planetSceneStart, planetSceneLength));
+        movieScript.addActorScript(new ActorScript(pipelineRenderer.getGraphShaderModels(), planetGroundId, planetSceneStart, planetSceneLength));
+        movieScript.addActorScript(new ActorScript(pipelineRenderer.getGraphShaderModels(), waterSurfaceId, planetSceneStart, planetSceneLength));
         float cloudsHeight = 10f;
         float cloudsDistance = 20f;
         movieScript.addActorScript(
-                new ActorScript(models, cloudsId, planetSceneStart, planetSceneLength)
+                new ActorScript(pipelineRenderer.getGraphShaderModels(), cloudsId, planetSceneStart, planetSceneLength)
                         .setScale(0, planetSceneLength, 0.001f, 0.001f)
                         .setPosition(0, planetSceneLength, new Vector3(-20f - cloudsDistance, cloudsHeight, 20f - cloudsDistance), new Vector3(0f - cloudsDistance, cloudsHeight, -0f - cloudsDistance))
                         .setRotation(0, planetSceneLength, new Vector3(0, 1, 0), 90, 90));
         movieScript.addActorScript(
-                new ActorScript(models, cloudsId, planetSceneStart, planetSceneLength)
+                new ActorScript(pipelineRenderer.getGraphShaderModels(), cloudsId, planetSceneStart, planetSceneLength)
                         .setScale(0, planetSceneLength, 0.001f, 0.001f)
                         .setPosition(0, planetSceneLength, new Vector3(-0f - cloudsDistance, cloudsHeight, 0f - cloudsDistance), new Vector3(20f - cloudsDistance, cloudsHeight, -20f - cloudsDistance))
                         .setRotation(0, planetSceneLength, new Vector3(0, 1, 0), 270, 270));
@@ -233,7 +229,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         float luminarisStartingX = -50f;
         float luminarisY = 1.6f;
         float luminarisStartY = 4f;
-        ActorScript luminarisActor = new ActorScript(models, luminarisId, hangarSceneStart, hangarSceneLength)
+        ActorScript luminarisActor = new ActorScript(pipelineRenderer.getGraphShaderModels(), luminarisId, hangarSceneStart, hangarSceneLength)
                 .setScale(0, hangarSceneLength, luminarisScale, luminarisScale)
                 .setRotation(0, hangarSceneLength, new Vector3(0, 1, 0), 90, 90)
                 .setPosition(0, 8f, new Vector3(luminarisStartingX, luminarisY + luminarisStartY, 0), new Vector3(luminarisStartingX, luminarisY + luminarisStartY, 0))
@@ -246,7 +242,7 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         movieScript.setSubtitleText(hangarSceneStart + 14, Color.WHITE, "- GDX-255, raise your shields and prepare for interdimensional transfer.");
         Vector3 shipShieldPosition = new Vector3(0f, 2f, 0);
         movieScript.addActorScript(
-                new ActorScript(models, shipShieldId, hangarSceneStart + 17f, 13.5f)
+                new ActorScript(pipelineRenderer.getGraphShaderModels(), shipShieldId, hangarSceneStart + 17f, 13.5f)
                         .setPosition(0, 0, shipShieldPosition, shipShieldPosition)
                         .setFloatProperty("Min Y", 0f, 5f, -1f, 8f));
         movieScript.setSubtitleText(hangarSceneStart + 19f, Color.WHITE, "");
@@ -259,28 +255,28 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
     }
 
     private void setupHangarEnvironment(MovieScript movieScript, float hangarSceneStart, float hangarSceneLength) {
-        movieScript.addActorScript(new ActorScript(models, hangarFloorId, hangarSceneStart, hangarSceneLength));
-        movieScript.addActorScript(new ActorScript(models, hangarWallId, hangarSceneStart, hangarSceneLength));
-        movieScript.addActorScript(new ActorScript(models, hangarShieldId, hangarSceneStart, hangarSceneLength));
+        movieScript.addActorScript(new ActorScript(pipelineRenderer.getGraphShaderModels(), hangarFloorId, hangarSceneStart, hangarSceneLength));
+        movieScript.addActorScript(new ActorScript(pipelineRenderer.getGraphShaderModels(), hangarWallId, hangarSceneStart, hangarSceneLength));
+        movieScript.addActorScript(new ActorScript(pipelineRenderer.getGraphShaderModels(), hangarShieldId, hangarSceneStart, hangarSceneLength));
         movieScript.addActorScript(
-                new ActorScript(models, scifiPedestalId, hangarSceneStart, hangarSceneLength)
+                new ActorScript(pipelineRenderer.getGraphShaderModels(), scifiPedestalId, hangarSceneStart, hangarSceneLength)
                         .setScale(0, hangarSceneLength, 0.002f, 0.002f));
         for (int i = 0; i < 5; i++) {
             Vector3 createPosition1 = new Vector3(-3 + i, 0, -9);
             Vector3 createPosition2 = new Vector3(-3 + i, 0, -8);
             movieScript.addActorScript(
-                    new ActorScript(models, crateId, hangarSceneStart, hangarSceneLength)
+                    new ActorScript(pipelineRenderer.getGraphShaderModels(), crateId, hangarSceneStart, hangarSceneLength)
                             .setScale(0, hangarSceneLength, 0.8f, 0.8f)
                             .setPosition(0, hangarSceneLength, createPosition1, createPosition1));
             movieScript.addActorScript(
-                    new ActorScript(models, crateId, hangarSceneStart, hangarSceneLength)
+                    new ActorScript(pipelineRenderer.getGraphShaderModels(), crateId, hangarSceneStart, hangarSceneLength)
                             .setScale(0, hangarSceneLength, 0.8f, 0.8f)
                             .setPosition(0, hangarSceneLength, createPosition2, createPosition2));
         }
         for (int i = 0; i < 6; i++) {
             Vector3 cellPosition = new Vector3(3 + i * 0.4f, 0.4f, -9);
             movieScript.addActorScript(
-                    new ActorScript(models, cellId, hangarSceneStart, hangarSceneLength)
+                    new ActorScript(pipelineRenderer.getGraphShaderModels(), cellId, hangarSceneStart, hangarSceneLength)
                             .setScale(0, hangarSceneLength, 0.002f, 0.002f)
                             .setPosition(0, hangarSceneLength, cellPosition, cellPosition));
         }
@@ -612,12 +608,11 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
         Gdx.app.debug("Unclosed", ShaderProgram.getManagedStatus());
     }
 
-    private PipelineRenderer loadPipelineRenderer(GraphShaderModels models, Stage stage) {
+    private PipelineRenderer loadPipelineRenderer(Stage stage) {
         try {
             InputStream stream = Gdx.files.internal("pipeline/demo.json").read();
             try {
                 PipelineRenderer pipelineRenderer = GraphLoader.loadGraph(stream, new PipelineLoaderCallback());
-                pipelineRenderer.setPipelineProperty("Models", models);
                 pipelineRenderer.setPipelineProperty("Stage", stage);
                 disposables.add(pipelineRenderer);
                 return pipelineRenderer;
