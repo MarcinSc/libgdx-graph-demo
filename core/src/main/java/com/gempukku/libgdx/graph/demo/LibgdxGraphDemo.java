@@ -1,6 +1,5 @@
 package com.gempukku.libgdx.graph.demo;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -86,8 +85,6 @@ public class LibgdxGraphDemo extends ApplicationAdapter {
 
     @Override
     public void create() {
-        Gdx.app.setLogLevel(Application.LOG_DEBUG);
-
         Label subtitleLabel = createStageSubtitleLabel();
 
         models = Models.create();
